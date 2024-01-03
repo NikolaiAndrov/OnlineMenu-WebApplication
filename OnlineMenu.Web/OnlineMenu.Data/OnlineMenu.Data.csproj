@@ -15,4 +15,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OnlineMenu.Common\OnlineMenu.Common.csproj" />
+  </ItemGroup>
+
 </Project>
