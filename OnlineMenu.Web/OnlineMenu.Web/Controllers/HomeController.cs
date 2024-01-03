@@ -1,7 +1,7 @@
 ﻿namespace OnlineMenu.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using OnlineMenu.Web.Models;
+    using OnlineMenu.Web.ViewModels.Home;
     using System.Diagnostics;
 
     public class HomeController : Controller

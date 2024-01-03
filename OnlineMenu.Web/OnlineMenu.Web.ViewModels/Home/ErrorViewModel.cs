@@ -1,4 +1,4 @@
-namespace OnlineMenu.Web.Models
+namespace OnlineMenu.Web.ViewModels.Home
 {
     public class ErrorViewModel
     {

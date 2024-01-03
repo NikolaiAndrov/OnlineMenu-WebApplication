@@ -2,7 +2,7 @@ namespace OnlineMenu.Web
 {
     using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
-    using OnlineMenu.Web.Data;
+    using OnlineMenu.Data;
 
     public class Program
     {

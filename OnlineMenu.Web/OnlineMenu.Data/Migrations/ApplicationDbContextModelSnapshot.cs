@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineMenu.Web.Data;
 using System;
 
-namespace OnlineMenu.Web.Data.Migrations
+namespace OnlineMenu.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
