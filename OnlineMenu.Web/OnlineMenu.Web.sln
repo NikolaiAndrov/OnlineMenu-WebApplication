@@ -5,6 +5,8 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineMenu.Web", "OnlineMenu.Web\OnlineMenu.Web.csproj", "{84BF1E41-9211-4B46-A78A-AA136DE45911}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineMenu.Common", "OnlineMenu.Common\OnlineMenu.Common.csproj", "{23446ABD-F5EF-4221-8055-C96D8F5A81EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{84BF1E41-9211-4B46-A78A-AA136DE45911}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84BF1E41-9211-4B46-A78A-AA136DE45911}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84BF1E41-9211-4B46-A78A-AA136DE45911}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23446ABD-F5EF-4221-8055-C96D8F5A81EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23446ABD-F5EF-4221-8055-C96D8F5A81EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23446ABD-F5EF-4221-8055-C96D8F5A81EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23446ABD-F5EF-4221-8055-C96D8F5A81EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
