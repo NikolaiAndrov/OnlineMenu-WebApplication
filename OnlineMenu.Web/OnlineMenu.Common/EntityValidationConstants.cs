@@ -29,7 +29,7 @@
             public const string PriceMaxValue = "3000";
 
             public const int DescriptionMinLength = 5;
-            public const int DescriptionMaxLength = 150;
+            public const int DescriptionMaxLength = 300;
         }
 
         public static class DrinkValidation
@@ -44,7 +44,7 @@
             public const string PriceMaxValue = "10000";
 
             public const int DescriptionMinLength = 5;
-            public const int DescriptionMaxLength = 150;
+            public const int DescriptionMaxLength = 300;
         }
 
         public static class ManagerValidation
