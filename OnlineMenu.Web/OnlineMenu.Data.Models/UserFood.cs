@@ -6,9 +6,9 @@
     public class UserFood
     {
         [Required]
-        public Guid ApplicationUserId { get; set; }
+        public Guid UserId { get; set; }
 
-        [ForeignKey(nameof(ApplicationUserId))]
+        [ForeignKey(nameof(UserId))]
         public virtual ApplicationUser User { get; set; } = null!;
 
         [Required]

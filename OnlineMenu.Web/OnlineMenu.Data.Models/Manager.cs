@@ -26,9 +26,10 @@
         [MaxLength(PhoneNumberMaxLength)]
         public string PhoneNumber { get; set; } = null!;
 
-        public Guid ApplicationUserId { get; set; }
+        [Required]
+        public Guid UserId { get; set; }
 
-        [ForeignKey(nameof(ApplicationUserId))]
+        [ForeignKey(nameof(UserId))]
         public virtual ApplicationUser User { get; set; } = null!;
     }
 }
