@@ -24,7 +24,7 @@
             category = new FoodCategory
             {
                 Id = 1,
-                Name = "Starters",
+                Name = "Salads",
                 IsDeleted = false,
             };
             foodCategories.Add(category);
@@ -32,7 +32,7 @@
             category = new FoodCategory
             {
                 Id = 2,
-                Name = "Main Dishes",
+                Name = "Starters",
                 IsDeleted = false,
             };
             foodCategories.Add(category);
@@ -40,7 +40,7 @@
             category = new FoodCategory
             {
                 Id = 3,
-                Name = "Pizza",
+                Name = "Main Dishes",
                 IsDeleted = false,
             };
             foodCategories.Add(category);
@@ -48,7 +48,7 @@
             category = new FoodCategory
             {
                 Id = 4,
-                Name = "Burgers",
+                Name = "Pizza",
                 IsDeleted = false,
             };
             foodCategories.Add(category);
@@ -56,6 +56,22 @@
             category = new FoodCategory
             {
                 Id = 5,
+                Name = "Spaghetti",
+                IsDeleted = false,
+            };
+            foodCategories.Add(category);
+
+            category = new FoodCategory
+            {
+                Id = 6,
+                Name = "Burgers",
+                IsDeleted = false,
+            };
+            foodCategories.Add(category);
+
+            category = new FoodCategory
+            {
+                Id = 7,
                 Name = "Desserts",
                 IsDeleted = false,
             };
