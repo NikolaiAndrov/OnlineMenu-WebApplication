@@ -24,7 +24,7 @@
             category = new DrinkCategory
             {
                 Id = 1,
-                Name = "Soft Drinks",
+                Name = "Water",
                 IsDeleted = false
             };
             drinkCategories.Add(category);
@@ -32,7 +32,7 @@
             category = new DrinkCategory
             {
                 Id = 2,
-                Name = "Hot Drinks",
+                Name = "Soft Drinks",
                 IsDeleted = false
             };
             drinkCategories.Add(category);
@@ -40,7 +40,7 @@
             category = new DrinkCategory
             {
                 Id = 3,
-                Name = "Whisky",
+                Name = "Hot Drinks",
                 IsDeleted = false
             };
             drinkCategories.Add(category);
@@ -56,6 +56,15 @@
             category = new DrinkCategory
             {
                 Id = 5,
+                Name = "Whisky",
+                IsDeleted = false
+            };
+            drinkCategories.Add(category);
+
+
+            category = new DrinkCategory
+            {
+                Id = 6,
                 Name = "Wine",
                 IsDeleted = false
             };

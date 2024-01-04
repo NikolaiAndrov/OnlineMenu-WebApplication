@@ -6,6 +6,7 @@
     {
         public ApplicationUser()
         {
+            this.Id = Guid.NewGuid();
             this.FavouriteDrinks = new HashSet<UserDrink>();
             this.FavourtiteFood = new HashSet<UserFood>();
         }
