@@ -61,11 +61,35 @@
             };
             drinkCategories.Add(category);
 
-
             category = new DrinkCategory
             {
                 Id = 6,
+                Name = "Vodka",
+                IsDeleted = false
+            };
+            drinkCategories.Add(category);
+
+            category = new DrinkCategory
+            {
+                Id = 7,
+                Name = "Gin",
+                IsDeleted = false
+            };
+            drinkCategories.Add(category);
+
+
+            category = new DrinkCategory
+            {
+                Id = 8,
                 Name = "Wine",
+                IsDeleted = false
+            };
+            drinkCategories.Add(category);
+
+            category = new DrinkCategory
+            {
+                Id = 9,
+                Name = "Cocktails",
                 IsDeleted = false
             };
             drinkCategories.Add(category);

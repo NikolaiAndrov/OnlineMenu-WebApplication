@@ -127,6 +127,32 @@
 
             drink = new Drink
             {
+                Name = "Carlsberg",
+                Milliliters = 330,
+                Price = 3.00m,
+                Description = "Draught beer",
+                IsDeleted = false,
+                IsAlcoholic = true,
+                ImageUrl = "https://ucd905382607284558aff947bacb.previews.dropboxusercontent.com/p/thumb/ACLqgorO33Z0hf4EVIfw4BwGtfOcCuHiiuymbv4gElxsWLraL2UzlOpUVwleL96l7D0CWKjHU7QARYfUsHKGzg8MQzpca8g0mqHwVE96h25_kpQDoobmr1wDHMplVffAWSqLHh_K8J5CJcEmiXQnZrd4TxskjW7Ndl1fatRheOjBfDTuqst0fsLrI7cSwIwfQIT1koIxAebMMxpc8pvkvVAv1rL3_lCwLBMPYuXxM5E6m-4LN1A7o33UeHZXWffmHFLe9wqIS_7SuY-PUzHdRSAthqBRHH6oQtB_xpObkWzQRRMnoESp5bze5zhUPXEfCfflq_rGh85z-4JoEzHw4YR9JCtBuXp11ZUobySOGZ5ONfQLVYwIItLrmel0mi2p948/p.jpeg",
+                DrinkCategoryId = 4
+            };
+            drinks.Add(drink);
+
+            drink = new Drink
+            {
+                Name = "Carlsberg",
+                Milliliters = 500,
+                Price = 4.50m,
+                Description = "Draught beer",
+                IsDeleted = false,
+                IsAlcoholic = true,
+                ImageUrl = "https://uc680f65cb2b7db5ea42b8036dcf.previews.dropboxusercontent.com/p/thumb/ACIDO-i_aDPCw3SWUFI4wItRFjYSogvGsrZPPUt7R19j0CkgRiWPtUj94bhzLUSemp7jDulVRYfx4r2LaJ5oJugM1D-3hFOWZE09Exd7I8a1Rc2G5vdkosyNhDOFWHv3UrJ2cQW_my8pUDfJbK329-9YsWfdOHWKgQop4ZFNMMIQiPai9tPwtqKTSVScqA7I1n8LRPPe1FNk9tP_j5P4khNzA6YxSAAwPvXHCBnQ7tqwV-fjDlLKQV75KimHwRv0TGBKRox304V8LaqV1j16680L0G4h8AjKSPEELCdYjvKcQ5MAIzYy2JH3e8L9efwdV4V1rJcWzPuVCk1MQ2pWeSVPFvjrTKWOJVklXUALmJzA2ljeeasXSEnsH7GGszXn2eQ/p.jpeg",
+                DrinkCategoryId = 4
+            };
+            drinks.Add(drink);
+
+            drink = new Drink
+            {
                 Name = "Singleton",
                 Milliliters = 50,
                 Price = 15.00m,
@@ -166,27 +192,66 @@
 
             drink = new Drink
             {
-                Name = "Carlsberg",
-                Milliliters = 330,
-                Price = 3.00m,
-                Description = "Draught beer",
+                Name = "Beluga",
+                Milliliters = 50,
+                Price = 15.00m,
+                Description = "Vodka with premium quality and smooth taste",
                 IsDeleted = false,
                 IsAlcoholic = true,
-                ImageUrl = "https://ucd905382607284558aff947bacb.previews.dropboxusercontent.com/p/thumb/ACLqgorO33Z0hf4EVIfw4BwGtfOcCuHiiuymbv4gElxsWLraL2UzlOpUVwleL96l7D0CWKjHU7QARYfUsHKGzg8MQzpca8g0mqHwVE96h25_kpQDoobmr1wDHMplVffAWSqLHh_K8J5CJcEmiXQnZrd4TxskjW7Ndl1fatRheOjBfDTuqst0fsLrI7cSwIwfQIT1koIxAebMMxpc8pvkvVAv1rL3_lCwLBMPYuXxM5E6m-4LN1A7o33UeHZXWffmHFLe9wqIS_7SuY-PUzHdRSAthqBRHH6oQtB_xpObkWzQRRMnoESp5bze5zhUPXEfCfflq_rGh85z-4JoEzHw4YR9JCtBuXp11ZUobySOGZ5ONfQLVYwIItLrmel0mi2p948/p.jpeg",
-                DrinkCategoryId = 4
+                ImageUrl = "https://uc572e1c3d51ab7a39e8aa27b3b8.previews.dropboxusercontent.com/p/thumb/ACKq4lG-S8XyoO_6yOtUkSE0e-KKT5oU7ukhwO9kO4zaM4zFSX989aht80pGIcfpT6XcpjAj2iiiE4CTgtchfKsZyXyLKGRAdxB-Zi3MzCA_-M5VH4j5WDgeOjO9rbs3TyNNxbppVCBlYQYGBwuK1RF1zEhe0Si-V_L2cf6StNCln1OAPjd5asCDq8YMYINSsJn0afMA_P14aOXV8WECbspQeEhxquFm3CNev4-LtozJ3f4J6-njG8WxUAV3cBCLaNKjFkTirqdy_DQSxK_TemzCJljaJaIeQgawhZC34zm3xPTHvHv03xSlsWc9nU93cRyvG-ZTGAtVgvDjfafrDHR5kmgwW030bBZArE2Sf3MjT5VzVPMh7VWulsB3GgDYEwk/p.jpeg",
+                DrinkCategoryId = 6
             };
             drinks.Add(drink);
 
             drink = new Drink
             {
-                Name = "Carlsberg",
-                Milliliters = 500,
-                Price = 4.50m,
-                Description = "Draught beer",
+                Name = "Belvedere",
+                Milliliters = 50,
+                Price = 15.00m,
+                Description = "Smoothness, subtle sweetness, and clean finish",
                 IsDeleted = false,
                 IsAlcoholic = true,
-                ImageUrl = "https://uc680f65cb2b7db5ea42b8036dcf.previews.dropboxusercontent.com/p/thumb/ACIDO-i_aDPCw3SWUFI4wItRFjYSogvGsrZPPUt7R19j0CkgRiWPtUj94bhzLUSemp7jDulVRYfx4r2LaJ5oJugM1D-3hFOWZE09Exd7I8a1Rc2G5vdkosyNhDOFWHv3UrJ2cQW_my8pUDfJbK329-9YsWfdOHWKgQop4ZFNMMIQiPai9tPwtqKTSVScqA7I1n8LRPPe1FNk9tP_j5P4khNzA6YxSAAwPvXHCBnQ7tqwV-fjDlLKQV75KimHwRv0TGBKRox304V8LaqV1j16680L0G4h8AjKSPEELCdYjvKcQ5MAIzYy2JH3e8L9efwdV4V1rJcWzPuVCk1MQ2pWeSVPFvjrTKWOJVklXUALmJzA2ljeeasXSEnsH7GGszXn2eQ/p.jpeg",
-                DrinkCategoryId = 4
+                ImageUrl = "https://uc41f2bdb66479ee97f8ed425182.previews.dropboxusercontent.com/p/thumb/ACLtF0Tp51rD3BRGbmKnFPbMbRms1EmpLvVga4MWkLhJzZzjLR1_3oI60ORzjIRWx96xiQ-X9Y1n1nvPkgstUe5DSK2JCgh6kCrbOyN9ULOpedSBJg3o3jEWmppEUJI0TGu3e8dGcdu5gYdpy_vwd0YCp7x9ROSxh8Vf93D5qZvjy3ZgzGGZGngLkIcIls19Y502ULO2XErRlQlgvvSHq-bEyLQg_f56nTW17DjZQQbTNhn6eXlgmvoHRGwwQxjjC7DPgAUEN8lGH405h4JbQK3DSWXsGUno5REvliWo9LOwnccnZUMRYhJ57hAKg4EvWCfRn5zGOfnsa6jkNCf4-hzrE3_pjnesOOiHCzEZvalUqYErkkoaNhw5L1NYriqMpmg/p.jpeg",
+                DrinkCategoryId = 6
+            };
+            drinks.Add(drink);
+
+            drink = new Drink
+            {
+                Name = "Grey Goose",
+                Milliliters = 50,
+                Price = 18.00m,
+                Description = "Smooth taste with subtle sweetness and a hint of almond",
+                IsDeleted = false,
+                IsAlcoholic = true,
+                ImageUrl = "https://uc21d4abd34231348924c82bc913.previews.dropboxusercontent.com/p/thumb/ACJf6rWEWN2smnu8aZey7THuCZ4QJ6Ml350oPh6SfpFlmjHw2nBk3Mq7Q7SeusPr5_kigLSAa11tNbvKO8OedAHz5vN3hd-Q3SgUudZEzPQBRRwJl_Ur5lRzBa-M0IiygLaffGQ7PolKEbcR0hrScmtF8py2Gd6H8uACXH7aqbRpAThFbP02lv4qegxWf3HqlEGU2I2lTZzMvzDBO5_YF9Qr0a6U_9hLLBDh3-LAirSe7IsYvF1SOAL9bwuC7LM8h-w37z12g6YSDn1xmO30ANN16PNvg4Pr7Cc1BqgybhliwNAPCl9yPSirnjmV5q3DbghGDFBenA9Nq1DfMK8Vm0-3uO14qLtbV_amogrJXeuYnKXkHB3Fts5FGkERCtLUB88/p.jpeg",
+                DrinkCategoryId = 6
+            };
+            drinks.Add(drink);
+
+            drink = new Drink
+            {
+                Name = "Bombay Sapphire",
+                Milliliters = 50,
+                Price = 8.00m,
+                Description = "London Dry Gin",
+                IsDeleted = false,
+                IsAlcoholic = true,
+                ImageUrl = "https://uc2ce24417d1794649b002ae263c.previews.dropboxusercontent.com/p/thumb/ACI-Il_Bs1w9CyA0vA2lP-9hqdJ9QPd9mQjwRpZq0_QWwUizUCFFzO5wqXB2UsxvfmfRXtRM47BlrCLN7yAYrLULq_CIN4SJ2qEXaZEVVCC0wzqrtAhwHmpOzBiXMWG0zKr-X7pMCMAJ7QQj3uLXXxN8VxSkJZQ8QoG1Y3z5A9tJ9AVPLggvDQshhvdsuEDtNfhtbgfaWo6zTffOXOtP4jHh8iHVE8YIit-mwzaYPYYgj86sJleJbwvpI_aGK1xvbEfRfjvrLxf-Zm75Kv-lPPa-FbM-hYjmf3d_ec-ZBzOuZWlzmzmbwurRmx0e88of8-Yc7-UA6Q_bl1gKNYv7XGDdk9JKxz8jCde6YWNZ94iUy_1LqJmHWXDyZCRTTX_X0qo/p.jpeg",
+                DrinkCategoryId = 7
+            };
+            drinks.Add(drink);
+
+            drink = new Drink
+            {
+                Name = "Brokers",
+                Milliliters = 50,
+                Price = 8.00m,
+                Description = "London Dry Gin",
+                IsDeleted = false,
+                IsAlcoholic = true,
+                ImageUrl = "https://uc7818dd26bb796b83b85db0e667.previews.dropboxusercontent.com/p/thumb/ACIFZt3FY8A5cJ56LcBS1QoNortYgL2707x0xYM3SOyw3q9ACAwJo8ek-2P4ldkb-5gNtPALkIZXcoqYbnMXtFJhUAK60qwQilank651aqxDn0yVna4_zcm4VeGRqmlcp-TEjYi7CvciObTy0EsYj7sKHQzElW_Ytc2y6iTSHckR-3mC6c1Uu8A1UhPbsz2BJZsXQrXLCc-aF_QX6rI_ZWwFMx8vBvTHm1n1iMzKptaPqtsFHmOimRCO_vJDvI9f9ai7xBVyDS0zWT-diYHPbXb14QAHHg2oJeDGgFcEiRwTFMso8aVT8moGRLHPpFubFpxD-USWsJmWergRBHi9hJDr8Imuj9X1nQs0Pm6Hp8aWcj8D5yqqzylv449k9c4580w/p.jpeg",
+                DrinkCategoryId = 7
             };
             drinks.Add(drink);
 
@@ -199,7 +264,33 @@
                 IsDeleted = false,
                 IsAlcoholic = true,
                 ImageUrl = "https://uc0ba9d481b29cf257f254cdf22f.previews.dropboxusercontent.com/p/thumb/ACI-VtoOYwWYPMBJLTJK4reZmGtaivkyUqWkoIN20yIcV3jrbY1DT7gyHObd5cfdQuRTKqqXbzKase9TeIIn567QXTCQDYk6xP2ww2oXmpvslapDAeq28hRqc36WPsDZpPL-pAIN6urjYxOw74w6MqqYVUKdiFDYxr5JmxeX7iXxm4UmyvKjSfBBAywjZ_34_anrK1TzpVSYQIH2b1qZrNwqcw4cbMMBVhD-WL3zb5RrI6IqwlDvEF8GbgeHkMWxf_DVYQYvlIAYo_PruTBXJ_p87c0NrLn9GoIwqTdS5mJfICFEbs3AhLZhuWU4SH2rX7KwDTYyvkp6KsJwnR3KECjk93JcIdKB5V4J9ylE4P5jw7Tlt1dha8Zm180v_aw_rFQ/p.jpeg",
-                DrinkCategoryId = 6
+                DrinkCategoryId = 8
+            };
+            drinks.Add(drink);
+
+            drink = new Drink
+            {
+                Name = "Negroni",
+                Milliliters = 200,
+                Price = 8.00m,
+                Description = "Consists of equal parts of three main ingredients: gin, campari, and sweet vermouth",
+                IsDeleted = false,
+                IsAlcoholic = true,
+                ImageUrl = "https://uccb24e13742879d8339c67b6ca5.previews.dropboxusercontent.com/p/thumb/ACLCf7hUGr-KVucGQhKOodcsAZrZxJC-THm66oniQvw5DLZ6HTsZFRjIJ9akO76LTRqW6gNE3VMHcB29pQ8-ALdBfCupVVmmKyyE1LetpWwJaUy99ZMM7pC0_grMKMds0ZgVExF4OGW4QRuAwZQcKudI_45gnjPj1XtXBAsMqh0cA9GlHCzDqCAqznJPT8FIdwv3VPzAXRDqwRk-dzhQzx532NHQSPoxTyXvnFrr6AG400qinLXTsZLxCcgqZECCbLC_VWxpjzH7KPtEK-RV79WjUyyzsW-lIumYRLrXl4KPatbQGQ1GaJMPDUvbw5C60tlS-KkPXczLRJQ16EqLE59zYiukClCFRS2cbmEYnSAPUMmu3eXMO8CW6JOfJttDgUo/p.jpeg",
+                DrinkCategoryId = 9
+            };
+            drinks.Add(drink);
+
+            drink = new Drink
+            {
+                Name = "Aperol Spritz",
+                Milliliters = 250,
+                Price = 8.00m,
+                Description = "Consists of aperol, prosecco, club soda, ice cubes, orange slice",
+                IsDeleted = false,
+                IsAlcoholic = true,
+                ImageUrl = "https://ucd101b79affd79bd3487a0b9195.previews.dropboxusercontent.com/p/thumb/ACIGGWwPIyXYO3vZuASYsOZXxRrtzRlQUaimIDnxVFLBd51UKJtG8KFZzzR7l7EgNK5EkHD8Y5sRlMNvl_R3WciJHAH7PEhju8ddQyO1445KaxsDIc-rS3C-5N0bJCp5yqM24In53_IeNMYKli8rSbBIjvtL7SBpWi4dsYw810dzu_ldVk0t2Q1M2Ex83UqPZDZIiKw0iWajiPuiPsTFCBorBUTE9-D8HJh1Ma8miKyfqxgSYStOdffUyB8hByzf-1apuKuAEsRGxzWRu1kV_SFJJ4KTZ1iwXPKggBeJBsQwXQL9OpNU8pZSsSUz5axz9a7dstDJhfiyEAkY7NePqZfXLvgMRpcDYaR--bt47WwjzgX_zwmGbrNBCRhLkexT98o/p.jpeg",
+                DrinkCategoryId = 9
             };
             drinks.Add(drink);
 
