@@ -11,6 +11,57 @@
             builder.HasMany(fc => fc.Food)
                 .WithOne(f => f.Category)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasData(this.CreateFoodCategories());
+        }
+
+        private FoodCategory[] CreateFoodCategories()
+        {
+            ICollection<FoodCategory> foodCategories = new HashSet<FoodCategory>();
+
+            FoodCategory category;
+
+            category = new FoodCategory
+            {
+                Id = 1,
+                Name = "Starters",
+                IsDeleted = false,
+            };
+            foodCategories.Add(category);
+
+            category = new FoodCategory
+            {
+                Id = 2,
+                Name = "Main Dishes",
+                IsDeleted = false,
+            };
+            foodCategories.Add(category);
+
+            category = new FoodCategory
+            {
+                Id = 3,
+                Name = "Pizza",
+                IsDeleted = false,
+            };
+            foodCategories.Add(category);
+
+            category = new FoodCategory
+            {
+                Id = 4,
+                Name = "Burgers",
+                IsDeleted = false,
+            };
+            foodCategories.Add(category);
+
+            category = new FoodCategory
+            {
+                Id = 5,
+                Name = "Desserts",
+                IsDeleted = false,
+            };
+            foodCategories.Add(category);
+
+            return foodCategories.ToArray();
         }
     }
 }
