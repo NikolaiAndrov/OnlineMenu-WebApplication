@@ -4,6 +4,8 @@
     using Microsoft.AspNetCore.Mvc;
     using OnlineMenu.Services.Interfaces;
     using OnlineMenu.Web.Infrastructure.Extensions;
+    using static Common.NotificationConstantMessages;
+    using static Common.GeneralApplicationMessages;
 
     [Authorize]
     public class ManagerController : Controller
@@ -23,7 +25,8 @@
 
             if (!isManager)
             {
-                return this.BadRequest();
+                this.TempData[ErrorMessage] = NotAuthorizedMessage;
+                return this.RedirectToAction("Index", "Home");
             }
 
             return this.View();
