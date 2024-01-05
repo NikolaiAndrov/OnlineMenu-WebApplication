@@ -27,7 +27,6 @@
   <ItemGroup>
     <Folder Include="Views\Food\" />
     <Folder Include="Views\Drink\" />
-    <Folder Include="Views\Manager\" />
     <Folder Include="wwwroot\img\food\" />
     <Folder Include="wwwroot\img\drinks\" />
   </ItemGroup>
