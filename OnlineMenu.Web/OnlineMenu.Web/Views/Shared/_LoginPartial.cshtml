@@ -11,7 +11,7 @@
 @if (SignInManager.IsSignedIn(User))
 {
         string userId = this.User.GetId();
-        bool isManager = await this.managerService.IsManagerExistingByUserId(userId);
+        bool isManager = await this.managerService.IsManagerExistingByUserIdAsync(userId);
 
     <li class="nav-item">
         <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
