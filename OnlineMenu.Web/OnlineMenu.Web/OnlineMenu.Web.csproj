@@ -22,4 +22,10 @@
     <ProjectReference Include="..\OnlineMenu.Web.ViewModels\OnlineMenu.Web.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Food\" />
+    <Folder Include="Views\Drink\" />
+    <Folder Include="Views\Manager\" />
+  </ItemGroup>
+
 </Project>

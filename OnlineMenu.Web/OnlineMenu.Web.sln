@@ -3,19 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineMenu.Web", "OnlineMenu.Web\OnlineMenu.Web.csproj", "{84BF1E41-9211-4B46-A78A-AA136DE45911}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineMenu.Web", "OnlineMenu.Web\OnlineMenu.Web.csproj", "{84BF1E41-9211-4B46-A78A-AA136DE45911}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineMenu.Common", "OnlineMenu.Common\OnlineMenu.Common.csproj", "{23446ABD-F5EF-4221-8055-C96D8F5A81EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineMenu.Common", "OnlineMenu.Common\OnlineMenu.Common.csproj", "{23446ABD-F5EF-4221-8055-C96D8F5A81EB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{53578C92-01B1-484F-847A-A5152CED5AC6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{68A564AC-5643-46BA-A773-FCDE63337F58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineMenu.Data", "OnlineMenu.Data\OnlineMenu.Data.csproj", "{16A2EAB2-EA23-4A95-8F2B-53988C7FAE86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineMenu.Data", "OnlineMenu.Data\OnlineMenu.Data.csproj", "{16A2EAB2-EA23-4A95-8F2B-53988C7FAE86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineMenu.Data.Models", "OnlineMenu.Data.Models\OnlineMenu.Data.Models.csproj", "{7706997E-CC24-4F26-A586-4949E58B7DC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineMenu.Data.Models", "OnlineMenu.Data.Models\OnlineMenu.Data.Models.csproj", "{7706997E-CC24-4F26-A586-4949E58B7DC2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineMenu.Web.ViewModels", "OnlineMenu.Web.ViewModels\OnlineMenu.Web.ViewModels.csproj", "{126F0C11-92D2-4738-80F1-F9EA0F44AFDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineMenu.Web.ViewModels", "OnlineMenu.Web.ViewModels\OnlineMenu.Web.ViewModels.csproj", "{126F0C11-92D2-4738-80F1-F9EA0F44AFDA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{9BC81182-D036-4AB8-BAF7-95FF233701F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineMenu.Services", "OnlineMenu.Services\OnlineMenu.Services.csproj", "{C4F4FD44-FFD5-4E03-AA3D-CB99D91FF859}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +47,10 @@ Global
 		{126F0C11-92D2-4738-80F1-F9EA0F44AFDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{126F0C11-92D2-4738-80F1-F9EA0F44AFDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{126F0C11-92D2-4738-80F1-F9EA0F44AFDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4F4FD44-FFD5-4E03-AA3D-CB99D91FF859}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4F4FD44-FFD5-4E03-AA3D-CB99D91FF859}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4F4FD44-FFD5-4E03-AA3D-CB99D91FF859}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4F4FD44-FFD5-4E03-AA3D-CB99D91FF859}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +60,7 @@ Global
 		{16A2EAB2-EA23-4A95-8F2B-53988C7FAE86} = {68A564AC-5643-46BA-A773-FCDE63337F58}
 		{7706997E-CC24-4F26-A586-4949E58B7DC2} = {68A564AC-5643-46BA-A773-FCDE63337F58}
 		{126F0C11-92D2-4738-80F1-F9EA0F44AFDA} = {53578C92-01B1-484F-847A-A5152CED5AC6}
+		{C4F4FD44-FFD5-4E03-AA3D-CB99D91FF859} = {9BC81182-D036-4AB8-BAF7-95FF233701F7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8313CCE3-EE33-4D57-93B3-C016D553C304}
