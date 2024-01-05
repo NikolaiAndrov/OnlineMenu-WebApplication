@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{9B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineMenu.Services", "OnlineMenu.Services\OnlineMenu.Services.csproj", "{C4F4FD44-FFD5-4E03-AA3D-CB99D91FF859}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineMenu.Web.Infrastructure", "OnlineMenu.Web.Infrastructure\OnlineMenu.Web.Infrastructure.csproj", "{4BF83858-717D-4A07-9996-AB93A6BCBA93}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{C4F4FD44-FFD5-4E03-AA3D-CB99D91FF859}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4F4FD44-FFD5-4E03-AA3D-CB99D91FF859}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4F4FD44-FFD5-4E03-AA3D-CB99D91FF859}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BF83858-717D-4A07-9996-AB93A6BCBA93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BF83858-717D-4A07-9996-AB93A6BCBA93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BF83858-717D-4A07-9996-AB93A6BCBA93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BF83858-717D-4A07-9996-AB93A6BCBA93}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +67,7 @@ Global
 		{7706997E-CC24-4F26-A586-4949E58B7DC2} = {68A564AC-5643-46BA-A773-FCDE63337F58}
 		{126F0C11-92D2-4738-80F1-F9EA0F44AFDA} = {53578C92-01B1-484F-847A-A5152CED5AC6}
 		{C4F4FD44-FFD5-4E03-AA3D-CB99D91FF859} = {9BC81182-D036-4AB8-BAF7-95FF233701F7}
+		{4BF83858-717D-4A07-9996-AB93A6BCBA93} = {53578C92-01B1-484F-847A-A5152CED5AC6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8313CCE3-EE33-4D57-93B3-C016D553C304}

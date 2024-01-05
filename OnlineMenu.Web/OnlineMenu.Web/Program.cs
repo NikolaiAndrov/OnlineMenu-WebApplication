@@ -3,8 +3,8 @@ namespace OnlineMenu.Web
     using Microsoft.EntityFrameworkCore;
     using OnlineMenu.Data;
     using OnlineMenu.Data.Models;
-    using OnlineMenu.Services;
-    using OnlineMenu.Services.Interfaces;
+	using OnlineMenu.Services.Interfaces;
+	using OnlineMenu.Web.Infrastructure.Extensions;
 
     public class Program
     {
@@ -41,7 +41,7 @@ namespace OnlineMenu.Web
 
             builder.Services.AddControllersWithViews();
 
-            builder.Services.AddScoped<IFoodService, FoodService>();
+            builder.Services.AddApplicationServices(typeof(IFoodService));
 
             WebApplication app = builder.Build();
 
