@@ -6,6 +6,7 @@
     [Authorize]
     public class DrinkController : Controller
     {
+        [AllowAnonymous]
         public async Task<IActionResult> All()
         {
             return View();

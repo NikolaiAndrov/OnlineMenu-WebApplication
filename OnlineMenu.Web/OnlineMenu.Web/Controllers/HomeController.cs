@@ -1,19 +1,23 @@
 ﻿namespace OnlineMenu.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using OnlineMenu.Services.Interfaces;
     using OnlineMenu.Web.ViewModels.Home;
     using System.Diagnostics;
 
     public class HomeController : Controller
     {
-        public HomeController()
+        private readonly IFoodService foodService;
+
+        public HomeController(IFoodService foodService)
         {
-            
+            this.foodService = foodService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            ICollection<IndexViewModel> indexFood = await this.foodService.GetFoodForIndexAsync();
+            return View(indexFood);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

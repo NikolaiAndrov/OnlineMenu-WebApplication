@@ -19,6 +19,7 @@
     <ProjectReference Include="..\OnlineMenu.Common\OnlineMenu.Common.csproj" />
     <ProjectReference Include="..\OnlineMenu.Data.Models\OnlineMenu.Data.Models.csproj" />
     <ProjectReference Include="..\OnlineMenu.Data\OnlineMenu.Data.csproj" />
+    <ProjectReference Include="..\OnlineMenu.Services\OnlineMenu.Services.csproj" />
     <ProjectReference Include="..\OnlineMenu.Web.ViewModels\OnlineMenu.Web.ViewModels.csproj" />
   </ItemGroup>
 
@@ -26,6 +27,7 @@
     <Folder Include="Views\Food\" />
     <Folder Include="Views\Drink\" />
     <Folder Include="Views\Manager\" />
+    <Folder Include="wwwroot\img\food\" />
   </ItemGroup>
 
 </Project>
