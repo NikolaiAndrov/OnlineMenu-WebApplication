@@ -19,7 +19,7 @@
         public async Task<ICollection<IndexViewModel>> GetFoodForIndexAsync()
         {
             ICollection<IndexViewModel> indexFood = await this.dbContext.Food
-                .Where(f => f.Category.Name == "Pizza" || f.Category.Name == "Burgers" || f.Category.Name == "Spaghetti")
+                .Where(f => f.Category.Name == "Desserts" || f.Category.Name == "Burgers")
                 .Select(f => new IndexViewModel
                 {
                     Id = f.Id.ToString(),
