@@ -10,4 +10,8 @@
     <ProjectReference Include="..\OnlineMenu.Common\OnlineMenu.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Drink\" />
+  </ItemGroup>
+
 </Project>
