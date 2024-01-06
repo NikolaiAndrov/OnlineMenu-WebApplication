@@ -22,6 +22,9 @@
         {
             IQueryable<Food> foodQuery = this.dbContext.Food.AsQueryable();
 
+            foodQuery = foodQuery
+                .Where(f => f.IsDeleted == false);
+
             if (!string.IsNullOrWhiteSpace(foodQueryModel.Category))
             {
                 foodQuery = foodQuery.Where(f => f.Category.Name == foodQueryModel.Category);
