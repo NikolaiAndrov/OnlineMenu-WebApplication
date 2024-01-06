@@ -20,6 +20,8 @@
 
         public int ItemsPerPage { get; set; }
 
+        public int TotalItems {  get; set; }
+
         public ICollection<string> Categories { get; set; }
 
         public ICollection<FoodAllViewModel> FoodAll {  get; set; }
