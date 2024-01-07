@@ -38,7 +38,7 @@
             return this.View(foodQueryModel);
         }
 
-        public async Task<IActionResult> GetFavourite()
+        public async Task<IActionResult> Favourite()
         {
             return this.View();
         }
@@ -49,6 +49,16 @@
         }
 
         public async Task<IActionResult> AddToFavourite()
+        {
+            return this.View();
+        }
+
+        public async Task<IActionResult> Edit(string Id)
+        {
+            return this.View();
+        }
+
+        public async Task<IActionResult> Delete(string Id)
         {
             return this.View();
         }
