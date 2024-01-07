@@ -27,13 +27,13 @@
 
                         <li class="nav-item dropdown">
                             <div>
-                                <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded-false>Menu</a>
+                                <a class="btn btn-outline-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded-false>Menu</a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                     <li>
                                         <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Food" asp-action="All">Food</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Drink" asp-action="All">Drink</a>
+                                        <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Drink" asp-action="All">Drinks</a>
                                     </li>
                                 </ul>
                             </div>
@@ -43,18 +43,19 @@
                         {
                             <li class="nav-item dropdown">
                                 <div>
-                                    <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded-false>My</a>
+                                    <a class="btn btn-outline-info dropdown-toggle mx-1" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded-false>My Favourite</a>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         <li>
-                                            <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Food" asp-action="Favourite">Favourite Food</a>
+                                            <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Food" asp-action="GetFavourite">Food</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Drink" asp-action="Favourite">Favourite Drinks</a>
+                                            <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Drink" asp-action="GetFavourite">Drinks</a>
                                         </li>
                                     </ul>
                                 </div>
                             </li>
                         }
+
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

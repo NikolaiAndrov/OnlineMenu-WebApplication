@@ -37,5 +37,20 @@
 
             return this.View(foodQueryModel);
         }
+
+        public async Task<IActionResult> GetFavourite()
+        {
+            return this.View();
+        }
+
+        public async Task<IActionResult> RemoveFromFavourite(string Id)
+        {
+            return this.View();
+        }
+
+        public async Task<IActionResult> AddToFavourite()
+        {
+            return this.View();
+        }
     }
 }

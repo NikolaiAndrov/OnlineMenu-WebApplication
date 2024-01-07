@@ -34,11 +34,11 @@
 
 				if (isInFavourite)
 				{
-					<a asp-controller="User" asp-action="RemoveFavouriteDrink" asp-route-id="@Model.Id" class="btn btn-outline-info">Remove from Favourite</a>
+					<a asp-controller="Drink" asp-action="RemoveFromFavourite" asp-route-id="@Model.Id" class="btn btn-outline-info">Remove from Favourite</a>
 				}
 				else
 				{
-					<a asp-controller="User" asp-action="AddFavouriteDrink" asp-route-id="@Model.Id" class="btn btn-outline-info">Add to Favourite</a>
+					<a asp-controller="Drink" asp-action="AddToFavourite" asp-route-id="@Model.Id" class="btn btn-outline-info">Add to Favourite</a>
 				}
 
 				if (isManager)
