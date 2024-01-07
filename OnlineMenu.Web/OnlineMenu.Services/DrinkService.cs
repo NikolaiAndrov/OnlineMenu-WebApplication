@@ -16,7 +16,19 @@
             this.dbContext = dbContext;
         }
 
-        public async Task<DrinkQueryModel> GetAllDrinksByQueryModelAsync(DrinkQueryModel drinkQueryModel)
+		public async Task AddToFavouriteAsync(string drinkId, string userId)
+		{
+			UserDrink userDrink = new UserDrink
+			{
+				UserId = Guid.Parse(userId),
+				DrinkId = Guid.Parse(drinkId)
+			};
+
+			await this.dbContext.UsersDrinks.AddAsync(userDrink);
+			await this.dbContext.SaveChangesAsync();
+		}
+
+		public async Task<DrinkQueryModel> GetAllDrinksByQueryModelAsync(DrinkQueryModel drinkQueryModel)
 		{
 			IQueryable<Drink> drinkQuery = this.dbContext.Drinks.AsQueryable();
 
@@ -85,6 +97,19 @@
 				.ToArrayAsync();
 
 			return favouriteDrinks;
+		}
+
+		public async Task<bool> IsDrinkExistingByIdAsync(string drinkId)
+			=> await this.dbContext.Drinks.AnyAsync(d => d.Id.ToString() == drinkId);
+
+		public async Task RemoveFromFavouriteAsync(string drinkId, string userId)
+		{
+			UserDrink userDrink = await this.dbContext.UsersDrinks
+				.Where(ud => ud.DrinkId.ToString() == drinkId && ud.UserId.ToString() == userId)
+				.FirstAsync();
+
+			this.dbContext.UsersDrinks.Remove(userDrink);
+			await this.dbContext.SaveChangesAsync();
 		}
 	}
 }

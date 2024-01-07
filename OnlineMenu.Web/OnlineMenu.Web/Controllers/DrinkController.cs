@@ -57,12 +57,72 @@
 
         public async Task<IActionResult> RemoveFromFavourite(string Id)
         {
-            return this.View();
-        }
+			bool isDrinkExisting;
+
+			try
+			{
+				isDrinkExisting = await this.drinkService.IsDrinkExistingByIdAsync(Id);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			if (!isDrinkExisting)
+			{
+				this.TempData[ErrorMessage] = ItemNotFoundMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            try
+            {
+                string userId = this.User.GetId();
+                await this.drinkService.RemoveFromFavouriteAsync(Id, userId);
+            }
+            catch (Exception)
+            {
+				this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            this.TempData[SuccessMessage] = ItemRemovedFromFavouriteMessage;
+            return this.RedirectToAction("Favourite", "Drink");
+		}
 
         public async Task<IActionResult> AddToFavourite(string Id)
         {
-            return this.View();
+            bool isDrinkExisting;
+
+            try
+            {
+                isDrinkExisting = await this.drinkService.IsDrinkExistingByIdAsync(Id);
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            if (!isDrinkExisting)
+            {
+                this.TempData[ErrorMessage] = ItemNotFoundMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            try
+            {
+                string userId = this.User.GetId();
+                await this.drinkService.AddToFavouriteAsync(Id, userId);
+            }
+            catch (Exception)
+            {
+				this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            this.TempData[SuccessMessage] = ItemAddedToFavouriteMessage;
+            return this.RedirectToAction("Favourite", "Drink");
         }
 
         public async Task<IActionResult> Edit(string Id)
