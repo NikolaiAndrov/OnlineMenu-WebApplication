@@ -1,0 +1,18 @@
+﻿namespace OnlineMenu.Web.ViewModels.Drink
+{
+	public class DrinkAllViewModel
+	{
+		public string Id { get; set; } = null!;
+
+		public string Name { get; set; } = null!;
+
+		public string IsAlcoholic { get; set; } = null!;
+
+		public int Milliliters { get; set; }
+
+		public decimal Price { get; set; }
+
+		public string ImageUrl { get; set; } = null!;
+
+	}
+}
