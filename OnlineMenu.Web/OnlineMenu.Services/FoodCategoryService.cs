@@ -16,6 +16,7 @@
         public async Task<ICollection<string>> GetFoodCategoryNamesAsync()
         {
             ICollection<string> categoryNames = await this.dbContext.FoodCategories
+                .Where(fc => fc.IsDeleted == false)
                 .Select(fc => fc.Name)
                 .ToArrayAsync();
 
