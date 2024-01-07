@@ -6,7 +6,9 @@
 
 		public string Name { get; set; } = null!;
 
-		public string IsAlcoholic { get; set; } = null!;
+		public string Category { get; set; } = null!;
+
+		public bool IsAlcoholic { get; set; } 
 
 		public int Milliliters { get; set; }
 

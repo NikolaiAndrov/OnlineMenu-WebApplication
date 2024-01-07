@@ -50,7 +50,8 @@
 				{
 					Id = d.Id.ToString(),
 					Name = d.Name,
-					IsAlcoholic = d.IsAlcoholic ? "Yes" : "No",
+					Category = d.IsAlcoholic ? d.DrinkCategory.Name : string.Empty,
+					IsAlcoholic = d.IsAlcoholic,
 					Milliliters = d.Milliliters,
 					Price = d.Price,
 					ImageUrl = d.ImageUrl,
