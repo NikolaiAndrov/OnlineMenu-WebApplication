@@ -38,8 +38,8 @@
 			}
 
 			drinkQuery = drinkQuery
-				.OrderBy(d => d.IsAlcoholic == false)
-				.ThenBy(d => d.DrinkCategoryId)
+				.OrderBy(d => d.DrinkCategoryId)
+				.ThenBy(d => d.IsAlcoholic == false)
 				.ThenBy(d => d.Name)
 				.ThenBy(d => d.Price);
 
