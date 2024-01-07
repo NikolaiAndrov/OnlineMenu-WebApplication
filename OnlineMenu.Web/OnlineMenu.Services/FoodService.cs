@@ -112,5 +112,15 @@
 
         public async Task<bool> IsFoodExistingByIdAsync(string foodId)
             => await this.dbContext.Food.AnyAsync(f => f.Id.ToString() == foodId);
+
+		public async Task RemoveFromFavouriteAsync(string foodId, string userId)
+		{
+			UserFood userFood = await this.dbContext.UsersFood
+                .Where(uf => uf.UserId.ToString() == userId && uf.FoodId.ToString() == foodId)
+                .FirstAsync();
+
+            this.dbContext.UsersFood.Remove(userFood);
+            await this.dbContext.SaveChangesAsync();
+		}
 	}
 }

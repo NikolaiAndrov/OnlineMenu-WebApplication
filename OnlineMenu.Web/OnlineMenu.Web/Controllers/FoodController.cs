@@ -57,8 +57,38 @@
 
         public async Task<IActionResult> RemoveFromFavourite(string Id)
         {
-            return this.View();
-        }
+			bool isFoodExisting;
+
+			try
+			{
+				isFoodExisting = await this.foodService.IsFoodExistingByIdAsync(Id);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			if (!isFoodExisting)
+			{
+				this.TempData[ErrorMessage] = ItemNotFoundMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            try
+            {
+                string userId = this.User.GetId();
+                await this.foodService.RemoveFromFavouriteAsync(Id, userId);
+            }
+            catch (Exception)
+            {
+				this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            this.TempData[SuccessMessage] = ItemRemovedFromFavouriteMessage;
+			return this.RedirectToAction("Favourite", "Food");
+		}
 
         public async Task<IActionResult> AddToFavourite(string Id)
         {
@@ -91,6 +121,7 @@
 				return this.RedirectToAction("Index", "Home");
 			}
 
+            this.TempData[SuccessMessage] = ItemAddedToFavouriteMessage;
             return this.RedirectToAction("Favourite", "Food");
         }
 

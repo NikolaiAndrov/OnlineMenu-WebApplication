@@ -14,5 +14,7 @@
         Task AddToFavouriteAsync(string foodId, string userId);
 
         Task<bool> IsFoodExistingByIdAsync(string foodId);
+
+        Task RemoveFromFavouriteAsync(string foodId, string userId);
     }
 }
