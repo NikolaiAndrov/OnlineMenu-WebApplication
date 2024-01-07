@@ -1,0 +1,50 @@
+﻿@using OnlineMenu.Services.Interfaces
+@using OnlineMenu.Web.Infrastructure.Extensions
+@inject IManagerService managerService;
+@inject IUserService userService;
+
+@model DrinkAllViewModel
+
+<div class="col-md-4">
+	<div class="card mb-3">
+		<img class="card-img-top" src="@Model.ImageUrl" alt="Drink Image" style="height: 350px; object-fit: cover;">
+		<div class="card-body text-center">
+			<h4>@Model.Name</h4>
+			<h6>
+				Is alcoholic: @Model.IsAlcoholic</>
+			</h6>
+			<h6>
+				Quantity: @Model.Milliliters ml
+			</h6>
+			<h6>
+				Price
+				<b>@String.Format("{0:f2}", Model.Price) lv</b>
+			</h6>
+			<br />
+			<a asp-controller="Drink" asp-action="Details" asp-route-id="@Model.Id"
+			   class="btn btn-outline-success">Details</a>
+			@if (this.User.Identity?.IsAuthenticated ?? false)
+			{
+				string userId = this.User.GetId();
+				bool isManager = await this.managerService.IsManagerExistingByUserIdAsync(userId);
+				bool isInFavourite = await this.userService.IsDrinkInFavourite(userId, Model.Id);
+
+				if (isInFavourite)
+				{
+					<a asp-controller="User" asp-action="RemoveFavouriteDrink" asp-route-id="@Model.Id" class="btn btn-outline-info">Remove from Favourite</a>
+				}
+				else
+				{
+					<a asp-controller="User" asp-action="AddFavouriteDrink" asp-route-id="@Model.Id" class="btn btn-outline-info">Add to Favourite</a>
+				}
+
+				if (isManager)
+				{
+					<a asp-controller="Drink" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-warning">Edit</a>
+					<a asp-controller="Drink" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger">Delete</a>
+					<p></p>
+				}
+			}
+		</div>
+	</div>
+</div>

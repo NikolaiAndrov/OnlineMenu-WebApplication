@@ -7,5 +7,7 @@
         Task<string> GetUserIdByEmailAsync(string email);
 
         Task<bool> IsFoodInFavourite(string userId, string foodId);
+
+        Task<bool> IsDrinkInFavourite(string userId, string drinkId);
     }
 }
