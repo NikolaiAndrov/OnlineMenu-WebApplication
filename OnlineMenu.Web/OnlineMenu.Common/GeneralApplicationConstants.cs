@@ -4,6 +4,6 @@
     {
         public const int DefaultPage = 1;
 
-        public const int DefaultItemsPerPage = 6;
+        public const int DefaultItemsPerPage = 9;
     }
 }
