@@ -22,20 +22,37 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Food" asp-action="All">Food</a>
+
+                        <li class="nav-item dropdown">
+                            <div>
+                                <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded-false>Menu</a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <li>
+                                        <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Food" asp-action="All">Food</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Drink" asp-action="All">Drink</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Drink" asp-action="All">Drinks</a>
-                        </li>
+
                         @if (this.User.Identity?.IsAuthenticated ?? false)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Food" asp-action="Favourite">Favourite Food</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Drink" asp-action="Favourite">Favourite Drinks</a>
+                            <li class="nav-item dropdown">
+                                <div>
+                                    <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded-false>My</a>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <li>
+                                            <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Food" asp-action="Favourite">Favourite Food</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Drink" asp-action="Favourite">Favourite Drinks</a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </li>
                         }
                     </ul>
