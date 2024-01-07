@@ -1,12 +1,12 @@
 ﻿@using OnlineMenu.Services.Interfaces
 @using OnlineMenu.Web.Infrastructure.Extensions
 @inject IManagerService managerService;
+@inject IUserService userService;
 
 @model FoodAllViewModel
 
 <div class="col-md-4">
 	<div class="card mb-3">
-		@* <img class="card-img-top" src="@Model.ImageUrl" alt="Food Image"> *@
 		<img class="card-img-top" src="@Model.ImageUrl" alt="Food Image" style="height: 350px; object-fit: cover;">
 		<div class="card-body text-center">
 			<h4>@Model.Name</h4>
@@ -25,13 +25,21 @@
 			{
 				string userId = this.User.GetId();
 				bool isManager = await this.managerService.IsManagerExistingByUserIdAsync(userId);
+				bool isInFavourite = await this.userService.IsFoodInFavourite(userId, Model.Id);
+
+				if (isInFavourite)
+				{
+					<a asp-controller="User" asp-action="RemoveFavouriteFood" asp-route-id="@Model.Id" class="btn btn-outline-info">Remove from Favourite</a>
+				}
+				else
+				{
+					<a asp-controller="User" asp-action="AddFavouriteFood" asp-route-id="@Model.Id" class="btn btn-outline-info">Add to Favourite</a>
+				}
 
 				if (isManager)
 				{
-					<a asp-controller="Food" asp-action="Edit" asp-route-id="@Model.Id"
-					   class="btn btn-outline-warning">Edit</a>
-					<a asp-controller="Food" asp-action="Delete" asp-route-id="@Model.Id"
-					   class="btn btn-outline-danger">Delete</a>
+					<a asp-controller="Food" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-warning">Edit</a>
+					<a asp-controller="Food" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger">Delete</a>
 					<p></p>
 				}
 			}

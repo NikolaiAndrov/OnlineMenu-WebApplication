@@ -23,7 +23,10 @@
             return userId!;
         }
 
-        public async Task<bool> IsUserExistingByEmailAsync(string email)
+        public async Task<bool> IsFoodInFavourite(string userId, string foodId)
+            => await this.dbContext.UsersFood.AnyAsync(uf => uf.UserId.ToString() == userId && uf.FoodId.ToString() == foodId);
+
+		public async Task<bool> IsUserExistingByEmailAsync(string email)
             => await this.dbContext.Users.AnyAsync(u => u.Email == email);
     }
 }
