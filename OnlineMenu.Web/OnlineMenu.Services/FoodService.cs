@@ -18,7 +18,19 @@
             this.dbContext = dbContext;
         }
 
-        public async Task<FoodQueryModel> GetAllFoodByQueryModelAsync(FoodQueryModel foodQueryModel)
+		public async Task AddToFavouriteAsync(string foodId, string userId)
+		{
+			UserFood userFood = new UserFood
+            {
+                FoodId = Guid.Parse(foodId),
+                UserId = Guid.Parse(userId)
+            };
+
+            await this.dbContext.UsersFood.AddAsync(userFood);
+            await this.dbContext.SaveChangesAsync();
+		}
+
+		public async Task<FoodQueryModel> GetAllFoodByQueryModelAsync(FoodQueryModel foodQueryModel)
         {
             IQueryable<Food> foodQuery = this.dbContext.Food.AsQueryable();
 
@@ -63,7 +75,27 @@
             return foodQueryModel;
         }
 
-        public async Task<ICollection<IndexViewModel>> GetFoodForIndexAsync()
+		public async Task<ICollection<FoodAllViewModel>> GetFavouriteFoodAsync(string userId)
+		{
+			ICollection<FoodAllViewModel> favouriteFood = await this.dbContext.UsersFood
+                .Where(u => u.UserId.ToString() == userId)
+                .OrderBy(uf => uf.Food.Category.Id)
+                .ThenBy(uf => uf.Food.Name)
+                .ThenBy(uf => uf.Food.Price)
+                .Select(uf => new FoodAllViewModel
+                {
+                    Id = uf.Food.Id.ToString(),
+                    Name = uf.Food.Name,
+                    Weight= uf.Food.Weight,
+                    Price = uf.Food.Price,
+                    ImageUrl = uf.Food.ImageUrl
+                })
+                .ToListAsync();
+                
+            return favouriteFood;
+		}
+
+		public async Task<ICollection<IndexViewModel>> GetFoodForIndexAsync()
         {
             ICollection<IndexViewModel> indexFood = await this.dbContext.Food
                 .Where(f => f.Category.Name == "Desserts" || f.Category.Name == "Burgers")
@@ -77,5 +109,8 @@
 
             return indexFood;
         }
-    }
+
+        public async Task<bool> IsFoodExistingByIdAsync(string foodId)
+            => await this.dbContext.Food.AnyAsync(f => f.Id.ToString() == foodId);
+	}
 }

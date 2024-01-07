@@ -31,5 +31,8 @@
 
 		public async Task<bool> IsUserExistingByEmailAsync(string email)
             => await this.dbContext.Users.AnyAsync(u => u.Email == email);
-    }
+
+        public async Task<bool> IsUserExistingByIdAsync(string userId)
+            => await this.dbContext.Users.AnyAsync(u => u.Id.ToString() == userId);
+	}
 }

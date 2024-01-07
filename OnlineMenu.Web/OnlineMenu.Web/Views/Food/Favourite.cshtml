@@ -1,0 +1,20 @@
+﻿@model ICollection<FoodAllViewModel>
+
+@{
+	ViewBag.Title = "My Favourite Food";
+}
+
+<h2 class="text-center display-6 fst-italic fw-light">@ViewBag.Title</h2>
+<hr />
+
+@if (!Model.Any())
+{
+	<h3 class="text-center fst-italic fw-light">No food added to Favourite</h3>
+}
+
+<div class="row">
+	@foreach (var food in Model)
+	{
+		<partial name="_FoodPartial" model="@food" />
+	}
+</div>

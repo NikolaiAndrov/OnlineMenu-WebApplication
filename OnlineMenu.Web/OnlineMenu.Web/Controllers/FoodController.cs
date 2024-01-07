@@ -6,8 +6,9 @@
     using OnlineMenu.Web.ViewModels.Food;
     using static Common.NotificationConstantMessages;
     using static Common.GeneralApplicationMessages;
+	using OnlineMenu.Web.Infrastructure.Extensions;
 
-    [Authorize]
+	[Authorize]
     public class FoodController : Controller
     {
         private readonly IFoodService foodService;
@@ -17,7 +18,6 @@
         {
             this.foodService = foodService;
             this.foodCategoryService = foodCategoryService;
-
         }
 
         [AllowAnonymous]
@@ -40,7 +40,19 @@
 
         public async Task<IActionResult> Favourite()
         {
-            return this.View();
+            ICollection<FoodAllViewModel> favouriteFood;
+
+            try
+            {
+                favouriteFood = await this.foodService.GetFavouriteFoodAsync(this.User.GetId());
+            }
+            catch (Exception)
+            {
+                TempData[ErrorMessage] = UnexpectedErrorMessage;
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            return this.View(favouriteFood);
         }
 
         public async Task<IActionResult> RemoveFromFavourite(string Id)
@@ -48,9 +60,38 @@
             return this.View();
         }
 
-        public async Task<IActionResult> AddToFavourite()
+        public async Task<IActionResult> AddToFavourite(string Id)
         {
-            return this.View();
+            bool isFoodExisting;
+
+            try
+            {
+                isFoodExisting = await this.foodService.IsFoodExistingByIdAsync(Id);
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            if (!isFoodExisting)
+            {
+				this.TempData[ErrorMessage] = ItemNotFoundMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            try
+            {
+                string userId = this.User.GetId();
+                await this.foodService.AddToFavouriteAsync(Id, userId);
+            }
+            catch (Exception)
+            {
+				this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            return this.RedirectToAction("Favourite", "Food");
         }
 
         public async Task<IActionResult> Edit(string Id)
