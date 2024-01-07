@@ -1,7 +1,7 @@
-﻿@model FoodQueryModel
+﻿@model DrinkQueryModel
 
 @{
-	ViewBag.Title = "Food";
+	ViewBag.Title = "Drink";
 }
 
 <h2 class="text-center display-6 fst-italic fw-light">@ViewBag.Title</h2>
@@ -21,7 +21,7 @@
 					}
 				</select>
 			</div>
-		
+
 			<div class="form-group col-md-4">
 				<label asp-for="Keyword"></label>
 				<input asp-for="Keyword" class="form-control" placeholder="...">
@@ -44,17 +44,17 @@
 		previousPage = 1;
 	}
 
-	int maxPage =(int)Math.Ceiling((double)Model.TotalItems / Model.ItemsPerPage);
+	int maxPage = (int)Math.Ceiling((double)Model.TotalItems / Model.ItemsPerPage);
 }
 
-@if (!Model.FoodAll.Any())
+@if (!Model.DrinksAll.Any())
 {
-	<h2 class="text-center">No food found by the given criteria!</h2>
+	<h2 class="text-center">No drinks found by the given criteria!</h2>
 }
 <div class="row">
-	@foreach (var food in Model.FoodAll)
+	@foreach (var drink in Model.DrinksAll)
 	{
-		<partial name="_FoodPartial" model="@food" />
+		<partial name="_DrinkPartial" model="@drink" />
 	}
 </div>
 
@@ -69,7 +69,7 @@
 	</div>
 	@{
 		bool shouldButtonBeDisabled = Model.CurrentPage == maxPage ||
-		!Model.FoodAll.Any();
+		!Model.DrinksAll.Any();
 	}
 	<div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-center">
 		<a class="btn btn-primary
