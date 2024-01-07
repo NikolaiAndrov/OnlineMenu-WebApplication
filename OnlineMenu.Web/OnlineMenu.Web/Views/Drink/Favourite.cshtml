@@ -1,7 +1,7 @@
-﻿@model ICollection<FoodAllViewModel>
+﻿@model ICollection<DrinkAllViewModel>
 
 @{
-	ViewBag.Title = "My Favourite Food";
+	ViewBag.Title = "My Favourite Drinks";
 }
 
 <h2 class="text-center display-6 fst-italic fw-light">@ViewBag.Title</h2>
@@ -9,7 +9,7 @@
 
 @if (!Model.Any())
 {
-	<h3 class="text-center fst-italic fw-light">No food added to favourite yet!</h3>
+	<h3 class="text-center fst-italic fw-light">No drinks added to favourite yet!</h3>
 }
 
 <div class="row">

@@ -5,6 +5,7 @@
 	using OnlineMenu.Data.Models;
 	using OnlineMenu.Services.Interfaces;
 	using OnlineMenu.Web.ViewModels.Drink;
+	using System.Collections.Generic;
 
 	public class DrinkService : IDrinkService
 	{
@@ -61,6 +62,29 @@
 			drinkQueryModel.TotalItems = drinkQuery.Count();
 
 			return drinkQueryModel;
+		}
+
+		public async Task<ICollection<DrinkAllViewModel>> GetFavouriteDrinksAsync(string userId)
+		{
+			ICollection<DrinkAllViewModel> favouriteDrinks = await this.dbContext.UsersDrinks
+				.Where(ud => ud.UserId.ToString() == userId)
+				.OrderBy(ud => ud.Drink.DrinkCategoryId)
+				.ThenBy(ud => ud.Drink.IsAlcoholic == false)
+				.ThenBy(ud => ud.Drink.Name)
+				.ThenBy(ud => ud.Drink.Price)
+				.Select(ud => new DrinkAllViewModel
+				{
+					Id = ud.DrinkId.ToString(),
+					Name = ud.Drink.Name,
+					Category = ud.Drink.DrinkCategory.Name,
+					IsAlcoholic = ud.Drink.IsAlcoholic,
+					Milliliters = ud.Drink.Milliliters,
+					Price = ud.Drink.Price,
+					ImageUrl = ud.Drink.ImageUrl,
+				})
+				.ToArrayAsync();
+
+			return favouriteDrinks;
 		}
 	}
 }

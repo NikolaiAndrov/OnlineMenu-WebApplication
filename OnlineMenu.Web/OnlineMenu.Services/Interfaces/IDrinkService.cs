@@ -5,5 +5,6 @@
 	public interface IDrinkService
 	{
 		Task<DrinkQueryModel> GetAllDrinksByQueryModelAsync(DrinkQueryModel drinkQueryModel);
+		Task<ICollection<DrinkAllViewModel>> GetFavouriteDrinksAsync(string userId);
 	}
 }

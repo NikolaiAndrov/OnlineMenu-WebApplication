@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 	using OnlineMenu.Services.Interfaces;
+	using OnlineMenu.Web.Infrastructure.Extensions;
 	using OnlineMenu.Web.ViewModels.Drink;
     using static Common.GeneralApplicationMessages;
     using static Common.NotificationConstantMessages;
@@ -39,7 +40,19 @@
 
         public async Task<IActionResult> Favourite()
         {
-            return this.View();
+            ICollection<DrinkAllViewModel> favouriteDrinks;
+
+            try
+            {
+                favouriteDrinks = await this.drinkService.GetFavouriteDrinksAsync(this.User.GetId());
+            }
+            catch (Exception)
+            {
+				TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            return this.View(favouriteDrinks);
         }
 
         public async Task<IActionResult> RemoveFromFavourite(string Id)
