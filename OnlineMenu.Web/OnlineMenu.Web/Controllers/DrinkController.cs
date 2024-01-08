@@ -13,11 +13,13 @@
     {
         private readonly IDrinkService drinkService;
         private readonly IDrinkCategoryService drinkCategoryService;
+        private readonly IManagerService managerService;
 
-        public DrinkController(IDrinkService drinkService, IDrinkCategoryService drinkCategoryService)
+        public DrinkController(IDrinkService drinkService, IDrinkCategoryService drinkCategoryService, IManagerService managerService)
         {
             this.drinkService = drinkService;
             this.drinkCategoryService = drinkCategoryService;
+            this.managerService = managerService;
         }
 
         [AllowAnonymous]
@@ -131,7 +133,27 @@
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            return this.View();
+            bool isManager;
+            DrinkPostModel model = new DrinkPostModel();
+
+            try
+            {
+                isManager = await this.managerService.IsManagerExistingByUserIdAsync(this.User.GetId());
+				model.Categories = await this.drinkCategoryService.GetDrinkCategoriesPostAsync();
+			}
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            if (!isManager)
+            {
+                this.TempData[ErrorMessage] = NotAuthorizedMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            return this.View(model);
         }
 
         public async Task<IActionResult> Edit(string Id)

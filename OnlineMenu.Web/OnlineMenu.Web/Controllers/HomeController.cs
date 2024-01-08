@@ -28,7 +28,7 @@
             catch (Exception)
             {
                 this.TempData[ErrorMessage] = UnexpectedErrorMessage;
-                return this.RedirectToAction("Login", "Account");
+                return this.RedirectToAction("All", "Food");
             }
 
             return this.View(indexFood);
