@@ -45,6 +45,9 @@
 
             public const int DescriptionMinLength = 5;
             public const int DescriptionMaxLength = 300;
+
+            public const int MillilitersMinValue = 1;
+            public const int MillilitersMaxValue = 3000;
         }
 
         public static class ManagerValidation

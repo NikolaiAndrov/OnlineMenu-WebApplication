@@ -11,22 +11,24 @@
 			this.Categories = new HashSet<FoodCategoryPostModel>();
         }
 
-        [Required]
-		[MaxLength(NameMaxLength)]
+        [Required(AllowEmptyStrings = false)]
+		[StringLength(NameMaxLength, MinimumLength = NameMinLength)]
 		public string Name { get; set; } = null!;
 
 		[Required]
+		[Range(WeightMinValue, WeightMaxValue)]
 		public int Weight { get; set; }
 
 		[Required]
+		[Range(typeof(decimal), PriceMinValue, PriceMaxValue)]
 		public decimal Price { get; set; }
 
-		[Required]
-		[MaxLength(DescriptionMaxLength)]
+		[Required(AllowEmptyStrings = false)]
+		[StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength)]
 		public string Description { get; set; } = null!;
 
-		[Required]
-		[MaxLength(ImageUrlMaxLength)]
+		[Required(AllowEmptyStrings = false)]
+		[StringLength(ImageUrlMaxLength, MinimumLength = ImageUrlMinLength)]
 		[Display(Name = "Image Link")]
 		public string ImageUrl { get; set; } = null!;
 

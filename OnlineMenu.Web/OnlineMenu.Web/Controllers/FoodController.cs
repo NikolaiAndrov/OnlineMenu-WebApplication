@@ -13,11 +13,13 @@
     {
         private readonly IFoodService foodService;
         private readonly IFoodCategoryService foodCategoryService;
+        private readonly IManagerService managerService;
 
-        public FoodController(IFoodService foodService, IFoodCategoryService foodCategoryService)
+        public FoodController(IFoodService foodService, IFoodCategoryService foodCategoryService, IManagerService managerService)
         {
             this.foodService = foodService;
             this.foodCategoryService = foodCategoryService;
+            this.managerService = managerService;
         }
 
         [AllowAnonymous]
@@ -38,6 +40,7 @@
             return this.View(foodQueryModel);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Favourite()
         {
             ICollection<FoodAllViewModel> favouriteFood;
@@ -55,6 +58,7 @@
             return this.View(favouriteFood);
         }
 
+        [HttpGet]
         public async Task<IActionResult> RemoveFromFavourite(string Id)
         {
 			bool isFoodExisting;
@@ -125,7 +129,33 @@
             return this.RedirectToAction("Favourite", "Food");
         }
 
-        public async Task<IActionResult> Edit(string Id)
+		[HttpGet]
+		public async Task<IActionResult> Add()
+		{
+            bool isManager;
+            FoodPostModel model = new FoodPostModel();
+
+            try
+            {
+                isManager = await this.managerService.IsManagerExistingByUserIdAsync(this.User.GetId());
+                model.Categories = await this.foodCategoryService.GetFoodCategoriesPostAsync();
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            if (!isManager)
+            {
+                this.TempData[ErrorMessage] = NotAuthorizedMessage;
+                return this.RedirectToAction("Index", "Home");
+            }
+
+			return this.View(model);
+		}
+
+		public async Task<IActionResult> Edit(string Id)
         {
             return this.View();
         }

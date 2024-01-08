@@ -38,6 +38,7 @@
             return this.View(drinkQueryModel);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Favourite()
         {
             ICollection<DrinkAllViewModel> favouriteDrinks;
@@ -55,6 +56,7 @@
             return this.View(favouriteDrinks);
         }
 
+        [HttpGet]
         public async Task<IActionResult> RemoveFromFavourite(string Id)
         {
 			bool isDrinkExisting;
@@ -90,6 +92,7 @@
             return this.RedirectToAction("Favourite", "Drink");
 		}
 
+        [HttpGet]
         public async Task<IActionResult> AddToFavourite(string Id)
         {
             bool isDrinkExisting;
@@ -123,6 +126,12 @@
 
             this.TempData[SuccessMessage] = ItemAddedToFavouriteMessage;
             return this.RedirectToAction("Favourite", "Drink");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Add()
+        {
+            return this.View();
         }
 
         public async Task<IActionResult> Edit(string Id)

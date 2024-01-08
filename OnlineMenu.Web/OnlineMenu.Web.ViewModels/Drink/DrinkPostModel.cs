@@ -11,26 +11,28 @@
             this.Categories = new HashSet<DrinkCategoryPostModel>();
         }
 
-        [Required]
-		[MaxLength(NameMaxLength)]
+        [Required(AllowEmptyStrings = false)]
+		[StringLength(NameMaxLength, MinimumLength = NameMinLength)]
 		public string Name { get; set; } = null!;
 
 		[Required]
+		[Range(MillilitersMinValue, MillilitersMaxValue)]
 		public int Milliliters { get; set; }
 
 		[Required]
+		[Range(typeof(decimal), PriceMinValue, PriceMaxValue)]
 		public decimal Price { get; set; }
 
-		[Required]
-		[MaxLength(DescriptionMaxLength)]
+		[Required(AllowEmptyStrings = false)]
+		[StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength)]
 		public string Description { get; set; } = null!;
 
 		[Required]
 		[Display(Name = "Is Alcoholic")]
 		public bool IsAlcoholic { get; set; }
 
-		[Required]
-		[MaxLength(ImageUrlMaxLength)]
+		[Required(AllowEmptyStrings = false)]
+		[StringLength(ImageUrlMaxLength, MinimumLength = ImageUrlMinLength)]
 		[Display(Name = "Image Link")]
 		public string ImageUrl { get; set; } = null!;
 
