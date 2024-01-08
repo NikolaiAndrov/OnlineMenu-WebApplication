@@ -34,17 +34,17 @@
 
 				if (isInFavourite)
 				{
-					<a asp-controller="Drink" asp-action="RemoveFromFavourite" asp-route-id="@Model.Id" class="btn btn-outline-info">Remove from Favourite</a>
+					<a asp-area="" asp-controller="Drink" asp-action="RemoveFromFavourite" asp-route-id="@Model.Id" class="btn btn-outline-info">Remove from Favourite</a>
 				}
 				else
 				{
-					<a asp-controller="Drink" asp-action="AddToFavourite" asp-route-id="@Model.Id" class="btn btn-outline-info">Add to Favourite</a>
+					<a asp-area="" asp-controller="Drink" asp-action="AddToFavourite" asp-route-id="@Model.Id" class="btn btn-outline-info">Add to Favourite</a>
 				}
 
 				if (isManager)
 				{
-					<a asp-controller="Drink" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-warning">Edit</a>
-					<a asp-controller="Drink" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger">Delete</a>
+					<a asp-area="" asp-controller="Drink" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-warning">Edit</a>
+					<a asp-area="" asp-controller="Drink" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger">Delete</a>
 					<p></p>
 				}
 			}
