@@ -37,5 +37,8 @@
 
             return categoryNames;
         }
+
+        public async Task<bool> IsCategoryExistingByIdAsync(int id)
+            => await this.dbContext.FoodCategories.AnyAsync(fc => fc.Id == id);
     }
 }

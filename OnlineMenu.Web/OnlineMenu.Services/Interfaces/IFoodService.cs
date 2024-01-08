@@ -16,5 +16,7 @@
         Task<bool> IsFoodExistingByIdAsync(string foodId);
 
         Task RemoveFromFavouriteAsync(string foodId, string userId);
+
+        Task AddFoodAsync(FoodPostModel model);
     }
 }

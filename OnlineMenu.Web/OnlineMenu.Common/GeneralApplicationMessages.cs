@@ -10,5 +10,7 @@
         public const string ItemNotFoundMessage = "The Item you are looking for is not longer available!";
         public const string ItemAddedToFavouriteMessage = "The Item was added to favourite successfully!";
         public const string ItemRemovedFromFavouriteMessage = "The Item was removed from favourite successfully!";
+        public const string CategoryNotExistingMessage = "The selected category is not existing!";
+        public const string NewItemAddedMessage = "New Item was added successfully!";
     }
 }

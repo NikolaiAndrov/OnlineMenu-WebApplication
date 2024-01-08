@@ -156,9 +156,60 @@
 		}
 
         [HttpPost]
-        public async Task<IActionResult> Add(FoodPostModel foodPost)
+        public async Task<IActionResult> Add(FoodPostModel model)
         {
-            return this.View();
+            bool isManager;
+            bool isCategoryExisting;
+
+            try
+            {
+                isManager = await this.managerService.IsManagerExistingByUserIdAsync(this.User.GetId());
+                isCategoryExisting = await this.foodCategoryService.IsCategoryExistingByIdAsync(model.CategoryId);
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            if (!isManager)
+            {
+                this.TempData[ErrorMessage] = NotAuthorizedMessage;
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            if (!isCategoryExisting)
+            {
+                this.ModelState.AddModelError(nameof(model.CategoryId), CategoryNotExistingMessage);
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                try
+                {
+                    model.Categories = await this.foodCategoryService.GetFoodCategoriesPostAsync();
+                }
+                catch (Exception)
+                {
+                    this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+                    return this.RedirectToAction("Index", "Home");
+                }
+
+                return this.View(model);
+            }
+
+            try
+            {
+                await this.foodService.AddFoodAsync(model);
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            this.TempData[SuccessMessage] = NewItemAddedMessage;
+            return this.RedirectToAction("All", "Food");
         }
 
 		public async Task<IActionResult> Edit(string Id)

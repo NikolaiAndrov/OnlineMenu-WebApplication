@@ -4,6 +4,8 @@
     using OnlineMenu.Services.Interfaces;
     using OnlineMenu.Web.ViewModels.Home;
     using System.Diagnostics;
+    using static Common.NotificationConstantMessages;
+    using static Common.GeneralApplicationMessages;
 
     public class HomeController : Controller
     {
@@ -16,8 +18,20 @@
 
         public async Task<IActionResult> Index()
         {
-            ICollection<IndexViewModel> indexFood = await this.foodService.GetFoodForIndexAsync();
-            return View(indexFood);
+
+            ICollection<IndexViewModel> indexFood;
+
+            try
+            {
+                indexFood = await this.foodService.GetFoodForIndexAsync();
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+                return this.RedirectToAction("Login", "Account");
+            }
+
+            return this.View(indexFood);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

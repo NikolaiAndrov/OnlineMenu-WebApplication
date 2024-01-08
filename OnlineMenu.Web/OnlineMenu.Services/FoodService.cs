@@ -18,7 +18,23 @@
             this.dbContext = dbContext;
         }
 
-		public async Task AddToFavouriteAsync(string foodId, string userId)
+        public async Task AddFoodAsync(FoodPostModel model)
+        {
+            Food newFood = new Food
+            {
+                Name = model.Name,
+                Weight = model.Weight,
+                Price = model.Price,
+                Description = model.Description,
+                ImageUrl = model.ImageUrl,
+                FoodCategoryId = model.CategoryId,
+            };
+
+            await this.dbContext.Food.AddAsync(newFood);
+            await this.dbContext.SaveChangesAsync();
+        }
+
+        public async Task AddToFavouriteAsync(string foodId, string userId)
 		{
 			UserFood userFood = new UserFood
             {
