@@ -155,6 +155,12 @@
 			return this.View(model);
 		}
 
+        [HttpPost]
+        public async Task<IActionResult> Add(FoodPostModel foodPost)
+        {
+            return this.View();
+        }
+
 		public async Task<IActionResult> Edit(string Id)
         {
             return this.View();
