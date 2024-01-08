@@ -5,8 +5,9 @@ namespace OnlineMenu.Web
     using OnlineMenu.Data.Models;
 	using OnlineMenu.Services.Interfaces;
 	using OnlineMenu.Web.Infrastructure.Extensions;
+	using OnlineMenu.Web.Infrastructure.ModelBinders;
 
-    public class Program
+	public class Program
     {
         public static void Main(string[] args)
         {
@@ -39,7 +40,11 @@ namespace OnlineMenu.Web
             })
             .AddEntityFrameworkStores<OnlineMenuDbContext>();
 
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews()
+                .AddMvcOptions(options =>
+                {
+                    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+                });
 
             builder.Services.AddApplicationServices(typeof(IFoodService));
 

@@ -12,5 +12,6 @@
         public const string ItemRemovedFromFavouriteMessage = "The Item was removed from favourite successfully!";
         public const string CategoryNotExistingMessage = "The selected category is not existing!";
         public const string NewItemAddedMessage = "New Item was added successfully!";
+        public const string ItemDeletedMessage = "The Item was deleted successfully!";
     }
 }

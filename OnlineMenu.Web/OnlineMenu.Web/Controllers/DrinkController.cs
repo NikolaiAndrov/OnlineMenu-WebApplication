@@ -213,6 +213,7 @@
             return this.RedirectToAction("All", "Drink");
         }
 
+        [HttpGet]
         public async Task<IActionResult> Edit(string Id)
         {
             return this.View();
@@ -220,7 +221,44 @@
 
         public async Task<IActionResult> Delete(string Id)
         {
-            return this.View();
-        }
+			bool isManager;
+			bool isDrinkExisting;
+
+			try
+			{
+				isManager = await this.managerService.IsManagerExistingByUserIdAsync(this.User.GetId());
+				isDrinkExisting = await this.drinkService.IsDrinkExistingByIdAsync(Id);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			if (!isManager)
+			{
+				this.TempData[ErrorMessage] = NotAuthorizedMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			if (!isDrinkExisting)
+			{
+				this.TempData[ErrorMessage] = ItemNotFoundMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			try
+			{
+				await this.drinkService.DeleteAsync(Id);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			this.TempData[SuccessMessage] = ItemDeletedMessage;
+			return this.RedirectToAction("All", "Drink");
+		}
     }
 }
