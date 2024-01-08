@@ -3,6 +3,7 @@
 	using Microsoft.EntityFrameworkCore;
 	using OnlineMenu.Data;
 	using OnlineMenu.Services.Interfaces;
+	using OnlineMenu.Web.ViewModels.DrinkCategory;
 
 	public class DrinkCategoryService : IDrinkCategoryService
 	{
@@ -13,7 +14,21 @@
             this.dbContext = dbContext;
         }
 
-        public async Task<ICollection<string>> GetDrinkCategoryNamesAsync()
+		public async Task<ICollection<DrinkCategoryPostModel>> GetDrinkCategoriesPostAsync()
+		{
+			ICollection<DrinkCategoryPostModel> drinkCategories = await this.dbContext.DrinksCategories
+				.Where(dc => dc.IsDeleted == false)
+				.Select(dc => new DrinkCategoryPostModel
+				{
+					Id = dc.Id,
+					Name = dc.Name
+				})
+				.ToArrayAsync();
+
+			return drinkCategories;
+		}
+
+		public async Task<ICollection<string>> GetDrinkCategoryNamesAsync()
 		{
 			ICollection<string> drinkCategories = await this.dbContext.DrinksCategories
 				.Where(dc => dc.IsDeleted == false)
