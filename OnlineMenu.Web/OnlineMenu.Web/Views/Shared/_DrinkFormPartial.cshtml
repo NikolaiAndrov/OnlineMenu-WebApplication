@@ -23,9 +23,10 @@
 				<textarea asp-for="Description" rows="4" class="form-control" placeholder="Description..."></textarea>
 				<span asp-validation-for="Description" class="small text-danger"></span>
 			</div>
-			<div>
+			<div class="form-group">
 				<label asp-for="IsAlcoholic"></label>
 				<select asp-for="IsAlcoholic" class="form-control">
+					<span asp-validation-for="IsAlcoholic" class="small text-danger"></span>
 					<option value="false">No</option>
 					<option value="true">Yes</option>
 				</select>

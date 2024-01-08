@@ -16,6 +16,23 @@
             this.dbContext = dbContext;
         }
 
+		public async Task AddDrinkAsync(DrinkPostModel model)
+		{
+			Drink newDrink = new Drink
+			{
+				Name = model.Name,
+				Milliliters = model.Milliliters,
+				Price = model.Price,
+				Description = model.Description,
+				IsAlcoholic = model.IsAlcoholic,
+				ImageUrl = model.ImageUrl,
+				DrinkCategoryId = model.CategoryId,
+			};
+
+			await this.dbContext.Drinks.AddAsync(newDrink);
+			await this.dbContext.SaveChangesAsync();
+		}
+
 		public async Task AddToFavouriteAsync(string drinkId, string userId)
 		{
 			UserDrink userDrink = new UserDrink

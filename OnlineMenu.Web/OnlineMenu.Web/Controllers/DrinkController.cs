@@ -156,6 +156,63 @@
             return this.View(model);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Add(DrinkPostModel model)
+        {
+            bool isManager;
+            bool isCategoryExisting;
+
+            try
+            {
+                isManager = await this.managerService.IsManagerExistingByUserIdAsync(this.User.GetId());
+                isCategoryExisting = await this.drinkCategoryService.IsCategoryExistingByIdAsync(model.CategoryId);
+            }
+            catch (Exception)
+            {
+				this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            if (!isManager)
+            {
+                this.TempData[ErrorMessage] = NotAuthorizedMessage;
+                return this.RedirectToAction("Index", "Home");
+			}
+
+            if (!isCategoryExisting)
+            {
+                this.ModelState.AddModelError(nameof(model.CategoryId), CategoryNotExistingMessage);
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                try
+                {
+                    model.Categories = await this.drinkCategoryService.GetDrinkCategoriesPostAsync();
+                }
+                catch (Exception)
+                {
+					this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+					return this.RedirectToAction("Index", "Home");
+				}
+
+                return this.View(model);
+            }
+
+            try
+            {
+                await this.drinkService.AddDrinkAsync(model);
+            }
+            catch (Exception)
+            {
+				this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            this.TempData[SuccessMessage] = NewItemAddedMessage;
+            return this.RedirectToAction("All", "Drink");
+        }
+
         public async Task<IActionResult> Edit(string Id)
         {
             return this.View();

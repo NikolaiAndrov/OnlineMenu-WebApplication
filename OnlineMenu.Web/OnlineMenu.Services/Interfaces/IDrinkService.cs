@@ -12,6 +12,8 @@
 
 		Task AddToFavouriteAsync(string drinkId, string userId);
 
-		Task RemoveFromFavouriteAsync(string drinkId, string userId);	
+		Task RemoveFromFavouriteAsync(string drinkId, string userId);
+
+		Task AddDrinkAsync(DrinkPostModel model);
 	}
 }
