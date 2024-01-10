@@ -20,5 +20,7 @@
         Task AddFoodAsync(FoodPostModel model);
 
         Task<FoodDetailsViewModel> GetFoodDetailsAsync(string foodId);
+
+        Task<FoodPostModel> GetFoodForEditAsync(string foodId);
     }
 }

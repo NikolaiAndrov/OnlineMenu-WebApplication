@@ -13,5 +13,6 @@
         public const string CategoryNotExistingMessage = "The selected category is not existing!";
         public const string NewItemAddedMessage = "New Item was added successfully!";
         public const string ItemDeletedMessage = "The Item was deleted successfully!";
+        public const string ItemReadyForEdit = "Item ready for edit!";
     }
 }

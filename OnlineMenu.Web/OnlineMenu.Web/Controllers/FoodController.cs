@@ -251,7 +251,47 @@
 
 		public async Task<IActionResult> Edit(string Id)
         {
-            return this.View();
+            bool isManager;
+            bool isFoodExisting;
+
+            try
+            {
+                isManager = await this.managerService.IsManagerExistingByUserIdAsync(this.User.GetId());
+                isFoodExisting = await this.foodService.IsFoodExistingByIdAsync(Id);
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            if (!isFoodExisting)
+            {
+                this.TempData[ErrorMessage] = ItemNotFoundMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            if (!isManager)
+            {
+                this.TempData[ErrorMessage] = NotAuthorizedMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            FoodPostModel model;
+
+            try
+            {
+                model = await this.foodService.GetFoodForEditAsync(Id);
+                model.Categories = await this.foodCategoryService.GetFoodCategoriesPostAsync();
+            }
+            catch (Exception)
+            {
+				this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            this.TempData[InfoMessage] = ItemReadyForEdit;
+            return this.View(model);
         }
 
         public async Task<IActionResult> Delete(string Id)

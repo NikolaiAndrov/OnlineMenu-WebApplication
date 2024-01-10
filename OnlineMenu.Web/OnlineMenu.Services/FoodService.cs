@@ -130,6 +130,24 @@
 
 		}
 
+		public async Task<FoodPostModel> GetFoodForEditAsync(string foodId)
+		{
+			FoodPostModel foodPostModel = await this.dbContext.Food
+                .Where(f => f.IsDeleted == false && f.Id.ToString() == foodId)
+                .Select(f => new FoodPostModel
+                {
+                    Name = f.Name,
+                    Weight = f.Weight,
+                    Price = f.Price,
+                    Description = f.Description,
+                    ImageUrl = f.ImageUrl,
+                    CategoryId = f.FoodCategoryId
+                })
+                .FirstAsync();
+
+            return foodPostModel;
+		}
+
 		public async Task<ICollection<IndexViewModel>> GetFoodForIndexAsync()
         {
             ICollection<IndexViewModel> indexFood = await this.dbContext.Food
