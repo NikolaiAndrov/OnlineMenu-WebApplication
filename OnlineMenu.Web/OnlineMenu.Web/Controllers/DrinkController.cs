@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+	using Microsoft.CodeAnalysis.CSharp.Syntax;
 	using OnlineMenu.Services.Interfaces;
 	using OnlineMenu.Web.Infrastructure.Extensions;
 	using OnlineMenu.Web.ViewModels.Drink;
@@ -363,6 +364,7 @@
             return this.RedirectToAction("Details", "Drink", new { Id });
         }
 
+        [HttpGet]
         public async Task<IActionResult> Delete(string Id)
         {
 			bool isManager;
@@ -391,9 +393,11 @@
 				return this.RedirectToAction("Index", "Home");
 			}
 
+            DrinkDeleteViewModel model;
+
 			try
 			{
-				await this.drinkService.DeleteAsync(Id);
+				model = await this.drinkService.GetDrinkForDeleteAsync(Id);
 			}
 			catch (Exception)
 			{
@@ -401,8 +405,51 @@
 				return this.RedirectToAction("Index", "Home");
 			}
 
-			this.TempData[SuccessMessage] = ItemDeletedMessage;
-			return this.RedirectToAction("All", "Drink");
+			this.TempData[ErrorMessage] = DeleteItemWarningMessage;
+            return this.View(model);
+		}
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string Id, DrinkDeleteViewModel model)
+        {
+			bool isManager;
+			bool isDrinkExisting;
+
+			try
+			{
+				isManager = await this.managerService.IsManagerExistingByUserIdAsync(this.User.GetId());
+				isDrinkExisting = await this.drinkService.IsDrinkExistingByIdAsync(Id);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			if (!isManager)
+			{
+				this.TempData[ErrorMessage] = NotAuthorizedMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			if (!isDrinkExisting)
+			{
+				this.TempData[ErrorMessage] = ItemNotFoundMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            try
+            {
+                await this.drinkService.DeleteDrinkAsync(Id);
+            }
+            catch (Exception)
+            {
+				this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            this.TempData[SuccessMessage] = ItemDeletedMessage;
+            return this.RedirectToAction("All", "Drink");
 		}
     }
 }

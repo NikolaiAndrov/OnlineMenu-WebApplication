@@ -23,5 +23,9 @@
 		Task<DrinkPostModel> GetDrinkForEditAsync(string drinkId);
 
 		Task EditDrinkAsync(string drinkId, DrinkPostModel model);
+
+		Task<DrinkDeleteViewModel> GetDrinkForDeleteAsync(string drinkId);
+
+		Task DeleteDrinkAsync(string drinkId);
 	}
 }

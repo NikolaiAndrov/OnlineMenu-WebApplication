@@ -57,6 +57,16 @@
 			await this.dbContext.SaveChangesAsync();
 		}
 
+		public async Task DeleteDrinkAsync(string drinkId)
+		{
+			Drink drink = await this.dbContext.Drinks
+				.Where(d => d.IsDeleted == false && d.Id.ToString() == drinkId)
+				.FirstAsync();
+
+			drink.IsDeleted = true;
+			await this.dbContext.SaveChangesAsync();
+		}
+
 		public async Task EditDrinkAsync(string drinkId, DrinkPostModel model)
 		{
 			Drink drink = await this.dbContext.Drinks
@@ -140,6 +150,21 @@
 				.FirstAsync();
 
 			return drinkDetails;
+		}
+
+		public async Task<DrinkDeleteViewModel> GetDrinkForDeleteAsync(string drinkId)
+		{
+			DrinkDeleteViewModel model = await this.dbContext.Drinks
+				.Where(d => d.IsDeleted == false && d.Id.ToString() == drinkId)
+				.Select(d => new DrinkDeleteViewModel
+				{
+					Name = d.Name,
+					Description = d.Description,
+					ImageUrl= d.ImageUrl
+				})
+				.FirstAsync();
+
+			return model;
 		}
 
 		public async Task<DrinkPostModel> GetDrinkForEditAsync(string drinkId)
