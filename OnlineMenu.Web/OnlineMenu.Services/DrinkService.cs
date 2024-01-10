@@ -55,6 +55,23 @@
 			await this.dbContext.SaveChangesAsync();
 		}
 
+		public async Task EditDrinkAsync(string drinkId, DrinkPostModel model)
+		{
+			Drink drink = await this.dbContext.Drinks
+				.Where(d => d.IsDeleted == false && d.Id.ToString() == drinkId)
+				.FirstAsync();
+
+			drink.Name = model.Name;
+			drink.Milliliters = model.Milliliters;
+			drink.Price = model.Price;
+			drink.Description = model.Description;
+			drink.IsAlcoholic = model.IsAlcoholic;
+			drink.ImageUrl = model.ImageUrl;
+			drink.DrinkCategoryId = model.CategoryId;
+
+			await this.dbContext.SaveChangesAsync();
+		}
+
 		public async Task<DrinkQueryModel> GetAllDrinksByQueryModelAsync(DrinkQueryModel drinkQueryModel)
 		{
 			IQueryable<Drink> drinkQuery = this.dbContext.Drinks.AsQueryable();

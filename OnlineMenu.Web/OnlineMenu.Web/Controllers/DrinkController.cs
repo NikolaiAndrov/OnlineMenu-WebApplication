@@ -296,6 +296,71 @@
             return this.View(model);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Edit(string Id, DrinkPostModel model)
+        {
+			bool isManager;
+			bool isDrinkExisting;
+            bool isDrinkCategoryExisting; ;
+
+			try
+			{
+				isManager = await this.managerService.IsManagerExistingByUserIdAsync(this.User.GetId());
+				isDrinkExisting = await this.drinkService.IsDrinkExistingByIdAsync(Id);
+                isDrinkCategoryExisting = await this.drinkCategoryService.IsCategoryExistingByIdAsync(model.CategoryId);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			if (!isManager)
+			{
+				this.TempData[ErrorMessage] = NotAuthorizedMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			if (!isDrinkExisting)
+			{
+				this.TempData[ErrorMessage] = ItemNotFoundMessage;
+				return this.RedirectToAction("All", "Drink");
+			}
+
+            if (!isDrinkCategoryExisting)
+            {
+                this.ModelState.AddModelError(nameof(model.CategoryId), CategoryNotExistingMessage);
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                try
+                {
+                    model.Categories = await this.drinkCategoryService.GetDrinkCategoriesPostAsync();
+                }
+                catch (Exception)
+                {
+					this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+					return this.RedirectToAction("Index", "Home");
+				}
+
+                return this.View(model);
+            }
+
+            try
+            {
+                await this.drinkService.EditDrinkAsync(Id, model);
+            }
+            catch (Exception)
+            {
+				this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            this.TempData[SuccessMessage] = ItemEditedMessage;
+            return this.RedirectToAction("All", "Drink");
+        }
+
         public async Task<IActionResult> Delete(string Id)
         {
 			bool isManager;

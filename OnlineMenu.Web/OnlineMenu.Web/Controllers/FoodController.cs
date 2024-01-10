@@ -315,17 +315,18 @@
 				return this.RedirectToAction("Index", "Home");
 			}
 
+			if (!isManager)
+			{
+				this.TempData[ErrorMessage] = NotAuthorizedMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
 			if (!isFoodExisting)
 			{
 				this.TempData[ErrorMessage] = ItemNotFoundMessage;
 				return this.RedirectToAction("All", "Food");
 			}
 
-			if (!isManager)
-			{
-				this.TempData[ErrorMessage] = NotAuthorizedMessage;
-				return this.RedirectToAction("Index", "Home");
-			}
 
             if (!isFoodCategoryExisting)
             {

@@ -21,5 +21,7 @@
 		Task<DrinkDetailsViewModel> GetDrinkDetailsAsync(string drinkId);
 
 		Task<DrinkPostModel> GetDrinkForEditAsync(string drinkId);
+
+		Task EditDrinkAsync(string drinkId, DrinkPostModel model);
 	}
 }
