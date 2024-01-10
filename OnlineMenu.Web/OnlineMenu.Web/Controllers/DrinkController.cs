@@ -358,7 +358,7 @@
 			}
 
             this.TempData[SuccessMessage] = ItemEditedMessage;
-            return this.RedirectToAction("All", "Drink");
+            return this.RedirectToAction("Details", "Drink", new { Id });
         }
 
         public async Task<IActionResult> Delete(string Id)

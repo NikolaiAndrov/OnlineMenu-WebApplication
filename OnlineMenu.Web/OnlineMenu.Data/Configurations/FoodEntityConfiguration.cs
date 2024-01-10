@@ -220,7 +220,7 @@
                 Price = 5.90m,
                 Description = "Cake with intense chocolate flavor and smooth, creamy texture",
                 IsDeleted = false,
-                ImageUrl = "img/food/Garash.jpg",
+                ImageUrl = "/img/food/Garash.jpg",
                 FoodCategoryId = 7
             };
             foodCollection.Add(food);
