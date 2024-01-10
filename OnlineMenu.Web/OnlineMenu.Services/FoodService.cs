@@ -46,6 +46,22 @@
             await this.dbContext.SaveChangesAsync();
 		}
 
+		public async Task EditFoodAsync(string foodId, FoodPostModel model)
+		{
+			Food food = await this.dbContext.Food
+                .Where(f => f.IsDeleted == false && f.Id.ToString() == foodId)
+                .FirstAsync();
+
+            food.Name = model.Name;
+            food.Weight = model.Weight;
+            food.Price = model.Price;
+            food.Description = model.Description;
+            food.ImageUrl = model.ImageUrl;
+            food.FoodCategoryId = model.CategoryId;
+
+            await this.dbContext.SaveChangesAsync();
+		}
+
 		public async Task<FoodQueryModel> GetAllFoodByQueryModelAsync(FoodQueryModel foodQueryModel)
         {
             IQueryable<Food> foodQuery = this.dbContext.Food.AsQueryable();

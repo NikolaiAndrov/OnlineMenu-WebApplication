@@ -7,6 +7,7 @@
     using static Common.NotificationConstantMessages;
     using static Common.GeneralApplicationMessages;
 	using OnlineMenu.Web.Infrastructure.Extensions;
+	using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 	[Authorize]
     public class FoodController : Controller
@@ -249,6 +250,7 @@
             return this.View(model);
         }
 
+        [HttpGet]
 		public async Task<IActionResult> Edit(string Id)
         {
             bool isManager;
@@ -292,6 +294,71 @@
 
             this.TempData[InfoMessage] = ItemReadyForEdit;
             return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(string Id, FoodPostModel model)
+        {
+			bool isManager;
+			bool isFoodExisting;
+            bool isFoodCategoryExisting;
+
+			try
+			{
+				isManager = await this.managerService.IsManagerExistingByUserIdAsync(this.User.GetId());
+				isFoodExisting = await this.foodService.IsFoodExistingByIdAsync(Id);
+                isFoodCategoryExisting = await this.foodCategoryService.IsCategoryExistingByIdAsync(model.CategoryId);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			if (!isFoodExisting)
+			{
+				this.TempData[ErrorMessage] = ItemNotFoundMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			if (!isManager)
+			{
+				this.TempData[ErrorMessage] = NotAuthorizedMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            if (!isFoodCategoryExisting)
+            {
+                this.ModelState.AddModelError(nameof(model.CategoryId), CategoryNotExistingMessage);
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                try
+                {
+                    model.Categories = await this.foodCategoryService.GetFoodCategoriesPostAsync();
+                }
+                catch (Exception)
+                {
+					this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+					return this.RedirectToAction("Index", "Home");
+				}
+
+                return this.View(model);
+            }
+
+            try
+            {
+                await this.foodService.EditFoodAsync(Id, model);
+            }
+            catch (Exception)
+            {
+				this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            this.TempData[SuccessMessage] = ItemEditedMessage;
+            return this.RedirectToAction("All", "Food");
         }
 
         public async Task<IActionResult> Delete(string Id)
