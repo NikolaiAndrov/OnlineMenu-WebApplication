@@ -111,6 +111,25 @@
             return favouriteFood;
 		}
 
+		public async Task<FoodDetailsViewModel> GetFoodDetailsAsync(string foodId)
+		{
+			FoodDetailsViewModel foodDetails = await this.dbContext.Food
+                .Where(f => f.IsDeleted == false && f.Id.ToString() == foodId)
+                .Select(f => new FoodDetailsViewModel
+                {
+					Id = f.Id.ToString(),
+					Name = f.Name,
+					Weight = f.Weight,
+					Price = f.Price,
+					ImageUrl = f.ImageUrl,
+                    Description = f.Description
+				})
+                .FirstAsync();
+
+            return foodDetails;
+
+		}
+
 		public async Task<ICollection<IndexViewModel>> GetFoodForIndexAsync()
         {
             ICollection<IndexViewModel> indexFood = await this.dbContext.Food

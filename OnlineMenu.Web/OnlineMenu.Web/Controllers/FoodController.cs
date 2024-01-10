@@ -212,6 +212,42 @@
             return this.RedirectToAction("All", "Food");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Details(string id)
+        {
+            bool isFoodExisting;
+
+            try
+            {
+                isFoodExisting = await this.foodService.IsFoodExistingByIdAsync(id);
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            if (!isFoodExisting)
+            {
+				this.TempData[ErrorMessage] = ItemNotFoundMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            FoodDetailsViewModel model;
+
+            try
+            {
+                model = await this.foodService.GetFoodDetailsAsync(id);
+            }
+            catch (Exception)
+            {
+				this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            return this.View(model);
+        }
+
 		public async Task<IActionResult> Edit(string Id)
         {
             return this.View();
