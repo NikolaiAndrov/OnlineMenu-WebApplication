@@ -17,7 +17,7 @@
 
         Task RemoveFromFavouriteAsync(string foodId, string userId);
 
-        Task AddFoodAsync(FoodPostModel model);
+        Task<string> AddFoodAndReturnIdAsync(FoodPostModel model);
 
         Task<FoodDetailsViewModel> GetFoodDetailsAsync(string foodId);
 

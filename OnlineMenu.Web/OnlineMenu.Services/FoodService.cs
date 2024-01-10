@@ -18,7 +18,7 @@
             this.dbContext = dbContext;
         }
 
-        public async Task AddFoodAsync(FoodPostModel model)
+        public async Task<string> AddFoodAndReturnIdAsync(FoodPostModel model)
         {
             Food newFood = new Food
             {
@@ -32,6 +32,7 @@
 
             await this.dbContext.Food.AddAsync(newFood);
             await this.dbContext.SaveChangesAsync();
+            return newFood.Id.ToString();
         }
 
         public async Task AddToFavouriteAsync(string foodId, string userId)

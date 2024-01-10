@@ -199,9 +199,11 @@
                 return this.View(model);
             }
 
-            try
+            string id;
+
+			try
             {
-                await this.foodService.AddFoodAsync(model);
+                id = await this.foodService.AddFoodAndReturnIdAsync(model);
             }
             catch (Exception)
             {
@@ -210,7 +212,7 @@
             }
 
             this.TempData[SuccessMessage] = NewItemAddedMessage;
-            return this.RedirectToAction("All", "Food");
+            return this.RedirectToAction("Details", "Food", new { id });
         }
 
         [HttpGet]

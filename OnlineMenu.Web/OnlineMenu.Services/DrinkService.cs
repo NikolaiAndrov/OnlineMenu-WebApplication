@@ -16,7 +16,7 @@
             this.dbContext = dbContext;
         }
 
-		public async Task AddDrinkAsync(DrinkPostModel model)
+		public async Task<string> AddDrinkAndReturnIdAsync(DrinkPostModel model)
 		{
 			Drink newDrink = new Drink
 			{
@@ -31,6 +31,8 @@
 
 			await this.dbContext.Drinks.AddAsync(newDrink);
 			await this.dbContext.SaveChangesAsync();
+
+			return newDrink.Id.ToString();
 		}
 
 		public async Task AddToFavouriteAsync(string drinkId, string userId)
