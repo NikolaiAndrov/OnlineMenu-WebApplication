@@ -214,6 +214,43 @@
         }
 
         [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Details(string id)
+        {
+            bool isDrinkExisting;
+
+            try
+            {
+                isDrinkExisting = await this.drinkService.IsDrinkExistingByIdAsync(id);
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            if (!isDrinkExisting)
+            {
+                this.TempData[ErrorMessage] = ItemNotFoundMessage;
+				return this.RedirectToAction("All", "Drink");
+			}
+
+            DrinkDetailsViewModel model;
+
+            try
+            {
+                model = await this.drinkService.GetDrinkDetailsAsync(id);
+            }
+            catch (Exception)
+            {
+				this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            return this.View(model);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Edit(string Id)
         {
             return this.View();

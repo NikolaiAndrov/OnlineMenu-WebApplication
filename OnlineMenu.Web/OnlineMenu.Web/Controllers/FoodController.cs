@@ -213,6 +213,7 @@
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Details(string id)
         {
             bool isFoodExisting;
@@ -230,7 +231,7 @@
             if (!isFoodExisting)
             {
 				this.TempData[ErrorMessage] = ItemNotFoundMessage;
-				return this.RedirectToAction("Index", "Home");
+				return this.RedirectToAction("All", "Food");
 			}
 
             FoodDetailsViewModel model;

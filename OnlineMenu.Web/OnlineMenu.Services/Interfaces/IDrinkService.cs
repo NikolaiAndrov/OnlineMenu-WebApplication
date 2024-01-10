@@ -17,5 +17,7 @@
 		Task AddDrinkAsync(DrinkPostModel model);
 
 		Task DeleteAsync(string drinkId);
+
+		Task<DrinkDetailsViewModel> GetDrinkDetailsAsync(string drinkId);
 	}
 }
