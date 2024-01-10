@@ -1,0 +1,14 @@
+﻿@model DrinkPostModel
+
+@{
+	ViewBag.Title = "Edit Drink";
+}
+
+<h2 class="text-center display-6 fst-italic fw-light">@ViewBag.Title</h2>
+<hr />
+
+<partial name="_DrinkFormPartial" model="@Model" />
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

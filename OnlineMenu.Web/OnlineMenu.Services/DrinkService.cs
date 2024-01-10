@@ -123,6 +123,25 @@
 			return drinkDetails;
 		}
 
+		public async Task<DrinkPostModel> GetDrinkForEditAsync(string drinkId)
+		{
+			DrinkPostModel model = await this.dbContext.Drinks
+				.Where(d => d.IsDeleted == false && d.Id.ToString() == drinkId)
+				.Select (d => new DrinkPostModel
+				{
+					Name = d.Name,
+					Milliliters = d.Milliliters,
+					Price = d.Price,
+					Description = d.Description,
+					IsAlcoholic = d.IsAlcoholic,
+					ImageUrl= d.ImageUrl,
+					CategoryId = d.DrinkCategoryId
+				})
+				.FirstAsync();
+
+			return model;
+		}
+
 		public async Task<ICollection<DrinkAllViewModel>> GetFavouriteDrinksAsync(string userId)
 		{
 			ICollection<DrinkAllViewModel> favouriteDrinks = await this.dbContext.UsersDrinks

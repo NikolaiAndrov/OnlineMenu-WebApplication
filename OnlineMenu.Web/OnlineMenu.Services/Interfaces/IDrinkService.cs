@@ -19,5 +19,7 @@
 		Task DeleteAsync(string drinkId);
 
 		Task<DrinkDetailsViewModel> GetDrinkDetailsAsync(string drinkId);
+
+		Task<DrinkPostModel> GetDrinkForEditAsync(string drinkId);
 	}
 }

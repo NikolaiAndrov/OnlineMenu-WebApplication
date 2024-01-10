@@ -253,7 +253,47 @@
         [HttpGet]
         public async Task<IActionResult> Edit(string Id)
         {
-            return this.View();
+            bool isManager;
+            bool isDrinkExisting;
+
+            try
+            {
+                isManager = await this.managerService.IsManagerExistingByUserIdAsync(this.User.GetId());
+                isDrinkExisting = await this.drinkService.IsDrinkExistingByIdAsync(Id);
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            if (!isManager)
+            {
+                this.TempData[ErrorMessage] = NotAuthorizedMessage;
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            if (!isDrinkExisting)
+            {
+                this.TempData[ErrorMessage] = ItemNotFoundMessage;
+                return this.RedirectToAction("All", "Drink");
+            }
+
+            DrinkPostModel model;
+
+            try
+            {
+                model = await this.drinkService.GetDrinkForEditAsync(Id);
+                model.Categories = await this.drinkCategoryService.GetDrinkCategoriesPostAsync();
+            }
+            catch (Exception)
+            {
+				this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            this.TempData[InfoMessage] = ItemReadyForEdit;
+            return this.View(model);
         }
 
         public async Task<IActionResult> Delete(string Id)
