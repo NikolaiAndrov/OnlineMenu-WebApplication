@@ -364,9 +364,92 @@
             return this.RedirectToAction("Details", "Food", new { Id });
         }
 
+        [HttpGet]
         public async Task<IActionResult> Delete(string Id)
         {
-            return this.View();
+			bool isManager;
+			bool isFoodExisting;
+
+			try
+			{
+				isManager = await this.managerService.IsManagerExistingByUserIdAsync(this.User.GetId());
+				isFoodExisting = await this.foodService.IsFoodExistingByIdAsync(Id);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			if (!isFoodExisting)
+			{
+				this.TempData[ErrorMessage] = ItemNotFoundMessage;
+				return this.RedirectToAction("All", "Food");
+			}
+
+			if (!isManager)
+			{
+				this.TempData[ErrorMessage] = NotAuthorizedMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            FoodDeleteViewModel model;
+
+            try
+            {
+                model = await this.foodService.GetFoodForDeleteAsync(Id);
+            }
+            catch (Exception)
+            {
+				this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            this.TempData[ErrorMessage] = DeleteItemWarningMessage;
+            return this.View(model);
+		}
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string Id, FoodDetailsViewModel model)
+        {
+			bool isManager;
+			bool isFoodExisting;
+
+			try
+			{
+				isManager = await this.managerService.IsManagerExistingByUserIdAsync(this.User.GetId());
+				isFoodExisting = await this.foodService.IsFoodExistingByIdAsync(Id);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			if (!isFoodExisting)
+			{
+				this.TempData[ErrorMessage] = ItemNotFoundMessage;
+				return this.RedirectToAction("All", "Food");
+			}
+
+			if (!isManager)
+			{
+				this.TempData[ErrorMessage] = NotAuthorizedMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            try
+            {
+                await this.foodService.DeleteFoodAsync(Id);
+            }
+            catch (Exception)
+            {
+				this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+            this.TempData[SuccessMessage] = ItemDeletedMessage;
+            return this.RedirectToAction("All", "Food");
         }
-    }
+	}
 }

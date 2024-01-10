@@ -15,5 +15,6 @@
         public const string ItemDeletedMessage = "The Item was deleted successfully!";
         public const string ItemReadyForEdit = "Item ready for edit!";
         public const string ItemEditedMessage = "The Item was edited successfully!";
+        public const string DeleteItemWarningMessage = "You are on way to delete this Item!";
     }
 }

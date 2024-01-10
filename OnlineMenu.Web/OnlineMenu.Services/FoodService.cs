@@ -47,6 +47,16 @@
             await this.dbContext.SaveChangesAsync();
 		}
 
+		public async Task DeleteFoodAsync(string foodId)
+		{
+			Food food = await this.dbContext.Food
+                .Where(f => f.IsDeleted == false && f.Id.ToString() == foodId)
+                .FirstAsync();
+
+            food.IsDeleted = true;
+            await this.dbContext.SaveChangesAsync();
+		}
+
 		public async Task EditFoodAsync(string foodId, FoodPostModel model)
 		{
 			Food food = await this.dbContext.Food
@@ -145,6 +155,21 @@
 
             return foodDetails;
 
+		}
+
+		public async Task<FoodDeleteViewModel> GetFoodForDeleteAsync(string foodId)
+		{
+			FoodDeleteViewModel model = await this.dbContext.Food
+                .Where(f => f.IsDeleted == false && f.Id.ToString() == foodId)
+                .Select(f => new FoodDeleteViewModel
+                {
+                    Name = f.Name,
+                    Description = f.Description,
+                    ImageUrl = f.ImageUrl,
+                })
+                .FirstAsync();
+
+            return model;
 		}
 
 		public async Task<FoodPostModel> GetFoodForEditAsync(string foodId)

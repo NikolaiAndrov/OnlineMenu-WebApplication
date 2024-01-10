@@ -39,6 +39,6 @@
 		}
 
 		public async Task<bool> IsCategoryExistingByIdAsync(int id)
-			=> await this.dbContext.DrinksCategories.AnyAsync(dc => dc.Id == id);
+			=> await this.dbContext.DrinksCategories.AnyAsync(dc => dc.IsDeleted == false && dc.Id == id);
 	}
 }
