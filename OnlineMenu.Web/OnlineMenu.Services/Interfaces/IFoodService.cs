@@ -28,5 +28,7 @@
         Task<FoodDeleteViewModel> GetFoodForDeleteAsync(string foodId);
 
         Task DeleteFoodAsync(string foodId);
+
+        Task<bool> IsFoodInFavouriteAsync(string userId, string foodId);
     }
 }

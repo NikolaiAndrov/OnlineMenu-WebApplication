@@ -98,10 +98,13 @@
         public async Task<IActionResult> AddToFavourite(string Id)
         {
             bool isFoodExisting;
+            bool isInFavourite;
+            string userId = this.User.GetId();
 
             try
             {
                 isFoodExisting = await this.foodService.IsFoodExistingByIdAsync(Id);
+                isInFavourite = await this.foodService.IsFoodInFavouriteAsync(userId, Id);
             }
             catch (Exception)
             {
@@ -115,9 +118,14 @@
 				return this.RedirectToAction("Index", "Home");
 			}
 
+            if (isInFavourite)
+            {
+                this.TempData[InfoMessage] = ItemInFavouriteMessage;
+                return this.RedirectToAction("All", "Food");
+            }
+
             try
             {
-                string userId = this.User.GetId();
                 await this.foodService.AddToFavouriteAsync(Id, userId);
             }
             catch (Exception)
