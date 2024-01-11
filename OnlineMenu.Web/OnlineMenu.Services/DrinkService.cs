@@ -212,6 +212,9 @@
 		public async Task<bool> IsDrinkExistingByIdAsync(string drinkId)
 			=> await this.dbContext.Drinks.AnyAsync(d => d.Id.ToString() == drinkId);
 
+		public async Task<bool> IsDrinkInFavourite(string userId, string drinkId)
+			=> await this.dbContext.UsersDrinks.AnyAsync(ud => ud.UserId.ToString() == userId && ud.DrinkId.ToString() == drinkId);
+
 		public async Task RemoveFromFavouriteAsync(string drinkId, string userId)
 		{
 			UserDrink userDrink = await this.dbContext.UsersDrinks

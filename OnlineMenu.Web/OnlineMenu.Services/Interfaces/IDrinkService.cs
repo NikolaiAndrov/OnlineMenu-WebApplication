@@ -27,5 +27,7 @@
 		Task<DrinkDeleteViewModel> GetDrinkForDeleteAsync(string drinkId);
 
 		Task DeleteDrinkAsync(string drinkId);
+
+		Task<bool> IsDrinkInFavourite(string userId, string drinkId);
 	}
 }
