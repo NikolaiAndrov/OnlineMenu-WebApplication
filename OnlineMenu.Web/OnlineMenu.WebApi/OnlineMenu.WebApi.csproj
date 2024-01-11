@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>89d4b3d4-3ede-4d78-afda-c475c2d6246d</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OnlineMenu.Data.Models\OnlineMenu.Data.Models.csproj" />
+    <ProjectReference Include="..\OnlineMenu.Data\OnlineMenu.Data.csproj" />
+    <ProjectReference Include="..\OnlineMenu.Services\OnlineMenu.Services.csproj" />
+    <ProjectReference Include="..\OnlineMenu.Web.Infrastructure\OnlineMenu.Web.Infrastructure.csproj" />
+    <ProjectReference Include="..\OnlineMenu.Web.ViewModels\OnlineMenu.Web.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>

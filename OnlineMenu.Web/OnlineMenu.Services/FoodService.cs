@@ -138,6 +138,15 @@
             return favouriteFood;
 		}
 
+		public async Task<int> GetFoodCountAsync()
+		{
+			int count = await this.dbContext.Food
+                .Where(f => f.IsDeleted == false)
+                .CountAsync();
+
+            return count;
+		}
+
 		public async Task<FoodDetailsViewModel> GetFoodDetailsAsync(string foodId)
 		{
 			FoodDetailsViewModel foodDetails = await this.dbContext.Food

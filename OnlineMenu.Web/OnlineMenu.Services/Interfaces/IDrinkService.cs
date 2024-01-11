@@ -29,5 +29,7 @@
 		Task DeleteDrinkAsync(string drinkId);
 
 		Task<bool> IsDrinkInFavourite(string userId, string drinkId);
+
+		Task<int> GetDrinksCountAsync();
 	}
 }

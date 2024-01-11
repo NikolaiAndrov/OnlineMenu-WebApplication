@@ -186,6 +186,15 @@
 			return model;
 		}
 
+		public async Task<int> GetDrinksCountAsync()
+		{
+			int count = await this.dbContext.Drinks
+				.Where(d => d.IsDeleted == false)
+				.CountAsync();
+
+			return count;
+		}
+
 		public async Task<ICollection<DrinkAllViewModel>> GetFavouriteDrinksAsync(string userId)
 		{
 			ICollection<DrinkAllViewModel> favouriteDrinks = await this.dbContext.UsersDrinks
