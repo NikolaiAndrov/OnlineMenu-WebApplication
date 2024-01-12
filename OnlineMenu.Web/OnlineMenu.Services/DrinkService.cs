@@ -47,16 +47,6 @@
 			await this.dbContext.SaveChangesAsync();
 		}
 
-		public async Task DeleteAsync(string drinkId)
-		{
-			Drink drink = await this.dbContext.Drinks
-				.Where(d => d.Id.ToString() == drinkId)
-				.FirstAsync();
-
-			drink.IsDeleted = true;
-			await this.dbContext.SaveChangesAsync();
-		}
-
 		public async Task DeleteDrinkAsync(string drinkId)
 		{
 			Drink drink = await this.dbContext.Drinks
