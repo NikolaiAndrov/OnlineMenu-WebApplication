@@ -63,10 +63,13 @@
         public async Task<IActionResult> RemoveFromFavourite(string Id)
         {
 			bool isDrinkExisting;
+            bool isInFavourite;
+            string userId = this.User.GetId();
 
 			try
 			{
 				isDrinkExisting = await this.drinkService.IsDrinkExistingByIdAsync(Id);
+                isInFavourite = await this.drinkService.IsDrinkInFavourite(userId, Id);
 			}
 			catch (Exception)
 			{
@@ -80,9 +83,14 @@
 				return this.RedirectToAction("Index", "Home");
 			}
 
+            if (!isInFavourite)
+            {
+                this.TempData[InfoMessage] = ItemNotInFavourite;
+				return this.RedirectToAction("Favourite", "Drink");
+			}
+
             try
             {
-                string userId = this.User.GetId();
                 await this.drinkService.RemoveFromFavouriteAsync(Id, userId);
             }
             catch (Exception)
@@ -123,8 +131,8 @@
             if (isInFavourite)
             {
                 this.TempData[InfoMessage] = ItemInFavouriteMessage;
-                return this.RedirectToAction("All", "Drink");
-            }
+				return this.RedirectToAction("Favourite", "Drink");
+			}
 
             try
             {

@@ -1,6 +1,7 @@
 namespace OnlineMenu.Web
 {
-    using Microsoft.EntityFrameworkCore;
+	using Microsoft.AspNetCore.Mvc;
+	using Microsoft.EntityFrameworkCore;
     using OnlineMenu.Data;
     using OnlineMenu.Data.Models;
 	using OnlineMenu.Services.Interfaces;
@@ -44,6 +45,7 @@ namespace OnlineMenu.Web
                 .AddMvcOptions(options =>
                 {
                     options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+                    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();  
                 });
 
             builder.Services.AddApplicationServices(typeof(IFoodService));

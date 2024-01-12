@@ -17,5 +17,6 @@
         public const string ItemEditedMessage = "The Item was edited successfully!";
         public const string DeleteItemWarningMessage = "You are on way to delete this Item!";
         public const string ItemInFavouriteMessage = "You already have added this Item to favourite!";
+        public const string ItemNotInFavourite = "You do not have added this Item to favourite yet!";
     }
 }
