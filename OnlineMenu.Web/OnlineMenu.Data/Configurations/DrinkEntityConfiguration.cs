@@ -257,7 +257,7 @@
 
             drink = new Drink
             {
-                Name = "Minkov Brothers Wine",
+                Name = "Minkov Brothers",
                 Milliliters = 350,
                 Price = 6.00m,
                 Description = "Red, White, or Rose",

@@ -19,8 +19,6 @@
         {
             Manager manager = new Manager
             {
-                FirstName = model.FirstName,
-                LastName = model.LastName,
                 PhoneNumber = model.PhoneNumber,
                 UserId = Guid.Parse(userId)
             };

@@ -52,14 +52,17 @@
 
         public static class ManagerValidation
         {
+            public const int PhoneNumberMinLength = 8;
+            public const int PhoneNumberMaxLength = 15;
+        }
+
+        public static class ApplicationUserValidation 
+        {
             public const int FirstNameMinLength = 2;
             public const int FirstNameMaxLength = 50;
 
             public const int LastNameMinLength = 2;
             public const int LastNameMaxLength = 50;
-
-            public const int PhoneNumberMinLength = 8;
-            public const int PhoneNumberMaxLength = 15;
         }
     }
 }

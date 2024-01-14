@@ -99,7 +99,7 @@
                 this.TempData[ErrorMessage] = UnexpectedErrorMessage;
             }
 
-            this.TempData[SuccessMessage] = string.Format(ManagerAddedSuccessfullyMessage, model.FirstName, model.LastName);
+            this.TempData[SuccessMessage] = ManagerAddedSuccessfullyMessage;
             return this.RedirectToAction("Index", "Home");
         }
     }
