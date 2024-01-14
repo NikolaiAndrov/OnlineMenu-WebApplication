@@ -22,7 +22,20 @@
             this.signInManager = signInManager;
         }
 
-        public async Task<string> GetUserIdByEmailAsync(string email)
+		public async Task<string> GetFullNameByIdAsync(string userId)
+		{
+			ApplicationUser? user = await this.dbContext.Users
+                .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+
+            if (user == null)
+            {
+                return string.Empty;
+            }
+
+            return $"{user.FirstName} {user.LastName}";
+		}
+
+		public async Task<string> GetUserIdByEmailAsync(string email)
         {
             string userId = await this.dbContext.Users
                 .Where(u => u.Email == email)
