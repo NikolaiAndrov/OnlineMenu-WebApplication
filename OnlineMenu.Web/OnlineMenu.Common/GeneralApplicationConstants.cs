@@ -5,5 +5,8 @@
         public const int DefaultPage = 1;
 
         public const int DefaultItemsPerPage = 9;
+
+        public const string AdminRoleName = "Administrator";
+        public const string AdminEmail = "admin@abv.bg";
     }
 }
