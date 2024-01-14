@@ -20,5 +20,6 @@
         public const string ItemNotInFavourite = "You do not have added this Item to favourite yet!";
         public const string SuccessfullRegistrationMessage = "The registration was successfull!";
         public const string LogginErrorMessage = "An error occured while logging you, please try again later or contact administrator!";
+        public const string RegisterMessage = "To login You must be registered!";
     }
 }

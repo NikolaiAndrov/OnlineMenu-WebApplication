@@ -80,7 +80,10 @@ namespace OnlineMenu.Web
 			app.UseAuthentication();
 			app.UseAuthorization();
 
-			app.SeedAdministrator(AdminEmail);
+			if (app.Environment.IsDevelopment())
+			{
+				app.SeedAdministrator(AdminEmail);
+			}
 
 			app.UseEndpoints(endpoints =>
 			{

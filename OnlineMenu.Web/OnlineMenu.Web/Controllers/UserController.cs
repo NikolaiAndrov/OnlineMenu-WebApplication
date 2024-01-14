@@ -88,6 +88,24 @@
                 return this.View(model);
             }
 
+            bool isUserRegistered;
+
+            try
+            {
+                isUserRegistered = await this.userService.IsUserExistingByEmailAsync(model.Email);
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            if (!isUserRegistered)
+            {
+                this.TempData[ErrorMessage] = RegisterMessage;
+                return this.RedirectToAction("Register", "User");
+            }
+
             var signInResult = await this.signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
 
             if (!signInResult.Succeeded)
