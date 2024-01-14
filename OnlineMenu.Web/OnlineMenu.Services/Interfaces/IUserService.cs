@@ -1,5 +1,8 @@
 ﻿namespace OnlineMenu.Services.Interfaces
 {
+    using Microsoft.AspNetCore.Identity;
+    using OnlineMenu.Web.ViewModels.User;
+
     public interface IUserService
     {
         Task<bool> IsUserExistingByEmailAsync(string email);
@@ -11,5 +14,7 @@
         Task<bool> IsDrinkInFavourite(string userId, string drinkId);
 
         Task<bool> IsUserExistingByIdAsync(string userId);
+
+        Task<IdentityResult> RegisterAsync(RegisterFormModel model);
     }
 }

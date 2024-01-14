@@ -1,16 +1,25 @@
 ﻿namespace OnlineMenu.Services
 {
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using OnlineMenu.Data;
+    using OnlineMenu.Data.Models;
     using OnlineMenu.Services.Interfaces;
+    using OnlineMenu.Web.ViewModels.User;
 
     public class UserService : IUserService
     {
         private readonly OnlineMenuDbContext dbContext;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
 
-        public UserService(OnlineMenuDbContext dbContext)
+        public UserService(OnlineMenuDbContext dbContext,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager)
         {
             this.dbContext = dbContext;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
         }
 
         public async Task<string> GetUserIdByEmailAsync(string email)
@@ -34,5 +43,26 @@
 
         public async Task<bool> IsUserExistingByIdAsync(string userId)
             => await this.dbContext.Users.AnyAsync(u => u.Id.ToString() == userId);
-	}
+
+        public async Task<IdentityResult> RegisterAsync(RegisterFormModel model)
+        {
+            ApplicationUser user = new ApplicationUser
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName
+            };
+
+            await this.userManager.SetEmailAsync(user, model.Email);
+            await this.userManager.SetUserNameAsync(user, user.Email);
+
+            IdentityResult result = await this.userManager.CreateAsync(user, model.Password);
+
+            if (result.Succeeded)
+            {
+                await this.signInManager.SignInAsync(user, false);
+            }
+
+            return result;
+        }
+    }
 }

@@ -41,6 +41,11 @@ namespace OnlineMenu.Web
             })
             .AddEntityFrameworkStores<OnlineMenuDbContext>();
 
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/User/Login";
+            });
+
             builder.Services.AddControllersWithViews()
                 .AddMvcOptions(options =>
                 {

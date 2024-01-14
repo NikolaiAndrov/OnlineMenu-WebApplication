@@ -18,5 +18,7 @@
         public const string DeleteItemWarningMessage = "You are on way to delete this Item!";
         public const string ItemInFavouriteMessage = "You already have added this Item to favourite!";
         public const string ItemNotInFavourite = "You do not have added this Item to favourite yet!";
+        public const string SuccessfullRegistrationMessage = "The registration was successfull!";
+        public const string LogginErrorMessage = "An error occured while logging you, please try again later or contact administrator!";
     }
 }
