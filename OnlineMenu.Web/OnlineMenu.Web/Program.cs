@@ -3,7 +3,8 @@ namespace OnlineMenu.Web
 	using Microsoft.AspNetCore.Identity;
 	using Microsoft.AspNetCore.Mvc;
 	using Microsoft.EntityFrameworkCore;
-	using OnlineMenu.Data;
+    using NuGet.Packaging.Signing;
+    using OnlineMenu.Data;
 	using OnlineMenu.Data.Models;
 	using OnlineMenu.Services.Interfaces;
 	using OnlineMenu.Web.Infrastructure.Extensions;
@@ -57,7 +58,7 @@ namespace OnlineMenu.Web
 				});
 
 			builder.Services.AddApplicationServices(typeof(IFoodService));
-
+			
 			WebApplication app = builder.Build();
 
 			if (app.Environment.IsDevelopment())
@@ -80,10 +81,15 @@ namespace OnlineMenu.Web
 			app.UseAuthentication();
 			app.UseAuthorization();
 
-			if (app.Environment.IsDevelopment())
-			{
-				app.SeedAdministrator(AdminEmail);
-			}
+			/// <summary>
+			/// To seed Administrator, register a user with email: admin@abv.bg
+			/// After that uncomment the if statement below, run the application again
+			/// That's it, enjoy the application
+			/// </summary>
+			//if (app.Environment.IsDevelopment())
+			//{
+			//	app.SeedAdministrator(AdminEmail);
+			//}
 
 			app.UseEndpoints(endpoints =>
 			{

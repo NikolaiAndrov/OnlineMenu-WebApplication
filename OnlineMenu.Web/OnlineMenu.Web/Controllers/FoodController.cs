@@ -6,6 +6,7 @@
     using OnlineMenu.Web.ViewModels.Food;
     using static Common.NotificationConstantMessages;
     using static Common.GeneralApplicationMessages;
+    using static Common.GeneralApplicationConstants;
 	using OnlineMenu.Web.Infrastructure.Extensions;
 	using Microsoft.AspNetCore.Mvc.ModelBinding;
 

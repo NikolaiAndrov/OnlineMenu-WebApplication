@@ -24,7 +24,8 @@
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            bool isManager; 
+            bool isManager;
+            bool isAdmin = this.User.IsAdmin();
 
             try
             {
@@ -37,7 +38,7 @@
                 return this.RedirectToAction("Index", "Home");
             }
 
-            if (!isManager)
+            if (!isManager && !isAdmin)
             {
                 this.TempData[ErrorMessage] = NotAuthorizedMessage;
                 return this.RedirectToAction("Index", "Home");
@@ -71,7 +72,7 @@
                 return this.RedirectToAction("Index", "Home");
             }
 
-            if (!isManager)
+            if (!isManager && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = NotAuthorizedMessage;
                 return this.RedirectToAction("Index", "Home");
