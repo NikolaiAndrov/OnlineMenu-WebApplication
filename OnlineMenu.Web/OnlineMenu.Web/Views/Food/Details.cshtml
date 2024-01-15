@@ -44,7 +44,7 @@
 					<a asp-area="" asp-controller="Food" asp-action="AddToFavourite" asp-route-id="@Model.Id" class="btn btn-outline-info">Add to Favourite</a>
 				}
 
-				if (isManager)
+				if (isManager || this.User.IsAdmin())
 				{
 					<a asp-area="" asp-controller="Food" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-warning">Edit</a>
 					<a asp-area="" asp-controller="Food" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger">Delete</a>

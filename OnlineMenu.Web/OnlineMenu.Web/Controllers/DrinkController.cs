@@ -287,7 +287,7 @@
                 return this.RedirectToAction("Index", "Home");
             }
 
-            if (!isManager)
+            if (!isManager && !this.User.IsAdmin())
             {
                 this.TempData[ErrorMessage] = NotAuthorizedMessage;
                 return this.RedirectToAction("Index", "Home");
@@ -335,7 +335,7 @@
 				return this.RedirectToAction("Index", "Home");
 			}
 
-			if (!isManager)
+			if (!isManager && !this.User.IsAdmin())
 			{
 				this.TempData[ErrorMessage] = NotAuthorizedMessage;
 				return this.RedirectToAction("Index", "Home");
@@ -398,7 +398,7 @@
 				return this.RedirectToAction("Index", "Home");
 			}
 
-			if (!isManager)
+			if (!isManager && !this.User.IsAdmin())
 			{
 				this.TempData[ErrorMessage] = NotAuthorizedMessage;
 				return this.RedirectToAction("Index", "Home");
@@ -443,7 +443,7 @@
 				return this.RedirectToAction("Index", "Home");
 			}
 
-			if (!isManager)
+			if (!isManager && !this.User.IsAdmin())
 			{
 				this.TempData[ErrorMessage] = NotAuthorizedMessage;
 				return this.RedirectToAction("Index", "Home");
