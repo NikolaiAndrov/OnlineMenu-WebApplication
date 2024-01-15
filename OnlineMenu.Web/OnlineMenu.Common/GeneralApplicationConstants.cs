@@ -8,5 +8,6 @@
 
         public const string AdminRoleName = "Administrator";
         public const string AdminEmail = "admin@abv.bg";
+        public const string AdminAreaName = "Admin";
     }
 }

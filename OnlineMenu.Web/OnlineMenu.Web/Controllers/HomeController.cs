@@ -3,11 +3,12 @@
     using Microsoft.AspNetCore.Mvc;
     using OnlineMenu.Services.Interfaces;
     using OnlineMenu.Web.ViewModels.Home;
-    using System.Diagnostics;
     using static Common.NotificationConstantMessages;
     using static Common.GeneralApplicationMessages;
+    using static Common.GeneralApplicationConstants;
+	using OnlineMenu.Web.Infrastructure.Extensions;
 
-    public class HomeController : Controller
+	public class HomeController : Controller
     {
         private readonly IFoodService foodService;
 
@@ -18,6 +19,10 @@
 
         public async Task<IActionResult> Index()
         {
+            if (this.User.IsAdmin())
+            {
+                return this.RedirectToAction("Index", "Home", new { Area = AdminAreaName });
+            }
 
             ICollection<IndexViewModel> indexFood;
 
