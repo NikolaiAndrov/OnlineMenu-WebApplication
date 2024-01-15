@@ -18,7 +18,7 @@
 				<b>@String.Format("{0:f2}", Model.Price) lv</b>
 			</h6>
 			<br />
-			<a asp-controller="Food" asp-action="Details" asp-route-id="@Model.Id"
+			<a asp-area="" asp-controller="Food" asp-action="Details" asp-route-id="@Model.Id"
 			   class="btn btn-outline-success">Details</a>
 			@if (this.User.Identity?.IsAuthenticated ?? false)
 			{
