@@ -45,7 +45,7 @@
 		[HttpPost]
 		public async Task<IActionResult> Add(FoodCategoryPostModel model)
 		{
-			if (!ModelState.IsValid)
+			if (!this.ModelState.IsValid)
 			{
 				return this.View(model);
 			}

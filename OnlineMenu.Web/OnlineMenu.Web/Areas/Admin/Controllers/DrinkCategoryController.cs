@@ -41,5 +41,45 @@
 
 			return this.View(model);
 		}
+
+		[HttpPost]
+		public async Task<IActionResult> Add(DrinkCategoryPostModel model)
+		{
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
+			bool isCategoryExisting;
+
+			try
+			{
+				isCategoryExisting = await this.drinkCategoryService.IsCategoryExistingByNameAsync(model.Name);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
+				return this.RedirectToAction("Index", "Home", new { Area = AdminAreaName });
+			}
+
+			if (isCategoryExisting)
+			{
+				this.TempData[ErrorMessage] = ExistingCategoryMessage;
+				return this.RedirectToAction("All", "DrinkCategory");
+			}
+
+			try
+			{
+				await this.drinkCategoryService.AddNewCategoryAsync(model);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
+				return this.RedirectToAction("Index", "Home", new { Area = AdminAreaName });
+			}
+
+			this.TempData[SuccessMessage] = CategoryAddedMessage;
+			return this.RedirectToAction("All", "DrinkCategory");
+		}
 	}
 }
