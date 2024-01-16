@@ -81,5 +81,81 @@
 			this.TempData[SuccessMessage] = CategoryAddedMessage;
 			return this.RedirectToAction("All", "DrinkCategory");
 		}
+
+		[HttpGet]
+		public async Task<IActionResult> Edit(int id)
+		{
+			bool isCategoryExisting;
+
+			try
+			{
+				isCategoryExisting = await this.drinkCategoryService.IsCategoryExistingByIdAsync(id);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			if (!isCategoryExisting)
+			{
+				this.TempData[ErrorMessage] = CategoryNotExistingMessage;
+				return this.RedirectToAction("All", "DrinkCategory");
+			}
+
+			DrinkCategoryPostModel model;
+
+			try
+			{
+				model = await this.drinkCategoryService.GetCategoryForEditAsync(id);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			return this.View(model);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Edit(int id, DrinkCategoryPostModel model)
+		{
+			bool isCategoryExisting;
+
+			try
+			{
+				isCategoryExisting = await this.drinkCategoryService.IsCategoryExistingByIdAsync(id);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			if (!isCategoryExisting)
+			{
+				this.TempData[ErrorMessage] = CategoryNotExistingMessage;
+				return this.RedirectToAction("All", "DrinkCategory");
+			}
+
+			if (!this.ModelState.IsValid)
+			{
+				return this.View(model);
+			}
+
+			try
+			{
+				await this.drinkCategoryService.EditCategoryAsync(id, model);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			this.TempData[SuccessMessage] = CategoryEditedMessage;
+			return this.RedirectToAction("All", "DrinkCategory");
+		}
 	}
 }

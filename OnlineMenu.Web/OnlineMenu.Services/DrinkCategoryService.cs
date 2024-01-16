@@ -26,6 +26,16 @@
 			await this.dbContext.SaveChangesAsync();
 		}
 
+		public async Task EditCategoryAsync(int id, DrinkCategoryPostModel model)
+		{
+			DrinkCategory drinkCategory = await this.dbContext.DrinksCategories
+				.FirstAsync(dc => dc.IsDeleted == false && dc.Id == id);
+
+			drinkCategory.Name = model.Name;
+
+			await this.dbContext.SaveChangesAsync();
+		}
+
 		public async Task<ICollection<DrinkCategoryViewModel>> GetAllDrinkCategoriesAsync()
 		{
 			ICollection<DrinkCategoryViewModel> drinkCategories = await this.dbContext.DrinksCategories
@@ -38,6 +48,19 @@
 				.ToArrayAsync();
 
 			return drinkCategories;
+		}
+
+		public async Task<DrinkCategoryPostModel> GetCategoryForEditAsync(int id)
+		{
+			DrinkCategoryPostModel model = await this.dbContext.DrinksCategories
+				.Where(dc => dc.IsDeleted == false && dc.Id == id)
+				.Select(dc => new DrinkCategoryPostModel
+				{
+					Name = dc.Name
+				})
+				.FirstAsync();
+
+			return model;
 		}
 
 		public async Task<ICollection<string>> GetDrinkCategoryNamesAsync()
