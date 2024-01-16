@@ -32,5 +32,9 @@
         Task<bool> IsFoodInFavouriteAsync(string userId, string foodId);
 
         Task<int> GetFoodCountAsync();
+
+        Task<string> GetFoodNamesByCategoryIdAsync(int categoryId);
+
+        Task DeleteFoodByCategoryIdAsync(int categoryId);
     }
 }

@@ -78,5 +78,29 @@
             foodCategory.Name = model.Name;
             await this.dbContext.SaveChangesAsync();
 		}
+
+		public async Task<FoodCategoryDeleteViewModel> GetCategoryForDeleteAsync(int id)
+		{
+			FoodCategoryDeleteViewModel model = await this.dbContext.FoodCategories
+                .Where(fc => fc.IsDeleted == false && fc.Id == id)
+                .Select(fc => new FoodCategoryDeleteViewModel
+                {
+                    Id = id,
+                    Name = fc.Name
+                })
+                .FirstAsync();
+
+            return model;
+		}
+
+		public async Task DeleteCategoryAsync(int id)
+		{
+			FoodCategory foodCategory = await this.dbContext.FoodCategories
+                .FirstAsync(fc => fc.IsDeleted == false && fc.Id == id);
+
+            foodCategory.IsDeleted = true;
+
+            await this.dbContext.SaveChangesAsync();
+		}
 	}
 }

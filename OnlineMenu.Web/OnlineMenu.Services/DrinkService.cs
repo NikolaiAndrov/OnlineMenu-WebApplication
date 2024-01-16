@@ -188,7 +188,7 @@
 		public async Task<ICollection<DrinkAllViewModel>> GetFavouriteDrinksAsync(string userId)
 		{
 			ICollection<DrinkAllViewModel> favouriteDrinks = await this.dbContext.UsersDrinks
-				.Where(ud => ud.UserId.ToString() == userId)
+				.Where(ud => ud.Drink.IsDeleted == false && ud.UserId.ToString() == userId)
 				.OrderBy(ud => ud.Drink.DrinkCategoryId)
 				.ThenBy(ud => ud.Drink.IsAlcoholic == false)
 				.ThenBy(ud => ud.Drink.Name)

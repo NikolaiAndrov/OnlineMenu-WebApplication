@@ -1,0 +1,29 @@
+﻿@model FoodCategoryDeleteViewModel
+
+@{
+	ViewBag.Title = "Delete Food Category";
+}
+
+<h2 class="text-center display-6 fst-italic fw-light">@ViewBag.Title</h2>
+<h2 class="text-center display-6 fst-italic fw-light">Danger Zone!</h2>
+<hr />
+
+<div class="container mt-5">
+	<form asp-action="Delete">
+		<div class="row">
+			<div class="col-md-8">
+				<div class="form-group">
+					<label asp-for="Name" class="control-label"></label>
+					<input asp-for="Name" class="form-control" disabled="disabled" />
+				</div>
+				<div class="form-group mt-3">
+					<label asp-for="ItemsForDelete" class="control-label"></label>
+					<textarea asp-for="ItemsForDelete" class="form-control" rows="4" disabled="disabled"></textarea>
+				</div>
+				<div class="form-group">
+					<input type="submit" value="Delete" class="btn btn-danger mt-3" />
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

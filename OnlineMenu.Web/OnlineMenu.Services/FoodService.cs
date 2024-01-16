@@ -57,6 +57,20 @@
             await this.dbContext.SaveChangesAsync();
 		}
 
+		public async Task DeleteFoodByCategoryIdAsync(int categoryId)
+		{
+			ICollection<Food> foodForDelete = await this.dbContext.Food
+                .Where(f => f.IsDeleted == false && f.FoodCategoryId == categoryId)
+                .ToArrayAsync();
+
+            foreach (var food in foodForDelete)
+            {
+                food.IsDeleted = true;
+            }
+
+            await this.dbContext.SaveChangesAsync();
+		}
+
 		public async Task EditFoodAsync(string foodId, FoodPostModel model)
 		{
 			Food food = await this.dbContext.Food
@@ -121,7 +135,7 @@
 		public async Task<ICollection<FoodAllViewModel>> GetFavouriteFoodAsync(string userId)
 		{
 			ICollection<FoodAllViewModel> favouriteFood = await this.dbContext.UsersFood
-                .Where(u => u.UserId.ToString() == userId)
+                .Where(uf => uf.Food.IsDeleted == false && uf.UserId.ToString() == userId)
                 .OrderBy(uf => uf.Food.Category.Id)
                 .ThenBy(uf => uf.Food.Name)
                 .ThenBy(uf => uf.Food.Price)
@@ -214,7 +228,17 @@
             return indexFood;
         }
 
-        public async Task<bool> IsFoodExistingByIdAsync(string foodId)
+		public async Task<string> GetFoodNamesByCategoryIdAsync(int categoryId)
+		{
+            string[] food = await this.dbContext.Food
+                .Where(f => f.IsDeleted == false && f.FoodCategoryId == categoryId)
+                .Select(f => f.Name)
+                .ToArrayAsync();
+
+            return string.Join(", ", food);
+		}
+
+		public async Task<bool> IsFoodExistingByIdAsync(string foodId)
             => await this.dbContext.Food.AnyAsync(f => f.Id.ToString() == foodId);
 
         public async Task<bool> IsFoodInFavouriteAsync(string userId, string foodId)

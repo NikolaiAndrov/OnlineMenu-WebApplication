@@ -17,5 +17,9 @@
         Task<FoodCategoryPostModel> GetCategoryForEditAsync(int id);
 
         Task EditCategoryAsync(FoodCategoryPostModel model, int id);
+
+        Task<FoodCategoryDeleteViewModel> GetCategoryForDeleteAsync(int id); 
+
+        Task DeleteCategoryAsync(int id);
     }
 }

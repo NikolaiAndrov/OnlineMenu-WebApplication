@@ -5,15 +5,16 @@
 	using OnlineMenu.Web.ViewModels.FoodCategory;
 	using static Common.GeneralApplicationMessages;
 	using static Common.NotificationConstantMessages;
-	using static Common.GeneralApplicationConstants;
 
 	public class FoodCategoryController : BaseAdminController
 	{
 		private readonly IFoodCategoryService foodCategoryService;
+		private readonly IFoodService foodService;
 
-		public FoodCategoryController(IFoodCategoryService foodCategoryService) 
+		public FoodCategoryController(IFoodCategoryService foodCategoryService, IFoodService foodService) 
 		{
 			this.foodCategoryService = foodCategoryService;
+			this.foodService = foodService;
 		}
 
 		[HttpGet]
@@ -155,6 +156,79 @@
 			}
 
 			this.TempData[SuccessMessage] = CategoryEditedMessage;
+			return this.RedirectToAction("All", "FoodCategory");
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> Delete(int id)
+		{
+			bool isCategoryExisting;
+
+			try
+			{
+				isCategoryExisting = await this.foodCategoryService.IsCategoryExistingByIdAsync(id);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			if (!isCategoryExisting)
+			{
+				this.TempData[ErrorMessage] = CategoryNotExistingMessage;
+				return this.RedirectToAction("All", "FoodCategory");
+			}
+
+			FoodCategoryDeleteViewModel model;
+
+			try
+			{
+				model = await this.foodCategoryService.GetCategoryForDeleteAsync(id);
+				model.ItemsForDelete = await this.foodService.GetFoodNamesByCategoryIdAsync(id);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			return this.View(model);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Delete(FoodCategoryDeleteViewModel model) 
+		{
+			bool isCategoryExisting;
+
+			try
+			{
+				isCategoryExisting = await this.foodCategoryService.IsCategoryExistingByIdAsync(model.Id);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			if (!isCategoryExisting)
+			{
+				this.TempData[ErrorMessage] = CategoryNotExistingMessage;
+				return this.RedirectToAction("All", "FoodCategory");
+			}
+
+			try
+			{
+				await this.foodService.DeleteFoodByCategoryIdAsync(model.Id);
+				await this.foodCategoryService.DeleteCategoryAsync(model.Id);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			this.TempData[SuccessMessage] = CategoryDeletedMessage;
 			return this.RedirectToAction("All", "FoodCategory");
 		}
 	}

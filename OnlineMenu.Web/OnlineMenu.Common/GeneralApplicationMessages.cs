@@ -25,5 +25,7 @@
         public const string ExistingCategoryMessage = "There is already a category with this name!";
         public const string CategoryAddedMessage = "Successfully added a new category!";
         public const string CategoryEditedMessage = "The category was edited successfully!";
+        public const string ItemsForDeleteMessage = "The following items will be deleted!";
+        public const string CategoryDeletedMessage = "The category was deleted successfully!";
 	}
 }
