@@ -15,7 +15,7 @@
         public const string ItemDeletedMessage = "The Item was deleted successfully!";
         public const string ItemReadyForEdit = "Item ready for edit!";
         public const string ItemEditedMessage = "The Item was edited successfully!";
-        public const string DeleteItemWarningMessage = "You are on way to delete this Item!";
+        public const string DeleteItemWarningMessage = "You are on the way to delete this Item!";
         public const string ItemInFavouriteMessage = "You already have added this Item to favourite!";
         public const string ItemNotInFavourite = "You do not have added this Item to favourite yet!";
         public const string SuccessfullRegistrationMessage = "The registration was successfull!";
@@ -27,5 +27,7 @@
         public const string CategoryEditedMessage = "The category was edited successfully!";
         public const string ItemsForDeleteMessage = "The following items will be deleted!";
         public const string CategoryDeletedMessage = "The category was deleted successfully!";
+        public const string DeleteCategoryQWarningMessage = "You are on the way to delete this Category!";
+        public const string EditCategoryInfoMessage = "The Category is ready for edit!";
 	}
 }

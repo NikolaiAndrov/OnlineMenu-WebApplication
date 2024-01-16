@@ -116,6 +116,7 @@
 				return this.RedirectToAction("Index", "Home");
 			}
 
+			this.TempData[InfoMessage] = EditCategoryInfoMessage;
 			return this.View(model);
 		}
 
@@ -193,6 +194,7 @@
 				return this.RedirectToAction("Index", "Home");
 			}
 
+			this.TempData[ErrorMessage] = DeleteCategoryQWarningMessage;
 			return this.View(model);
 		}
 

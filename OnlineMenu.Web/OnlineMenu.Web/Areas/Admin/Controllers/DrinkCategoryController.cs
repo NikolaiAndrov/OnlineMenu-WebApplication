@@ -115,6 +115,7 @@
 				return this.RedirectToAction("Index", "Home");
 			}
 
+			this.TempData[InfoMessage] = EditCategoryInfoMessage;
 			return this.View(model);
 		}
 
