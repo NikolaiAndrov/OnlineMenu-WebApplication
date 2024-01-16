@@ -28,7 +28,7 @@
 			catch (Exception)
 			{
 				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
-				return this.RedirectToAction("Index", "Home", new { Area = AdminAreaName });
+				return this.RedirectToAction("Index", "Home");
 			}
 
 			return this.View(allCategories);
@@ -59,7 +59,7 @@
 			catch (Exception)
 			{
 				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
-				return this.RedirectToAction("Index", "Home", new { Area = AdminAreaName });
+				return this.RedirectToAction("Index", "Home");
 			}
 
 			if (isCategoryExisting)
@@ -75,10 +75,86 @@
 			catch (Exception)
 			{
 				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
-				return this.RedirectToAction("Index", "Home", new { Area = AdminAreaName });
+				return this.RedirectToAction("Index", "Home");
 			}
 
 			this.TempData[SuccessMessage] = CategoryAddedMessage;
+			return this.RedirectToAction("All", "FoodCategory");
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> Edit(int id)
+		{
+			bool isCategoryExisting;
+
+			try
+			{
+				isCategoryExisting = await this.foodCategoryService.IsCategoryExistingByIdAsync(id);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			if (!isCategoryExisting)
+			{
+				this.TempData[ErrorMessage] = CategoryNotExistingMessage;
+				return this.RedirectToAction("All", "FoodCategory");
+			}
+
+			FoodCategoryPostModel model;
+
+			try
+			{
+				model = await this.foodCategoryService.GetCategoryForEditAsync(id);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			return this.View(model);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Edit(int id, FoodCategoryPostModel model)
+		{
+			bool isCategoryExisting;
+
+			try
+			{
+				isCategoryExisting = await this.foodCategoryService.IsCategoryExistingByIdAsync(id);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			if (!isCategoryExisting)
+			{
+				this.TempData[ErrorMessage] = CategoryNotExistingMessage;
+				return this.RedirectToAction("All", "FoodCategory");
+			}
+
+			if (!this.ModelState.IsValid)
+			{
+				return this.View(model);
+			}
+
+			try
+			{
+				await this.foodCategoryService.EditCategoryAsync(model, id);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			this.TempData[SuccessMessage] = CategoryEditedMessage;
 			return this.RedirectToAction("All", "FoodCategory");
 		}
 	}

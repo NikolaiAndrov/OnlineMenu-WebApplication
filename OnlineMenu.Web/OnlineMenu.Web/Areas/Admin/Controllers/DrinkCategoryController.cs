@@ -28,7 +28,7 @@
 			catch (Exception)
 			{
 				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
-				return this.RedirectToAction("Index", "Home", new { Area = AdminAreaName });
+				return this.RedirectToAction("Index", "Home");
 			}
 
 			return this.View(allCategories);
@@ -59,7 +59,7 @@
 			catch (Exception)
 			{
 				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
-				return this.RedirectToAction("Index", "Home", new { Area = AdminAreaName });
+				return this.RedirectToAction("Index", "Home");
 			}
 
 			if (isCategoryExisting)
@@ -75,7 +75,7 @@
 			catch (Exception)
 			{
 				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
-				return this.RedirectToAction("Index", "Home", new { Area = AdminAreaName });
+				return this.RedirectToAction("Index", "Home");
 			}
 
 			this.TempData[SuccessMessage] = CategoryAddedMessage;

@@ -13,5 +13,9 @@
         Task<bool> IsCategoryExistingByNameAsync(string name);
 
         Task AddNewCategoryAsync(FoodCategoryPostModel model);
+
+        Task<FoodCategoryPostModel> GetCategoryForEditAsync(int id);
+
+        Task EditCategoryAsync(FoodCategoryPostModel model, int id);
     }
 }

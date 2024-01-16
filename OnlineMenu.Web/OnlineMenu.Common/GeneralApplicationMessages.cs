@@ -24,5 +24,6 @@
         public const string UnexpectedErrorAdminMessage = "Unexpected error occured while processing your request, please try again later!";
         public const string ExistingCategoryMessage = "There is already a category with this name!";
         public const string CategoryAddedMessage = "Successfully added a new category!";
+        public const string CategoryEditedMessage = "The category was edited successfully!";
 	}
 }

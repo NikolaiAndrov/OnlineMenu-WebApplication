@@ -26,6 +26,19 @@
             await this.dbContext.SaveChangesAsync();
 		}
 
+		public async Task<FoodCategoryPostModel> GetCategoryForEditAsync(int id)
+		{
+            FoodCategoryPostModel model = await this.dbContext.FoodCategories
+                .Where(fc => fc.IsDeleted == false && fc.Id == id)
+                .Select(fc => new FoodCategoryPostModel
+                {
+                    Name = fc.Name
+                })
+                .FirstAsync();
+
+            return model;
+		}
+
 		public async Task<ICollection<FoodCategoryViewModel>> GetAllFoodCategoriesAsync()
 		{
 			ICollection<FoodCategoryViewModel> foodCategories = await this.dbContext.FoodCategories
@@ -55,5 +68,15 @@
 
 		public async Task<bool> IsCategoryExistingByNameAsync(string name)
 		    => await this.dbContext.FoodCategories.AnyAsync(fc => fc.IsDeleted == false && fc.Name.ToLower() == name.ToLower());
+
+		public async Task EditCategoryAsync(FoodCategoryPostModel model, int id)
+		{
+			FoodCategory foodCategory = await this.dbContext.FoodCategories
+                .Where(fc => fc.IsDeleted == false && fc.Id == id)
+                .FirstAsync();
+
+            foodCategory.Name = model.Name;
+            await this.dbContext.SaveChangesAsync();
+		}
 	}
 }
