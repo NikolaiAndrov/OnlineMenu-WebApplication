@@ -5,7 +5,7 @@
         public static class FoodCategoryValidation
         {
             public const int NameMinLength = 2;
-            public const int NameMaxLength = 30;
+            public const int NameMaxLength = 50;
         }
 
         public static class DrinkCategoryValidation

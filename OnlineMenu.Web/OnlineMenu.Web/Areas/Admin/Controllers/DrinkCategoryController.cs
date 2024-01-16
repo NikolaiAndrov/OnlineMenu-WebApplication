@@ -16,6 +16,7 @@
             this.drinkCategoryService = drinkCategoryService;
         }
 
+		[HttpGet]
         public async Task<IActionResult> All()
 		{
 			ICollection<DrinkCategoryViewModel> allCategories;
@@ -30,7 +31,15 @@
 				return this.RedirectToAction("Index", "Home", new { Area = AdminAreaName });
 			}
 
-			return View(allCategories);
+			return this.View(allCategories);
+		}
+
+		[HttpGet]
+		public IActionResult Add()
+		{
+			DrinkCategoryPostModel model = new DrinkCategoryPostModel();
+
+			return this.View(model);
 		}
 	}
 }
