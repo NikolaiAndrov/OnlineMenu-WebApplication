@@ -6,7 +6,7 @@
     {
         Task<ICollection<string>> GetFoodCategoryNamesAsync();
 
-        Task<ICollection<FoodCategoryPostModel>> GetFoodCategoriesPostAsync();
+        Task<ICollection<FoodCategoryViewModel>> GetAllFoodCategoriesAsync();
 
         Task<bool> IsCategoryExistingByIdAsync(int id);
     }

@@ -157,7 +157,7 @@
             try
             {
                 isManager = await this.managerService.IsManagerExistingByUserIdAsync(this.User.GetId());
-				model.Categories = await this.drinkCategoryService.GetDrinkCategoriesPostAsync();
+				model.Categories = await this.drinkCategoryService.GetAllDrinkCategoriesAsync();
 			}
             catch (Exception)
             {
@@ -206,7 +206,7 @@
             {
                 try
                 {
-                    model.Categories = await this.drinkCategoryService.GetDrinkCategoriesPostAsync();
+                    model.Categories = await this.drinkCategoryService.GetAllDrinkCategoriesAsync();
                 }
                 catch (Exception)
                 {
@@ -304,7 +304,7 @@
             try
             {
                 model = await this.drinkService.GetDrinkForEditAsync(Id);
-                model.Categories = await this.drinkCategoryService.GetDrinkCategoriesPostAsync();
+                model.Categories = await this.drinkCategoryService.GetAllDrinkCategoriesAsync();
             }
             catch (Exception)
             {
@@ -356,7 +356,7 @@
             {
                 try
                 {
-                    model.Categories = await this.drinkCategoryService.GetDrinkCategoriesPostAsync();
+                    model.Categories = await this.drinkCategoryService.GetAllDrinkCategoriesAsync();
                 }
                 catch (Exception)
                 {

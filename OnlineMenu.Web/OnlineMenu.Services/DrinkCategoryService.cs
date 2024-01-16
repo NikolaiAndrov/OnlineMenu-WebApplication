@@ -14,11 +14,11 @@
             this.dbContext = dbContext;
         }
 
-		public async Task<ICollection<DrinkCategoryPostModel>> GetDrinkCategoriesPostAsync()
+		public async Task<ICollection<DrinkCategoryViewModel>> GetAllDrinkCategoriesAsync()
 		{
-			ICollection<DrinkCategoryPostModel> drinkCategories = await this.dbContext.DrinksCategories
+			ICollection<DrinkCategoryViewModel> drinkCategories = await this.dbContext.DrinksCategories
 				.Where(dc => dc.IsDeleted == false)
-				.Select(dc => new DrinkCategoryPostModel
+				.Select(dc => new DrinkCategoryViewModel
 				{
 					Id = dc.Id,
 					Name = dc.Name

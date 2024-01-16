@@ -1,14 +1,12 @@
 ﻿namespace OnlineMenu.Web.Controllers
 {
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using OnlineMenu.Services.Interfaces;
-    using OnlineMenu.Web.ViewModels.Food;
-    using static Common.NotificationConstantMessages;
-    using static Common.GeneralApplicationMessages;
-    using static Common.GeneralApplicationConstants;
+	using Microsoft.AspNetCore.Authorization;
+	using Microsoft.AspNetCore.Mvc;
+	using OnlineMenu.Services.Interfaces;
+	using OnlineMenu.Web.ViewModels.Food;
+	using static Common.NotificationConstantMessages;
+	using static Common.GeneralApplicationMessages;
 	using OnlineMenu.Web.Infrastructure.Extensions;
-	using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 	[Authorize]
     public class FoodController : Controller
@@ -156,7 +154,7 @@
             try
             {
                 isManager = await this.managerService.IsManagerExistingByUserIdAsync(this.User.GetId());
-                model.Categories = await this.foodCategoryService.GetFoodCategoriesPostAsync();
+                model.Categories = await this.foodCategoryService.GetAllFoodCategoriesAsync();
             }
             catch (Exception)
             {
@@ -205,7 +203,7 @@
             {
                 try
                 {
-                    model.Categories = await this.foodCategoryService.GetFoodCategoriesPostAsync();
+                    model.Categories = await this.foodCategoryService.GetAllFoodCategoriesAsync();
                 }
                 catch (Exception)
                 {
@@ -303,7 +301,7 @@
             try
             {
                 model = await this.foodService.GetFoodForEditAsync(Id);
-                model.Categories = await this.foodCategoryService.GetFoodCategoriesPostAsync();
+                model.Categories = await this.foodCategoryService.GetAllFoodCategoriesAsync();
             }
             catch (Exception)
             {
@@ -356,7 +354,7 @@
             {
                 try
                 {
-                    model.Categories = await this.foodCategoryService.GetFoodCategoriesPostAsync();
+                    model.Categories = await this.foodCategoryService.GetAllFoodCategoriesAsync();
                 }
                 catch (Exception)
                 {

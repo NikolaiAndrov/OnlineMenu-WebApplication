@@ -1,6 +1,6 @@
 ﻿namespace OnlineMenu.Web.ViewModels.DrinkCategory
 {
-	public class DrinkCategoryPostModel
+	public class DrinkCategoryViewModel
 	{
 		public int Id { get; set; }
 

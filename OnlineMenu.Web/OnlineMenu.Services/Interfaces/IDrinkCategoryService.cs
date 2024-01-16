@@ -6,7 +6,7 @@
 	{
 		Task<ICollection<string>> GetDrinkCategoryNamesAsync();
 
-		Task<ICollection<DrinkCategoryPostModel>> GetDrinkCategoriesPostAsync();
+		Task<ICollection<DrinkCategoryViewModel>> GetAllDrinkCategoriesAsync();
 
 		Task<bool> IsCategoryExistingByIdAsync(int id);
 	}

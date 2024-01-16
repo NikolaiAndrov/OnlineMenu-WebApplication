@@ -14,11 +14,11 @@
             this.dbContext = dbContext;
         }
 
-		public async Task<ICollection<FoodCategoryPostModel>> GetFoodCategoriesPostAsync()
+		public async Task<ICollection<FoodCategoryViewModel>> GetAllFoodCategoriesAsync()
 		{
-			ICollection<FoodCategoryPostModel> foodCategories = await this.dbContext.FoodCategories
+			ICollection<FoodCategoryViewModel> foodCategories = await this.dbContext.FoodCategories
                 .Where(fc => fc.IsDeleted == false)
-                .Select(fc => new FoodCategoryPostModel
+                .Select(fc => new FoodCategoryViewModel
                 {
                     Id = fc.Id,
                     Name = fc.Name

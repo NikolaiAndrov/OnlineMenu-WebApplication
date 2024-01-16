@@ -1,0 +1,19 @@
+﻿@model ICollection<FoodCategoryViewModel>
+
+@{
+	ViewBag.Title = "Food Categories";
+}
+
+<h2 class="text-center display-6 fst-italic fw-light">@ViewBag.Title</h2>
+<hr />
+
+@if (!Model.Any())
+{
+	<h2 class="text-center">No food categories added yet!</h2>
+}
+<div class="row">
+	@foreach (var category in Model)
+	{
+		<partial name="_FoodCategoryPartial" model="@category" />
+	}
+</div>

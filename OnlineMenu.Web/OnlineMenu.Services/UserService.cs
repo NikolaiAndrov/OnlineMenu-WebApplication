@@ -31,7 +31,7 @@
                     Id = u.Id.ToString(),
                     FullName = u.FirstName + " " + u.LastName,
                     Email = u.Email,
-                    PhoneNumber = string.Empty,
+                    PhoneNumber = string.Empty
                 })
                 .ToListAsync();
 

@@ -8,7 +8,7 @@
 	{
         public DrinkPostModel()
         {
-            this.Categories = new HashSet<DrinkCategoryPostModel>();
+            this.Categories = new HashSet<DrinkCategoryViewModel>();
         }
 
         [Required(AllowEmptyStrings = false)]
@@ -40,6 +40,6 @@
 		[Display(Name = "Category")]
 		public int CategoryId { get; set; }
 
-		public ICollection<DrinkCategoryPostModel> Categories { get; set; }
+		public ICollection<DrinkCategoryViewModel> Categories { get; set; }
 	}
 }

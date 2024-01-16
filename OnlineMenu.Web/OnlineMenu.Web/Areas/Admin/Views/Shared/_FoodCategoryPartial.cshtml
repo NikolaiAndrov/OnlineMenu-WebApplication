@@ -1,0 +1,13 @@
+﻿@model FoodCategoryViewModel
+
+<div class="col-md-4">
+	<div class="card mb-3">
+		<div class="card-body text-center">
+			<h4>@Model.Name</h4>
+			<br />
+			<a asp-area="Admin" asp-controller="FoodCategory" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-warning">Edit</a>
+			<a asp-area="Admin" asp-controller="FoodCategory" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger">Delete</a>
+			<p></p>
+		</div>
+	</div>
+</div>
