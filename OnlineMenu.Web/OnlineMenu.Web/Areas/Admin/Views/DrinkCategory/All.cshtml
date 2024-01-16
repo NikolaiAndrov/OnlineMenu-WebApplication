@@ -1,0 +1,19 @@
+﻿@model ICollection<DrinkCategoryViewModel>
+
+@{
+	ViewBag.Title = "Drink Categories";
+}
+
+<h2 class="text-center display-6 fst-italic fw-light">@ViewBag.Title</h2>
+<hr />
+
+@if (!Model.Any())
+{
+	<h2 class="text-center">No drink categories added yet!</h2>
+}
+<div class="row">
+	@foreach (var category in Model)
+	{
+		<partial name="_DrinkCategoryPartial" model="@category" />
+	}
+</div>

@@ -3,7 +3,7 @@
     public static class GeneralApplicationMessages
     {
         public const string NotAuthorizedMessage = "You are not authorized to perform this action!";
-        public const string UnexpectedErrorMessage = "Unexpected error occured while processing your request, please try later or contact administrator!";
+        public const string UnexpectedErrorMessage = "Unexpected error occured while processing your request, please try again later or contact administrator!";
         public const string ExistingManagerErrorMessage = "There is already a manager with these credentials!";
         public const string UserNotExistingErrorMessage = "To add a new manager he/she must be registered as a user first!";
         public const string ManagerAddedSuccessfullyMessage = "A new manager was added successfully!";
@@ -21,5 +21,7 @@
         public const string SuccessfullRegistrationMessage = "The registration was successfull!";
         public const string LogginErrorMessage = "An error occured while logging you, please try again later or contact administrator!";
         public const string RegisterMessage = "To login You must be registered!";
-    }
+        public const string UnexpectedErrorAdminMessage = "Unexpected error occured while processing your request, please try again later!";
+
+	}
 }

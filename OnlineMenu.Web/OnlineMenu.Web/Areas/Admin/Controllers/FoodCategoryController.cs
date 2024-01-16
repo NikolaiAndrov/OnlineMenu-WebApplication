@@ -3,6 +3,9 @@
 	using Microsoft.AspNetCore.Mvc;
 	using OnlineMenu.Services.Interfaces;
 	using OnlineMenu.Web.ViewModels.FoodCategory;
+	using static Common.GeneralApplicationMessages;
+	using static Common.NotificationConstantMessages;
+	using static Common.GeneralApplicationConstants;
 
 	public class FoodCategoryController : BaseAdminController
 	{
@@ -15,7 +18,17 @@
 
 		public async Task<IActionResult> All()
 		{
-			ICollection<FoodCategoryViewModel> allCategories = await this.foodCategoryService.GetAllFoodCategoriesAsync();
+			ICollection<FoodCategoryViewModel> allCategories;
+
+			try
+			{
+				allCategories = await this.foodCategoryService.GetAllFoodCategoriesAsync();
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
+				return this.RedirectToAction("Index", "Home", new { Area = AdminAreaName });
+			}
 
 			return this.View(allCategories);
 		}
