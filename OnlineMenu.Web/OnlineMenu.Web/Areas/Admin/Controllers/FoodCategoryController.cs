@@ -16,6 +16,7 @@
 			this.foodCategoryService = foodCategoryService;
 		}
 
+		[HttpGet]
 		public async Task<IActionResult> All()
 		{
 			ICollection<FoodCategoryViewModel> allCategories;
@@ -31,6 +32,54 @@
 			}
 
 			return this.View(allCategories);
+		}
+
+		[HttpGet]
+		public IActionResult Add()
+		{
+			FoodCategoryPostModel model = new FoodCategoryPostModel();
+
+			return this.View(model);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Add(FoodCategoryPostModel model)
+		{
+			if (!ModelState.IsValid)
+			{
+				return this.View(model);
+			}
+
+			bool isCategoryExisting;
+
+			try
+			{
+				isCategoryExisting = await this.foodCategoryService.IsCategoryExistingByNameAsync(model.Name);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
+				return this.RedirectToAction("Index", "Home", new { Area = AdminAreaName });
+			}
+
+			if (isCategoryExisting)
+			{
+				this.TempData[ErrorMessage] = ExistingCategoryMessage;
+				return this.RedirectToAction("All", "FoodCategory");
+			}
+
+			try
+			{
+				await this.foodCategoryService.AddNewCategoryAsync(model);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
+				return this.RedirectToAction("Index", "Home", new { Area = AdminAreaName });
+			}
+
+			this.TempData[SuccessMessage] = CategoryAddedMessage;
+			return this.RedirectToAction("All", "FoodCategory");
 		}
 	}
 }

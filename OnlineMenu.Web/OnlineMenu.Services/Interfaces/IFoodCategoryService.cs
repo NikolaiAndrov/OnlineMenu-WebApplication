@@ -9,5 +9,9 @@
         Task<ICollection<FoodCategoryViewModel>> GetAllFoodCategoriesAsync();
 
         Task<bool> IsCategoryExistingByIdAsync(int id);
+
+        Task<bool> IsCategoryExistingByNameAsync(string name);
+
+        Task AddNewCategoryAsync(FoodCategoryPostModel model);
     }
 }

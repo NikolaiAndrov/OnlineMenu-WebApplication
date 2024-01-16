@@ -2,7 +2,8 @@
 {
     using Microsoft.EntityFrameworkCore;
     using OnlineMenu.Data;
-    using OnlineMenu.Services.Interfaces;
+	using OnlineMenu.Data.Models;
+	using OnlineMenu.Services.Interfaces;
 	using OnlineMenu.Web.ViewModels.FoodCategory;
 
 	public class FoodCategoryService : IFoodCategoryService
@@ -13,6 +14,17 @@
         {
             this.dbContext = dbContext;
         }
+
+		public async Task AddNewCategoryAsync(FoodCategoryPostModel model)
+		{
+			FoodCategory foodCategory = new FoodCategory
+            {
+                Name = model.Name,
+            };
+
+            await this.dbContext.FoodCategories.AddAsync(foodCategory);
+            await this.dbContext.SaveChangesAsync();
+		}
 
 		public async Task<ICollection<FoodCategoryViewModel>> GetAllFoodCategoriesAsync()
 		{
@@ -40,5 +52,8 @@
 
         public async Task<bool> IsCategoryExistingByIdAsync(int id)
             => await this.dbContext.FoodCategories.AnyAsync(fc => fc.IsDeleted == false && fc.Id == id);
-    }
+
+		public async Task<bool> IsCategoryExistingByNameAsync(string name)
+		    => await this.dbContext.FoodCategories.AnyAsync(fc => fc.IsDeleted == false && fc.Name.ToLower() == name.ToLower());
+	}
 }
