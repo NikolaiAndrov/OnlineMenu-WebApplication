@@ -6,8 +6,9 @@
     using OnlineMenu.Data.Models;
     using OnlineMenu.Services.Interfaces;
     using OnlineMenu.Web.ViewModels.User;
+	using System.Collections.Generic;
 
-    public class UserService : IUserService
+	public class UserService : IUserService
     {
         private readonly OnlineMenuDbContext dbContext;
         private readonly UserManager<ApplicationUser> userManager;
@@ -21,6 +22,37 @@
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
+
+		public async Task<ICollection<UserViewModel>> GetAllUsersAsync()
+		{
+			ICollection<UserViewModel> allUsers = await this.dbContext.Users
+                .Select(u => new UserViewModel
+                {
+                    Id = u.Id.ToString(),
+                    FullName = u.FirstName + " " + u.LastName,
+                    Email = u.Email,
+                    PhoneNumber = string.Empty,
+                })
+                .ToListAsync();
+
+            foreach (var user in allUsers)
+            {
+                Manager? manager = await this.dbContext.Managers
+                    .FirstOrDefaultAsync(m => m.UserId.ToString() == user.Id);
+
+                if (manager != null)
+                {
+                    user.PhoneNumber = manager.PhoneNumber;
+                }
+            }
+
+            allUsers = allUsers
+                .OrderByDescending(u => u.PhoneNumber.Length)
+                .ThenBy(u => u.FullName)
+                .ToList();
+
+            return allUsers;
+		}
 
 		public async Task<string> GetFullNameByIdAsync(string userId)
 		{
