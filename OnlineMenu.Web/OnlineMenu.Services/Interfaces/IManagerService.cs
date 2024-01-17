@@ -9,5 +9,7 @@
 		Task<bool> IsManagerExistingByUserEmailAsync(string userEmail);
 
 		Task AddManagerAsync(AddManagerPostModel model, string userId);
+
+		Task RemoveManagerByUserIdAsync(string userId);
 	}
 }

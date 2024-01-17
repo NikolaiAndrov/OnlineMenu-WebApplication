@@ -32,5 +32,15 @@
 
         public async Task<bool> IsManagerExistingByUserIdAsync(string userId)
 			=> await this.dbContext.Managers.AnyAsync(m => m.UserId.ToString() == userId);
+
+		public async Task RemoveManagerByUserIdAsync(string userId)
+		{
+            Manager manager = await this.dbContext.Managers
+                .FirstAsync(m => m.UserId.ToString() == userId);
+
+            this.dbContext.Managers.Remove(manager);
+            
+            await this.dbContext.SaveChangesAsync();
+		}
 	}
 }

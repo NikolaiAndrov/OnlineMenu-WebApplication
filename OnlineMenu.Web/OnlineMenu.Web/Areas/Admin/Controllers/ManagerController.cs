@@ -7,6 +7,7 @@
 	using static Common.NotificationConstantMessages;
 	using static Common.GeneralApplicationMessages;
 	using OnlineMenu.Web.ViewModels.Manager;
+	using System.Security.Permissions;
 
 	public class ManagerController : BaseAdminController
 	{
@@ -29,9 +30,9 @@
 		[HttpPost]
 		public async Task<IActionResult> Add(AddManagerPostModel model)
 		{
-			if (!ModelState.IsValid)
+			if (!this.ModelState.IsValid)
 			{
-				return View(model);
+				return this.View(model);
 			}
 
 			bool isManagerExistingByEmail;
@@ -45,19 +46,19 @@
 			catch (Exception)
 			{
 				TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
-				return RedirectToAction("Index", "Home");
+				return this.RedirectToAction("Index", "Home");
 			}
 
 			if (isManagerExistingByEmail)
 			{
 				TempData[ErrorMessage] = ExistingManagerErrorMessage;
-				return RedirectToAction("All", "User");
+				return this.RedirectToAction("All", "User");
 			}
 
 			if (!isUserExistingByEmail)
 			{
 				TempData[ErrorMessage] = UserNotExistingErrorMessage;
-				return RedirectToAction("All", "User");
+				return this.RedirectToAction("All", "User");
 			}
 
 			try
@@ -71,7 +72,55 @@
 			}
 
 			TempData[SuccessMessage] = ManagerAddedSuccessfullyMessage;
-			return RedirectToAction("All", "User");
+			return this.RedirectToAction("All", "User");
+		}
+
+		[HttpGet]
+		public IActionResult Remove()
+		{
+			RemoveManagerPostModel model = new RemoveManagerPostModel();
+			return this.View(model);
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Remove(RemoveManagerPostModel model)
+		{
+			if (!this.ModelState.IsValid)
+			{
+				return this.View(model);
+			}
+
+			bool isManagerExistingByEmail;
+
+			try
+			{
+				isManagerExistingByEmail = await managerService.IsManagerExistingByUserEmailAsync(model.Email);
+			}
+			catch (Exception)
+			{
+				TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			if (!isManagerExistingByEmail)
+			{
+				TempData[ErrorMessage] = ManagerNotExistingMessage;
+				return this.RedirectToAction("All", "User");
+			}
+
+			try
+			{
+				string userManagerId = await this.userService.GetUserIdByEmailAsync(model.Email);
+				await this.managerService.RemoveManagerByUserIdAsync(userManagerId);
+			}
+			catch (Exception)
+			{
+				TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			this.TempData[SuccessMessage] = ManagerRemovedMessage;
+			return this.RedirectToAction("All", "User");
 		}
 	}
 }
