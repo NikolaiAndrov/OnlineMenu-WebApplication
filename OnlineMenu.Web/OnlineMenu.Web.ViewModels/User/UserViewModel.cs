@@ -9,5 +9,7 @@
 		public string Email { get; set; } = null!;
 
 		public string PhoneNumber { get; set; } = null!;
+
+		public bool IsAdmin { get; set; }
 	}
 }

@@ -7,6 +7,7 @@
     using OnlineMenu.Services.Interfaces;
     using OnlineMenu.Web.ViewModels.User;
 	using System.Collections.Generic;
+    using static Common.GeneralApplicationConstants;
 
 	public class UserService : IUserService
     {
@@ -44,10 +45,19 @@
                 {
                     user.PhoneNumber = manager.PhoneNumber;
                 }
+
+                ApplicationUser? applicationUser = await this.dbContext.Users
+                    .FirstOrDefaultAsync(u => u.Id.ToString() == user.Id);
+
+                if (applicationUser != null)
+                {
+                    user.IsAdmin = await this.userManager.IsInRoleAsync(applicationUser, AdminRoleName);
+                }
             }
 
             allUsers = allUsers
-                .OrderByDescending(u => u.PhoneNumber.Length)
+                .OrderByDescending(u => u.IsAdmin)
+                .ThenByDescending(u => u.PhoneNumber.Length)
                 .ThenBy(u => u.FullName)
                 .ToList();
 
