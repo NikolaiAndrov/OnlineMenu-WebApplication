@@ -2,7 +2,7 @@
 	ViewData["Title"] = "Home Page";
 }
 
-<div class="mt-4 p-5 bg-light text-center">
+<div class="mt-1 p-1 text-center">
 	<h2 class="text-center display-5 fst-italic fw-light">Admin Panel</h2>
 	<hr class="my-4">
 	<a asp-area="Admin" asp-controller="FoodCategory" asp-action="All" class="btn btn-primary">All Food Categories</a>
@@ -13,10 +13,12 @@
 	<a asp-area="Admin" asp-controller="DrinkCategory" asp-action="Add" class="btn btn-primary">Add Drink Category</a>
 </div>
 
-<div class="mt-4 p-5 bg-light text-center">
+<div class="mt-3 p-3 text-center">
 	<a asp-area="Admin" asp-controller="Manager" asp-action="Add" class="btn btn-primary">Add Manager</a>
 	<a asp-area="Admin" asp-controller="Manager" asp-action="Remove" class="btn btn-primary">Remove Manager</a>
-	<a asp-area="Admin" asp-controller="User" asp-action="All" class="btn btn-primary btn-lg">All Users</a>
+	<span> | </span>
+	<a asp-area="Admin" asp-controller="User" asp-action="All" class="btn btn-primary">All Users</a>
+	<span> | </span>
 	<a asp-area="Admin" asp-controller="Admin" asp-action="Add" class="btn btn-primary">Add Admin</a>
 	<a asp-area="Admin" asp-controller="Admin" asp-action="Remove" class="btn btn-primary">Remove Admin</a>
 </div>

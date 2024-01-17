@@ -13,7 +13,7 @@
 
 			<div class="form-group">
 				<label asp-for="Category"></label>
-				<select asp-for="Category" class="form-control">
+				<select asp-for="Category" class="form-control text-bg-info">
 					<option value="">All</option>
 					@foreach (var category in Model.Categories)
 					{
@@ -28,7 +28,7 @@
 			</div>
 
 			<div class="col-md-4 mb-3">
-				<div class="form-group mt-3 p-2">
+				<div class="form-group mt-1 p-2">
 					<input type="submit" value="Search" class="btn btn-outline-primary" />
 				</div>
 			</div>
