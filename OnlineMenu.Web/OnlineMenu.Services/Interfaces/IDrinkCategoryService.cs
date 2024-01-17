@@ -20,5 +20,6 @@
 
 		Task<DrinkCategoryDeleteViewModel> GetCategoryForDeleteAsync(int id);
 
+		Task DeleteCategoryAsync(int id);
 	}
 }

@@ -31,5 +31,7 @@
 		Task<int> GetDrinksCountAsync();
 
 		Task<string> GetDrinkNamesByCategoryIdAsync(int categoryId);
+
+		Task DeleteDrinksByCategoryIdAsync(int categoryId);
 	}
 }

@@ -197,5 +197,41 @@
 			this.TempData[ErrorMessage] = DeleteCategoryQWarningMessage;
 			return this.View(model);
 		}
+
+		[HttpPost]
+		public async Task<IActionResult> Delete(DrinkCategoryDeleteViewModel model)
+		{
+			bool isCategoryExisting;
+
+			try
+			{
+				isCategoryExisting = await this.drinkCategoryService.IsCategoryExistingByIdAsync(model.Id);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			if (!isCategoryExisting)
+			{
+				this.TempData[ErrorMessage] = CategoryNotExistingMessage;
+				return this.RedirectToAction("All", "DrinkCategory");
+			}
+
+			try
+			{
+				await this.drinkService.DeleteDrinksByCategoryIdAsync(model.Id);
+				await this.drinkCategoryService.DeleteCategoryAsync(model.Id);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			this.TempData[SuccessMessage] = CategoryDeletedMessage;
+			return this.RedirectToAction("All", "DrinkCategory");
+		}
 	}
 }

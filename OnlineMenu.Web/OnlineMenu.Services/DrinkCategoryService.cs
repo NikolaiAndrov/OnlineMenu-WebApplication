@@ -26,6 +26,17 @@
 			await this.dbContext.SaveChangesAsync();
 		}
 
+		public async Task DeleteCategoryAsync(int id)
+		{
+			DrinkCategory drinkCategory = await this.dbContext.DrinksCategories
+				.Where(dc => dc.IsDeleted == false && dc.Id == id)
+				.FirstAsync();
+
+			drinkCategory.IsDeleted = true;
+
+			await this.dbContext.SaveChangesAsync();
+		}
+
 		public async Task EditCategoryAsync(int id, DrinkCategoryPostModel model)
 		{
 			DrinkCategory drinkCategory = await this.dbContext.DrinksCategories

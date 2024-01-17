@@ -233,5 +233,19 @@
 			this.dbContext.UsersDrinks.Remove(userDrink);
 			await this.dbContext.SaveChangesAsync();
 		}
+
+		public async Task DeleteDrinksByCategoryIdAsync(int categoryId)
+		{
+			ICollection<Drink> drinksToDelete = await this.dbContext.Drinks
+				.Where(d => d.IsDeleted == false && d.DrinkCategoryId == categoryId)
+				.ToArrayAsync();
+
+			foreach (var drink in drinksToDelete)
+			{
+				drink.IsDeleted = true;
+			}
+
+			await this.dbContext.SaveChangesAsync();
+		}
 	}
 }
