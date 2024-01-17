@@ -208,6 +208,16 @@
 			return favouriteDrinks;
 		}
 
+		public async Task<string> GetDrinkNamesByCategoryIdAsync(int categoryId)
+		{
+			string[] drinks = await this.dbContext.Drinks
+				.Where(d => d.IsDeleted == false && d.DrinkCategoryId == categoryId)
+				.Select(d => d.Name)
+				.ToArrayAsync();
+
+			return string.Join(", ", drinks);
+		}
+
 		public async Task<bool> IsDrinkExistingByIdAsync(string drinkId)
 			=> await this.dbContext.Drinks.AnyAsync(d => d.Id.ToString() == drinkId);
 

@@ -5,15 +5,16 @@
 	using OnlineMenu.Web.ViewModels.DrinkCategory;
 	using static Common.GeneralApplicationMessages;
 	using static Common.NotificationConstantMessages;
-	using static Common.GeneralApplicationConstants;
 
 	public class DrinkCategoryController : BaseAdminController
 	{
 		private readonly IDrinkCategoryService drinkCategoryService;
+		private readonly IDrinkService drinkService;
 
-        public DrinkCategoryController(IDrinkCategoryService drinkCategoryService)
+        public DrinkCategoryController(IDrinkCategoryService drinkCategoryService, IDrinkService drinkService)
         {
             this.drinkCategoryService = drinkCategoryService;
+			this.drinkService = drinkService;
         }
 
 		[HttpGet]
@@ -157,6 +158,44 @@
 
 			this.TempData[SuccessMessage] = CategoryEditedMessage;
 			return this.RedirectToAction("All", "DrinkCategory");
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> Delete(int id)
+		{
+			bool isCategoryExisting;
+
+			try
+			{
+				isCategoryExisting = await this.drinkCategoryService.IsCategoryExistingByIdAsync(id);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			if (!isCategoryExisting)
+			{
+				this.TempData[ErrorMessage] = CategoryNotExistingMessage;
+				return this.RedirectToAction("All", "DrinkCategory");
+			}
+
+			DrinkCategoryDeleteViewModel model;
+
+			try
+			{
+				model = await this.drinkCategoryService.GetCategoryForDeleteAsync(id);
+				model.ItemsForDelete = await this.drinkService.GetDrinkNamesByCategoryIdAsync(id);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			this.TempData[ErrorMessage] = DeleteCategoryQWarningMessage;
+			return this.View(model);
 		}
 	}
 }

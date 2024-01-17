@@ -29,5 +29,7 @@
 		Task<bool> IsDrinkInFavourite(string userId, string drinkId);
 
 		Task<int> GetDrinksCountAsync();
+
+		Task<string> GetDrinkNamesByCategoryIdAsync(int categoryId);
 	}
 }

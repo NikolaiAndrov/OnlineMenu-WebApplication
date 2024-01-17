@@ -50,6 +50,20 @@
 			return drinkCategories;
 		}
 
+		public async Task<DrinkCategoryDeleteViewModel> GetCategoryForDeleteAsync(int id)
+		{
+			DrinkCategoryDeleteViewModel model = await this.dbContext.DrinksCategories
+				.Where(dc => dc.IsDeleted == false && dc.Id == id)
+				.Select(dc => new DrinkCategoryDeleteViewModel
+				{
+					Id = dc.Id,
+					Name = dc.Name
+				})
+				.FirstAsync();
+
+			return model;
+		}
+
 		public async Task<DrinkCategoryPostModel> GetCategoryForEditAsync(int id)
 		{
 			DrinkCategoryPostModel model = await this.dbContext.DrinksCategories

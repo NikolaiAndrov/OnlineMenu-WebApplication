@@ -17,5 +17,8 @@
 		Task<DrinkCategoryPostModel> GetCategoryForEditAsync(int id);
 
 		Task EditCategoryAsync(int id, DrinkCategoryPostModel model);
+
+		Task<DrinkCategoryDeleteViewModel> GetCategoryForDeleteAsync(int id);
+
 	}
 }
