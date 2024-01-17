@@ -1,0 +1,34 @@
+﻿@model AdminPostModel
+
+@{
+	ViewBag.Title = "Add Admin";
+}
+
+<h2 class="text-center fst-italic fw-light">@ViewBag.Title</h2>
+<hr />
+
+@if (!ViewData.ModelState.IsValid && ViewData.ModelState["Error"] != null)
+{
+	<div class="alert alert-danger" role="alert">
+		@ViewData.ModelState["Error"].Errors.First().ErrorMessage
+	</div>
+}
+
+<div class="row">
+	<div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+		<form method="post">
+			<div class="form-group">
+				<label asp-for="Email"></label>
+				<input asp-for="Email" class="form-control" placeholder="example@gmail.com">
+				<span asp-validation-for="Email" class="small text-danger"></span>
+			</div>
+			<div class="text-center">
+				<input class="btn btn-outline-primary mt-3 " type="submit" value="Save" />
+			</div>
+		</form>
+	</div>
+</div>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}
