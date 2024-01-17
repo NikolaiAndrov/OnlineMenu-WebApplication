@@ -27,6 +27,7 @@
 		public async Task<ICollection<UserViewModel>> GetAllUsersAsync()
 		{
 			ICollection<UserViewModel> allUsers = await this.dbContext.Users
+                .AsNoTracking()
                 .Select(u => new UserViewModel
                 {
                     Id = u.Id.ToString(),

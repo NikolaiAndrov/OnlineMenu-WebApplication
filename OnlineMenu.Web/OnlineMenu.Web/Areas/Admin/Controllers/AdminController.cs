@@ -61,12 +61,61 @@
 			if (isAdmin)
 			{
 				this.TempData[ErrorMessage] = AdminAlreadyExistingMessage;
-				return this.RedirectToAction("Index", "Home");
+				return this.RedirectToAction("All", "User");
 			}
 
 			await userManager.AddToRoleAsync(adminUser, AdminRoleName);
 			this.TempData[SuccessMessage] = AdminAddedMessage;
-			return this.RedirectToAction("Index", "Home");
+			return this.RedirectToAction("All", "User");
+		}
+
+		[Route("Admin/Remove")]
+		[HttpGet]
+		public IActionResult Remove()
+		{
+			AdminPostModel model = new AdminPostModel();
+			return this.View(model);
+		}
+
+		[Route("Admin/Remove")]
+		[HttpPost]
+		public async Task<IActionResult> Remove(AdminPostModel model)
+		{
+			if (!ModelState.IsValid)
+			{
+				return this.View(model);
+			}
+
+			bool isUserExisting;
+
+			try
+			{
+				isUserExisting = await this.userService.IsUserExistingByEmailAsync(model.Email);
+			}
+			catch (Exception)
+			{
+				this.TempData[ErrorMessage] = UnexpectedErrorAdminMessage;
+				return this.RedirectToAction("Index", "Home");
+			}
+
+			if (!isUserExisting)
+			{
+				this.TempData[ErrorMessage] = UserNotFoundByEmailMessage;
+				return this.RedirectToAction("All", "User");
+			}
+
+			ApplicationUser adminUser = await this.userManager.FindByEmailAsync(model.Email);
+			bool isAdmin = await this.userManager.IsInRoleAsync(adminUser, AdminRoleName);
+
+			if (!isAdmin)
+			{
+				this.TempData[ErrorMessage] = AdminNotExistingMessage;
+				return this.RedirectToAction("All", "User");
+			}
+
+			await this.userManager.RemoveFromRoleAsync(adminUser, AdminRoleName);
+			this.TempData[SuccessMessage] = AdminRemovedMessage;
+			return this.RedirectToAction("All", "User");
 		}
 	}
 }
