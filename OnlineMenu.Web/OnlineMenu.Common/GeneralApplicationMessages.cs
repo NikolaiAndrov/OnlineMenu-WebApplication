@@ -34,5 +34,10 @@
         public const string CategoryDeletedMessage = "The category was deleted successfully!";
         public const string DeleteCategoryQWarningMessage = "You are on the way to delete this Category!";
         public const string EditCategoryInfoMessage = "The Category is ready for edit!";
+
+        public const string UserNotFoundByEmailMessage = "There is no a user with the provided email!";
+
+        public const string AdminAlreadyExistingMessage = "There is already an Admin with this email!";
+        public const string AdminAddedMessage = "The Admin was added successfully!";
 	}
 }
