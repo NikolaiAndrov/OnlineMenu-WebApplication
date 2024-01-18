@@ -22,7 +22,7 @@ User Types:
     Explore other users and their permissions.
 
 
-Admin Panel
+Admin Panel:
 The admin panel provides the following capabilities:
 
     User Management:
