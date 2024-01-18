@@ -1,9 +1,9 @@
-Online Menu Yummy - Bar and Food
+#Online Menu Yummy - Bar and Food
 
 Welcome to Online Menu Yummy, an ASP.NET MVC (.NET6) web application that brings you a delightful selection of food and drinks. 
 Whether you're a casual visitor or a registered user, the platform allows you to explore the menu hassle-free.
 
-User Types:
+# User Types:
 1. Regular (registered) User
     Explore the entire menu.
     Add favorite food and drinks.
@@ -22,8 +22,8 @@ User Types:
     Explore other users and their permissions.
 
 
-Admin Panel:
-The admin panel provides the following capabilities:
+# Admin Panel:
+## The admin panel provides the following capabilities:
 
     User Management:
         Add and remove users as managers.
@@ -36,16 +36,16 @@ The admin panel provides the following capabilities:
         Investigate other users and their respective permissions.
 
 
-Web API for Statistics
+# Web API for Statistics
     The menu comes equipped with a Web API for statistics, providing real-time information on the count of available food and drinks.
 
 
-Error Pages and Error Handling
+# Error Pages and Error Handling
     Custom error pages are implemented but errors and notifications are handled by toastr, a JavaScript notifications bar.
 
 
-Getting Started
-To get started with Online Menu Yummy, follow these steps:
+# Getting Started
+## To get started with Online Menu Yummy, follow these steps:
 
     1. Clone the repository
     
@@ -63,10 +63,10 @@ To get started with Online Menu Yummy, follow these steps:
 	after starting the application provide the link from your browser (the difference in the port numbers will cause issues). 
    
 
-This project is licensed under the MIT License.
+# This project is licensed under the MIT License.
 
 
-Screenshots:
+# Screenshots:
 
 # <img width="1280" alt="Screenshot 2024-01-18 161023" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/f189eae6-3e20-4ba4-829a-0e651bbf050e">
 # <img width="1280" alt="Screenshot 2024-01-18 161341" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/02b1346e-1295-4577-97e8-8e6d59df3dba">
