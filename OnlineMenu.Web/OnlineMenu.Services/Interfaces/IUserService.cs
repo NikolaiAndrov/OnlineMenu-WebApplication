@@ -20,5 +20,9 @@
         Task<string> GetFullNameByIdAsync(string userId);
 
         Task<ICollection<UserViewModel>> GetAllUsersAsync();
+
+        Task<UpdateUserPostModel> GetUserForUpdateAsync(string userId);
+
+        Task UpdateFullNameAsync(string userId, UpdateUserPostModel model);
     }
 }

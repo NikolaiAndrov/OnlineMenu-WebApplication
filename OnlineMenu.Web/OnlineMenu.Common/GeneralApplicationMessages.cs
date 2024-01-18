@@ -9,7 +9,7 @@
         public const string LogginErrorMessage = "An error occured while logging you, please try again later or contact administrator!";
         public const string RegisterMessage = "To login You must be registered!";
 
-        public const string ExistingManagerErrorMessage = "There is already a manager with these credentials!";
+        public const string ExistingManagerErrorMessage = "There is already a manager with this email!";
         public const string ManagerNotExistingMessage = "There is no a manager with the provided email!";
         public const string ManagerRemovedMessage = "The manager was removed successfully!";
         public const string UserNotExistingErrorMessage = "To add a new manager he/she must be registered as a user first!";
@@ -36,6 +36,7 @@
         public const string EditCategoryInfoMessage = "The Category is ready for edit!";
 
         public const string UserNotFoundByEmailMessage = "There is no a user with the provided email!";
+        public const string FullNameUpdatedMessage = "You have updated your full name successfully!";
 
         public const string AdminAlreadyExistingMessage = "There is already an Admin with this email!";
         public const string AdminAddedMessage = "The Admin was added successfully!";

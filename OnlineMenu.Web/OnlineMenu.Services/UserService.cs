@@ -78,6 +78,20 @@
             return $"{user.FirstName} {user.LastName}";
 		}
 
+		public async Task<UpdateUserPostModel> GetUserForUpdateAsync(string userId)
+		{
+			UpdateUserPostModel viewModel = await this.dbContext.Users
+                .Where(u => u.Id.ToString() == userId)
+                .Select(u => new UpdateUserPostModel
+                {
+                    FirstName = u.FirstName,
+                    LastName = u.LastName
+                })
+                .FirstAsync();
+
+            return viewModel;
+		}
+
 		public async Task<string> GetUserIdByEmailAsync(string email)
         {
             string userId = await this.dbContext.Users
@@ -120,5 +134,16 @@
 
             return result;
         }
-    }
+
+		public async Task UpdateFullNameAsync(string userId, UpdateUserPostModel model)
+		{
+            ApplicationUser user = await this.dbContext.Users
+                .FirstAsync(u => u.Id.ToString() == userId);
+
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+
+            await this.dbContext.SaveChangesAsync();
+		}
+	}
 }

@@ -1,14 +1,17 @@
 ﻿namespace OnlineMenu.Web.Controllers
 {
     using Microsoft.AspNetCore.Authentication;
-    using Microsoft.AspNetCore.Identity;
+	using Microsoft.AspNetCore.Authorization;
+	using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using OnlineMenu.Data.Models;
     using OnlineMenu.Services.Interfaces;
-    using OnlineMenu.Web.ViewModels.User;
+	using OnlineMenu.Web.Infrastructure.Extensions;
+	using OnlineMenu.Web.ViewModels.User;
     using static Common.GeneralApplicationMessages;
     using static Common.NotificationConstantMessages;
 
+    [Authorize]
     public class UserController : Controller
     {
         private readonly SignInManager<ApplicationUser> signInManager;
@@ -28,12 +31,14 @@
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Register()
         {
             return this.View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterFormModel model)
         {
             if (!ModelState.IsValid)
@@ -68,6 +73,7 @@
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(string? returnUrl = null)
         {
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
@@ -81,6 +87,7 @@
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(LoginFormModel model)
         {
             if (!this.ModelState.IsValid)
@@ -116,5 +123,44 @@
 
             return Redirect(model.ReturnUrl ?? "/Home/Index");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Update()
+        {
+            UpdateUserPostModel model;
+
+            try
+            {
+                model = await this.userService.GetUserForUpdateAsync(this.User.GetId());
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+                return this.RedirectToAction("Index", "Home");
+            }
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(UpdateUserPostModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
+            try
+            {
+                await this.userService.UpdateFullNameAsync(this.User.GetId(), model);
+            }
+            catch (Exception)
+            {
+                this.TempData[ErrorMessage] = UnexpectedErrorMessage;
+            }
+
+            this.TempData[SuccessMessage] = FullNameUpdatedMessage;
+			return this.RedirectToAction("Index", "Home");
+		}
     }
 }
