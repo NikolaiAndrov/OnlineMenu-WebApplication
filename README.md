@@ -1,4 +1,4 @@
-#Online Menu Yummy - Bar and Food
+# Online Menu Yummy - Bar and Food
 
 Welcome to Online Menu Yummy, an ASP.NET MVC (.NET6) web application that brings you a delightful selection of food and drinks. 
 Whether you're a casual visitor or a registered user, the platform allows you to explore the menu hassle-free.
