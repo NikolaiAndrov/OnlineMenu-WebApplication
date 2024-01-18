@@ -64,3 +64,8 @@ To get started with Online Menu Yummy, follow these steps:
    
 
 This project is licensed under the MIT License.
+
+
+Screenshots:
+
+
