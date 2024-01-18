@@ -52,11 +52,11 @@ To get started with Online Menu Yummy, follow these steps:
     3. Provide a connection string to the database!
     4. To have admin-user first register a new user with the following email: admin@abv.bg.
     	 Go to "Program.cs" and uncomment the if statement of "SeedAdministrator(AdminEmail);" method.
-	     Run the application again.
-	     Login with email: admin@abv.bg.
+	 Run the application again.
+	 Login with email: admin@abv.bg.
     5. To obtain the web api functionality for statistics set multiple startup projects: "OnlineMenu.Web" and "OnlineMenu.WebApi", otherwise the button for statistics will not work.
-	     Important: In the project "OnlineMenu.WebApi" find the following link "https://localhost:7070", 
-	     after starting the application provide the link from your browser (the difference in the port numbers will cause issues). 
+	Important: In the project "OnlineMenu.WebApi" find the following link "https://localhost:7070", 
+	after starting the application provide the link from your browser (the difference in the port numbers will cause issues). 
    
 
 This project is licensed under the MIT License.
