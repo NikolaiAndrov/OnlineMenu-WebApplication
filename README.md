@@ -68,15 +68,15 @@ This project is licensed under the MIT License.
 
 Screenshots:
 
-<img width="1280" alt="Screenshot 2024-01-18 161023" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/f189eae6-3e20-4ba4-829a-0e651bbf050e">
-<img width="1280" alt="Screenshot 2024-01-18 161341" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/02b1346e-1295-4577-97e8-8e6d59df3dba">
-<img width="1280" alt="Screenshot 2024-01-18 161632" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/8c8f0c76-48e8-470e-82b9-da951d7cd9e1">
-<img width="1280" alt="Screenshot 2024-01-18 161913" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/27a3ab3f-0bc6-4d48-ae7f-65d6be7821c0">
-<img width="1280" alt="Screenshot 2024-01-18 162026" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/2aa539fa-1a95-4295-8c70-a28b4f986c49">
-<img width="1280" alt="Screenshot 2024-01-18 162209" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/44353ca0-494b-48a6-94fc-17d887721575">
-<img width="1280" alt="Screenshot 2024-01-18 162502" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/5531c35a-21dd-4962-8799-9b740aadb995">
-<img width="1280" alt="Screenshot 2024-01-18 162656" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/048895e8-868d-4a89-a29a-00a03abf4bb8">
-<img width="1280" alt="Screenshot 2024-01-18 162912" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/71bb5878-9580-4ead-ab94-6d8f789a2e7e">
+# <img width="1280" alt="Screenshot 2024-01-18 161023" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/f189eae6-3e20-4ba4-829a-0e651bbf050e">
+# <img width="1280" alt="Screenshot 2024-01-18 161341" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/02b1346e-1295-4577-97e8-8e6d59df3dba">
+# <img width="1280" alt="Screenshot 2024-01-18 161632" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/8c8f0c76-48e8-470e-82b9-da951d7cd9e1">
+# <img width="1280" alt="Screenshot 2024-01-18 161913" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/27a3ab3f-0bc6-4d48-ae7f-65d6be7821c0">
+# <img width="1280" alt="Screenshot 2024-01-18 162026" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/2aa539fa-1a95-4295-8c70-a28b4f986c49">
+# <img width="1280" alt="Screenshot 2024-01-18 162209" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/44353ca0-494b-48a6-94fc-17d887721575">
+# <img width="1280" alt="Screenshot 2024-01-18 162502" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/5531c35a-21dd-4962-8799-9b740aadb995">
+# <img width="1280" alt="Screenshot 2024-01-18 162656" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/048895e8-868d-4a89-a29a-00a03abf4bb8">
+# <img width="1280" alt="Screenshot 2024-01-18 162912" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/71bb5878-9580-4ead-ab94-6d8f789a2e7e">
 
 
 
