@@ -4,7 +4,6 @@
 	using OnlineMenu.Services.Interfaces;
 	using Microsoft.Extensions.Caching.Memory;
 	using OnlineMenu.Web.ViewModels.Manager;
-
 	using static Common.NotificationConstantMessages;
 	using static Common.GeneralApplicationMessages;
 	using static Common.GeneralApplicationConstants;
