@@ -12,5 +12,8 @@
 
         public const string UsersCacheKey = "UsersCache";
         public const int UsersCacheDurationMinutes = 5;
+
+        public const string DrinkCategoryCacheKey = "DrinkCategoryCache";
+        public const int DrinkCategoryCacheDurationMinutes = 15;
     }
 }

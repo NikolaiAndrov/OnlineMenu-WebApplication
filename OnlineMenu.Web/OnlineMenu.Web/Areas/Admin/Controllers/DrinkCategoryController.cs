@@ -1,20 +1,24 @@
 ﻿namespace OnlineMenu.Web.Areas.Admin.Controllers
 {
 	using Microsoft.AspNetCore.Mvc;
+	using Microsoft.Extensions.Caching.Memory;
 	using OnlineMenu.Services.Interfaces;
 	using OnlineMenu.Web.ViewModels.DrinkCategory;
 	using static Common.GeneralApplicationMessages;
 	using static Common.NotificationConstantMessages;
+	using static Common.GeneralApplicationConstants;
 
 	public class DrinkCategoryController : BaseAdminController
 	{
 		private readonly IDrinkCategoryService drinkCategoryService;
 		private readonly IDrinkService drinkService;
+		private readonly IMemoryCache memoryCache;
 
-        public DrinkCategoryController(IDrinkCategoryService drinkCategoryService, IDrinkService drinkService)
+        public DrinkCategoryController(IDrinkCategoryService drinkCategoryService, IDrinkService drinkService, IMemoryCache memoryCache)
         {
             this.drinkCategoryService = drinkCategoryService;
 			this.drinkService = drinkService;
+			this.memoryCache = memoryCache;
         }
 
 		[HttpGet]
@@ -24,7 +28,17 @@
 
 			try
 			{
-				allCategories = await this.drinkCategoryService.GetAllDrinkCategoriesAsync();
+				allCategories = this.memoryCache.Get<ICollection<DrinkCategoryViewModel>>(DrinkCategoryCacheKey);
+
+				if (allCategories == null)
+				{
+					allCategories = await this.drinkCategoryService.GetAllDrinkCategoriesAsync();
+
+					MemoryCacheEntryOptions options = new MemoryCacheEntryOptions()
+						.SetAbsoluteExpiration(TimeSpan.FromMinutes(DrinkCategoryCacheDurationMinutes));
+
+					this.memoryCache.Set(DrinkCategoryCacheKey, allCategories, options);
+				}
 			}
 			catch (Exception)
 			{
@@ -80,6 +94,7 @@
 			}
 
 			this.TempData[SuccessMessage] = CategoryAddedMessage;
+			this.memoryCache.Remove(DrinkCategoryCacheKey);
 			return this.RedirectToAction("All", "DrinkCategory");
 		}
 
@@ -157,6 +172,7 @@
 			}
 
 			this.TempData[SuccessMessage] = CategoryEditedMessage;
+			this.memoryCache.Remove(DrinkCategoryCacheKey);
 			return this.RedirectToAction("All", "DrinkCategory");
 		}
 
@@ -231,6 +247,7 @@
 			}
 
 			this.TempData[SuccessMessage] = CategoryDeletedMessage;
+			this.memoryCache.Remove(DrinkCategoryCacheKey);
 			return this.RedirectToAction("All", "DrinkCategory");
 		}
 	}
