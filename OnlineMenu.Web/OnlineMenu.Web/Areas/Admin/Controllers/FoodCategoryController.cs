@@ -1,20 +1,24 @@
 ﻿namespace OnlineMenu.Web.Areas.Admin.Controllers
 {
 	using Microsoft.AspNetCore.Mvc;
+	using Microsoft.Extensions.Caching.Memory;
 	using OnlineMenu.Services.Interfaces;
 	using OnlineMenu.Web.ViewModels.FoodCategory;
 	using static Common.GeneralApplicationMessages;
 	using static Common.NotificationConstantMessages;
+	using static Common.GeneralApplicationConstants;
 
 	public class FoodCategoryController : BaseAdminController
 	{
 		private readonly IFoodCategoryService foodCategoryService;
 		private readonly IFoodService foodService;
+		private readonly IMemoryCache memoryCache;
 
-		public FoodCategoryController(IFoodCategoryService foodCategoryService, IFoodService foodService) 
+		public FoodCategoryController(IFoodCategoryService foodCategoryService, IFoodService foodService, IMemoryCache memoryCache) 
 		{
 			this.foodCategoryService = foodCategoryService;
 			this.foodService = foodService;
+			this.memoryCache = memoryCache;
 		}
 
 		[HttpGet]
@@ -24,7 +28,17 @@
 
 			try
 			{
-				allCategories = await this.foodCategoryService.GetAllFoodCategoriesAsync();
+				allCategories = this.memoryCache.Get<ICollection<FoodCategoryViewModel>>(FoodCategoryCacheKey);
+
+				if (allCategories == null)
+				{
+					allCategories = await this.foodCategoryService.GetAllFoodCategoriesAsync();
+
+					MemoryCacheEntryOptions options = new MemoryCacheEntryOptions()
+						.SetAbsoluteExpiration(TimeSpan.FromMinutes(FoodCategoryCacheDurationMinutes));
+						
+					this.memoryCache.Set(FoodCategoryCacheKey, allCategories, options);
+				}
 			}
 			catch (Exception)
 			{
@@ -80,6 +94,7 @@
 			}
 
 			this.TempData[SuccessMessage] = CategoryAddedMessage;
+			this.memoryCache.Remove(FoodCategoryCacheKey);
 			return this.RedirectToAction("All", "FoodCategory");
 		}
 
@@ -157,6 +172,7 @@
 			}
 
 			this.TempData[SuccessMessage] = CategoryEditedMessage;
+			this.memoryCache.Remove(FoodCategoryCacheKey);
 			return this.RedirectToAction("All", "FoodCategory");
 		}
 
@@ -231,6 +247,7 @@
 			}
 
 			this.TempData[SuccessMessage] = CategoryDeletedMessage;
+			this.memoryCache.Remove(FoodCategoryCacheKey);
 			return this.RedirectToAction("All", "FoodCategory");
 		}
 	}
