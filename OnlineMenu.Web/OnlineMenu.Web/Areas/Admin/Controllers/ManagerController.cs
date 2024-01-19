@@ -1,24 +1,24 @@
 ﻿namespace OnlineMenu.Web.Areas.Admin.Controllers
 {
-	using Microsoft.AspNetCore.Authorization;
 	using Microsoft.AspNetCore.Mvc;
 	using OnlineMenu.Services.Interfaces;
-	using OnlineMenu.Web.Infrastructure.Extensions;
+	using Microsoft.Extensions.Caching.Memory;
+	using OnlineMenu.Web.ViewModels.Manager;
 	using static Common.NotificationConstantMessages;
 	using static Common.GeneralApplicationMessages;
-	using OnlineMenu.Web.ViewModels.Manager;
-	using System.Security.Permissions;
+	using static Common.GeneralApplicationConstants;
 
 	public class ManagerController : BaseAdminController
 	{
 		private readonly IManagerService managerService;
 		private readonly IUserService userService;
+		private readonly IMemoryCache memoryCache;
 
-		public ManagerController(IManagerService managerService, IUserService userService)
+		public ManagerController(IManagerService managerService, IUserService userService, IMemoryCache memoryCache)
 		{
 			this.managerService = managerService;
 			this.userService = userService;
-
+			this.memoryCache = memoryCache;
 		}
 
 		[HttpGet]
@@ -72,6 +72,7 @@
 			}
 
 			TempData[SuccessMessage] = ManagerAddedSuccessfullyMessage;
+			this.memoryCache.Remove(UsersCacheKey);
 			return this.RedirectToAction("All", "User");
 		}
 
@@ -120,6 +121,7 @@
 			}
 
 			this.TempData[SuccessMessage] = ManagerRemovedMessage;
+			this.memoryCache.Remove(UsersCacheKey);
 			return this.RedirectToAction("All", "User");
 		}
 	}

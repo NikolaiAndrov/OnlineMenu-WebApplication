@@ -4,12 +4,14 @@
 	using Microsoft.AspNetCore.Authorization;
 	using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using OnlineMenu.Data.Models;
+	using Microsoft.Extensions.Caching.Memory;
+	using OnlineMenu.Data.Models;
     using OnlineMenu.Services.Interfaces;
 	using OnlineMenu.Web.Infrastructure.Extensions;
 	using OnlineMenu.Web.ViewModels.User;
     using static Common.GeneralApplicationMessages;
     using static Common.NotificationConstantMessages;
+    using static Common.GeneralApplicationConstants;
 
     [Authorize]
     public class UserController : Controller
@@ -18,16 +20,19 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IUserStore<ApplicationUser> userStore;
         private readonly IUserService userService;
+        private readonly IMemoryCache memoryCache;
 
         public UserController(SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
-            IUserService userService)
+            IUserService userService, 
+            IMemoryCache memoryCache)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
             this.userStore = userStore;
             this.userService = userService;
+            this.memoryCache = memoryCache;
         }
 
         [HttpGet]
@@ -69,6 +74,7 @@
             }
           
             this.TempData[SuccessMessage] = SuccessfullRegistrationMessage;
+            this.memoryCache.Remove(UsersCacheKey);
             return this.RedirectToAction("Index", "Home");
         }
 

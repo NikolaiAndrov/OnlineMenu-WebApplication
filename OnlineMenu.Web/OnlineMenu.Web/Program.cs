@@ -59,6 +59,8 @@ namespace OnlineMenu.Web
 
             builder.Services.AddApplicationServices(typeof(IFoodService));
 
+            builder.Services.AddMemoryCache(); 
+
             WebApplication app = builder.Build();
 
             if (app.Environment.IsDevelopment())

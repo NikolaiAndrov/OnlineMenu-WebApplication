@@ -9,5 +9,8 @@
         public const string AdminRoleName = "Administrator";
         public const string AdminEmail = "admin@abv.bg";
         public const string AdminAreaName = "Admin";
+
+        public const string UsersCacheKey = "UsersCache";
+        public const int UsersCacheDurationMinutes = 5;
     }
 }
