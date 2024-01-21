@@ -96,13 +96,13 @@
 					EF.Functions.Like(d.Description, wildCard));
 			}
 
-			drinkQuery = drinkQuery
-				.OrderBy(d => d.DrinkCategoryId)
-				.ThenBy(d => d.IsAlcoholic == false)
-				.ThenBy(d => d.Name)
-				.ThenBy(d => d.Price);
+            drinkQuery = drinkQuery
+                .OrderByDescending(d => d.IsAlcoholic == false)
+				.ThenBy(d => d.DrinkCategory.Name)
+                .ThenBy(d => d.Name)
+                .ThenBy(d => d.Price);
 
-			drinkQueryModel.DrinksAll = await drinkQuery
+            drinkQueryModel.DrinksAll = await drinkQuery
 				.Skip((drinkQueryModel.CurrentPage - 1) * drinkQueryModel.ItemsPerPage)
 				.Take(drinkQueryModel.ItemsPerPage)
 				.Select(d => new DrinkAllViewModel
