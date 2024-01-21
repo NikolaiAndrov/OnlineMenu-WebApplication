@@ -1,7 +1,7 @@
-﻿@using OnlineMenu.Services.Interfaces
+﻿@* @using OnlineMenu.Services.Interfaces
 @using System.Security.Claims
 @using OnlineMenu.Web.Infrastructure.Extensions
-@inject IManagerService managerService;
+@inject IManagerService managerService; *@
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,43 +46,19 @@
                             </div>
                         </li>
 
-                        @if (this.User.Identity?.IsAuthenticated ?? false)
-                        {
-                            string userId = this.User.GetId();
-                            bool isManager = await this.managerService.IsManagerExistingByUserIdAsync(userId);
-
-                            <li class="nav-item dropdown">
-                                <div>
-                                    <a class="btn btn-primary dropdown-toggle mx-1" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded-false>My Favourite</a>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <li>
-                                            <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Food" asp-action="Favourite">Food</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Drink" asp-action="Favourite">Drinks</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-
-                            if (isManager)
-                            {
-                                <li class="nav-item dropdown">
-                                    <div>
-                                        <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded-false>Add</a>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                            <li>
-                                                <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Food" asp-action="Add">Food</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Drink" asp-action="Add">Drink</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            }
-                        }
-
+                        <li class="nav-item dropdown">
+                            <div>
+                                <a class="btn btn-primary dropdown-toggle mx-1" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded-false>My Favourite</a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <li>
+                                        <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Food" asp-action="Favourite">Food</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item nav-link text-dark" asp-area="" asp-controller="Drink" asp-action="Favourite">Drinks</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
