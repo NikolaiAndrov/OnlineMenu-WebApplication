@@ -25,7 +25,7 @@
 			</div>
 			<div class="form-group">
 				<label asp-for="IsAlcoholic"></label>
-				<select asp-for="IsAlcoholic" class="form-control">
+				<select asp-for="IsAlcoholic" class="form-control text-bg-info">
 					<span asp-validation-for="IsAlcoholic" class="small text-danger"></span>
 					<option value="false">No</option>
 					<option value="true">Yes</option>
@@ -38,7 +38,7 @@
 			</div>
 			<div class="form-group">
 				<label asp-for="CategoryId"></label>
-				<select asp-for="CategoryId" class="form-control">
+				<select asp-for="CategoryId" class="form-control text-bg-info">
 					@foreach (var category in Model.Categories)
 					{
 						<option value="@category.Id">@category.Name</option>
