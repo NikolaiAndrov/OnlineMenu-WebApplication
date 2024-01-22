@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\OnlineMenu.Common\OnlineMenu.Common.csproj" />
     <ProjectReference Include="..\OnlineMenu.Data.Models\OnlineMenu.Data.Models.csproj" />
     <ProjectReference Include="..\OnlineMenu.Data\OnlineMenu.Data.csproj" />
     <ProjectReference Include="..\OnlineMenu.Services\OnlineMenu.Services.csproj" />

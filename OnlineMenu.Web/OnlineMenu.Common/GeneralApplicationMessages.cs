@@ -42,5 +42,7 @@
         public const string AdminAddedMessage = "The Admin was added successfully!";
         public const string AdminNotExistingMessage = "There is no admin found with the provided email!";
         public const string AdminRemovedMessage = "The admin was removed successfully!";
+
+        public const string ItemNotFoundTestMessage = "Item not found in the database!";
 	}
 }

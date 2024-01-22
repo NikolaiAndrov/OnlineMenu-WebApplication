@@ -6,6 +6,7 @@
 	using OnlineMenu.Services.Interfaces;
 	using OnlineMenu.Web.ViewModels.Food;
 	using static InMemoryDatabaseSeeder;
+    using static Common.GeneralApplicationMessages;
 
 	[TestFixture]
 	public class FoodServiceTests
@@ -58,6 +59,8 @@
             Food? food = await this.dbContext.Food
                 .FirstOrDefaultAsync(f => f.Name == "Beef Burger");
 
+            Assert.IsNotNull(food, ItemNotFoundTestMessage);
+
             bool isFoodExisting = await this.foodService.IsFoodExistingByIdAsync(food!.Id.ToString());
             Assert.IsTrue(isFoodExisting);
         }
@@ -84,7 +87,10 @@
         {
 			Food? food = await this.dbContext.Food
 				.FirstOrDefaultAsync(f => f.Name == "Beef Burger");
-            await this.foodService.AddToFavouriteAsync(food!.Id.ToString(), User.Id.ToString());
+
+			Assert.IsNotNull(food, ItemNotFoundTestMessage);
+
+			await this.foodService.AddToFavouriteAsync(food!.Id.ToString(), User.Id.ToString());
 
             bool isInFavourite = await this.dbContext.UsersFood.AnyAsync(uf => uf.FoodId == food!.Id && uf.UserId == User.Id);
             Assert.IsTrue(isInFavourite);   
@@ -95,6 +101,8 @@
         {
 			Food? food = await this.dbContext.Food
 				.FirstOrDefaultAsync(f => f.Name == "Beef Burger");
+
+			Assert.IsNotNull(food, ItemNotFoundTestMessage);
 
 			await this.foodService.AddToFavouriteAsync(food!.Id.ToString(), User.Id.ToString());
 			await this.foodService.RemoveFromFavouriteAsync(food.Id.ToString(), User.Id.ToString());
