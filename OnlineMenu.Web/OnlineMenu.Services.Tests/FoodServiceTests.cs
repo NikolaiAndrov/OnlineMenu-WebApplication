@@ -2,6 +2,7 @@
 {
     using Microsoft.EntityFrameworkCore;
 	using OnlineMenu.Data;
+	using OnlineMenu.Data.Models;
 	using OnlineMenu.Services.Interfaces;
 	using OnlineMenu.Web.ViewModels.Food;
 	using static InMemoryDatabaseSeeder;
@@ -51,9 +52,35 @@
             Assert.IsTrue(isExisting);
         }
 
+        [Test]
+        public async Task IsFoodExistingByIdAsync_ShouldReturnTrueWhenExisting()
+        {
+            Food? food = await this.dbContext.Food
+                .FirstOrDefaultAsync(f => f.Name == "Beef Burger");
+
+            bool isFoodExisting = await this.foodService.IsFoodExistingByIdAsync(food!.Id.ToString());
+            Assert.IsTrue(isFoodExisting);
+        }
+
+        [Test]
+        public async Task IsFoodExistingByIdAsync_ShouldReturnFalseWhenNotExisting()
+        {
+            string id = "NotExistingId";
+			bool isFoodExisting = await this.foodService.IsFoodExistingByIdAsync(id);
+
+            Assert.IsFalse(isFoodExisting);
+		}
+
+		[Test]
+		public async Task IsFoodExistingByIdAsync_ShouldReturnFalseWhenNullPassed()
+		{
+			bool isFoodExisting = await this.foodService.IsFoodExistingByIdAsync(null!);
+
+			Assert.IsFalse(isFoodExisting);
+		}
 
 
-        [OneTimeTearDown]
+		[OneTimeTearDown]
         public void OneTimeTearDown()
         {
             this.dbContext.Database.EnsureDeleted();
