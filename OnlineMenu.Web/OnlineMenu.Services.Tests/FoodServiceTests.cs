@@ -111,6 +111,34 @@
             Assert.False(isInFavourite);
 		}
 
+        [Test]
+        public async Task IsFoodInFavouriteAsync_ShouldReturnFalseWhenNotInFavourite()
+        {
+			Food? food = await this.dbContext.Food
+				.FirstOrDefaultAsync(f => f.Name == "Beef Burger");
+
+			Assert.IsNotNull(food, ItemNotFoundTestMessage);
+
+            bool isInFavourite = await this.foodService.IsFoodInFavouriteAsync(User.Id.ToString(), food!.Id.ToString());
+
+            Assert.IsFalse(isInFavourite);
+		}
+
+		[Test]
+		public async Task IsFoodInFavouriteAsync_ShouldReturnTrueWhenInFavourite()
+        {
+			Food? food = await this.dbContext.Food
+				.FirstOrDefaultAsync(f => f.Name == "Beef Burger");
+
+			Assert.IsNotNull(food, ItemNotFoundTestMessage);
+
+            await this.foodService.AddToFavouriteAsync(food.Id.ToString(), User.Id.ToString());
+
+			bool isInFavourite = await this.foodService.IsFoodInFavouriteAsync(User.Id.ToString(), food!.Id.ToString());
+
+            Assert.IsTrue(isInFavourite);
+		}
+
 		[TearDown]
         public void TearDown()
         {
