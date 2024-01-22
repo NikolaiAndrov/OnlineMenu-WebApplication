@@ -239,7 +239,7 @@
 		}
 
 		public async Task<bool> IsFoodExistingByIdAsync(string foodId)
-            => await this.dbContext.Food.AnyAsync(f => f.Id.ToString() == foodId);
+            => await this.dbContext.Food.AnyAsync(f => f.IsDeleted == false && f.Id.ToString() == foodId);
 
         public async Task<bool> IsFoodInFavouriteAsync(string userId, string foodId)
             => await this.dbContext.UsersFood.AnyAsync(uf => uf.UserId.ToString() == userId && uf.FoodId.ToString() == foodId);
