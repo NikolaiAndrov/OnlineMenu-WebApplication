@@ -112,6 +112,7 @@ namespace OnlineMenu.Services.Tests
 		public void TearDown()
 		{
 			this.dbContext.Database.EnsureDeleted();
+			this.dbContext.Dispose();
 		}
 	}
 }
