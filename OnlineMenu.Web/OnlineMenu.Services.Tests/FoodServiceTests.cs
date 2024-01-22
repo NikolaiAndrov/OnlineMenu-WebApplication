@@ -19,8 +19,8 @@
             
         }
 
-        [OneTimeSetUp]
-        public void OneTimeSetUp()
+        [SetUp]
+        public void SetUp()
         {
             this.dbOptions = new DbContextOptionsBuilder<OnlineMenuDbContext>()
                 .UseInMemoryDatabase("OnlineMenuInMemory" + Guid.NewGuid().ToString())
@@ -79,9 +79,32 @@
 			Assert.IsFalse(isFoodExisting);
 		}
 
+        [Test]
+        public async Task AddToFavouriteAsync_ShouldWorkProperly()
+        {
+			Food? food = await this.dbContext.Food
+				.FirstOrDefaultAsync(f => f.Name == "Beef Burger");
+            await this.foodService.AddToFavouriteAsync(food!.Id.ToString(), User.Id.ToString());
 
-		[OneTimeTearDown]
-        public void OneTimeTearDown()
+            bool isInFavourite = await this.dbContext.UsersFood.AnyAsync(uf => uf.FoodId == food!.Id && uf.UserId == User.Id);
+            Assert.IsTrue(isInFavourite);   
+		}
+
+        [Test]
+        public async Task RemoveFromFavouriteAsync_ShouldWorkProperly()
+        {
+			Food? food = await this.dbContext.Food
+				.FirstOrDefaultAsync(f => f.Name == "Beef Burger");
+
+			await this.foodService.AddToFavouriteAsync(food!.Id.ToString(), User.Id.ToString());
+			await this.foodService.RemoveFromFavouriteAsync(food.Id.ToString(), User.Id.ToString());
+
+			bool isInFavourite = await this.dbContext.UsersFood.AnyAsync(uf => uf.FoodId == food!.Id && uf.UserId == User.Id);
+            Assert.False(isInFavourite);
+		}
+
+		[TearDown]
+        public void TearDown()
         {
             this.dbContext.Database.EnsureDeleted();
             this.dbContext.Dispose();
