@@ -14,7 +14,7 @@ namespace OnlineMenu.Services.Tests
 
         public ManagerServiceTests()
         {
-            
+
         }
 
         [OneTimeSetUp]
@@ -45,6 +45,22 @@ namespace OnlineMenu.Services.Tests
 		public async Task IsManagerExistingByUserIdAsync_ShoulReturnTrueWhenManagerExisting()
 		{
 			 bool isManagerExisting = await this.managerService.IsManagerExistingByUserIdAsync(ManagerUser.Id.ToString());
+
+			Assert.IsTrue(isManagerExisting);
+		}
+
+		[Test]
+		public async Task IsManagerExistingByUserEmailAsync_ShoulReturnFalseWhenManagerNotExisting()
+		{
+			bool isManagerExisting = await this.managerService.IsManagerExistingByUserEmailAsync(User.Email);
+
+			Assert.IsFalse(isManagerExisting);
+		}
+
+		[Test]
+		public async Task IsManagerExistingByUserEmailAsync_ShoulReturnTrueWhenManagerExisting()
+		{
+			bool isManagerExisting = await this.managerService.IsManagerExistingByUserEmailAsync(ManagerUser.Email);
 
 			Assert.IsTrue(isManagerExisting);
 		}
