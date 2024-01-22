@@ -3,6 +3,7 @@ namespace OnlineMenu.Services.Tests
 	using Microsoft.EntityFrameworkCore;
 	using OnlineMenu.Data;
 	using OnlineMenu.Services.Interfaces;
+	using OnlineMenu.Web.ViewModels.Manager;
 	using static InMemoryDatabaseSeeder;
 
 	[TestFixture]
@@ -17,8 +18,8 @@ namespace OnlineMenu.Services.Tests
 
         }
 
-        [OneTimeSetUp]
-		public void OneTimeSetUp()
+        [SetUp]
+		public void SetUp()
 		{
 			this.dbOptions = new DbContextOptionsBuilder<OnlineMenuDbContext>()
 				.UseInMemoryDatabase("OnlineMenuInMemory" + Guid.NewGuid().ToString())
@@ -81,8 +82,34 @@ namespace OnlineMenu.Services.Tests
 			Assert.IsTrue(isManagerExisting);
 		}
 
-		[OneTimeTearDown]
-		public void OneTimeTearDown()
+		[Test]
+		public async Task AddManagerAsync_ShouldWorkProperly()
+		{
+			AddManagerPostModel model = new AddManagerPostModel
+			{
+				PhoneNumber = "+359898968989",
+				Email = User.Email
+			};
+
+			await this.managerService.AddManagerAsync(model, User.Id.ToString());
+
+			bool isManagerExisting = await this.managerService.IsManagerExistingByUserIdAsync(User.Id.ToString());
+
+			Assert.IsTrue(isManagerExisting);
+		}
+
+		[Test]
+		public async Task RemoveManagerByUserIdAsync_ShouldWorkProperly()
+		{
+			await this.managerService.RemoveManagerByUserIdAsync(ManagerUser.Id.ToString());
+
+			bool isManagerExisting = await this.managerService.IsManagerExistingByUserIdAsync(ManagerUser.Id.ToString());
+
+			Assert.IsFalse(isManagerExisting);
+		}
+
+		[TearDown]
+		public void TearDown()
 		{
 			this.dbContext.Database.EnsureDeleted();
 		}
