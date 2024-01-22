@@ -42,6 +42,14 @@ namespace OnlineMenu.Services.Tests
 		}
 
 		[Test]
+		public async Task IsManagerExistingByUserIdAsync_ShoulReturnFalseWhenNullPassed()
+		{
+			bool isManagerExisting = await this.managerService.IsManagerExistingByUserIdAsync(null);
+
+			Assert.IsFalse(isManagerExisting);
+		}
+
+		[Test]
 		public async Task IsManagerExistingByUserIdAsync_ShoulReturnTrueWhenManagerExisting()
 		{
 			 bool isManagerExisting = await this.managerService.IsManagerExistingByUserIdAsync(ManagerUser.Id.ToString());
@@ -53,6 +61,14 @@ namespace OnlineMenu.Services.Tests
 		public async Task IsManagerExistingByUserEmailAsync_ShoulReturnFalseWhenManagerNotExisting()
 		{
 			bool isManagerExisting = await this.managerService.IsManagerExistingByUserEmailAsync(User.Email);
+
+			Assert.IsFalse(isManagerExisting);
+		}
+
+		[Test]
+		public async Task IsManagerExistingByUserEmailAsync_ShoulReturnFalseWhenNullPassed()
+		{
+			bool isManagerExisting = await this.managerService.IsManagerExistingByUserEmailAsync(null);
 
 			Assert.IsFalse(isManagerExisting);
 		}
