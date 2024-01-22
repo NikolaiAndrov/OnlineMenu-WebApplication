@@ -5,9 +5,9 @@
 
 	public static class InMemoryDatabaseSeeder
 	{
-		public static ApplicationUser User;
-		public static ApplicationUser ManagerUser;
-		public static Manager Manager;
+		public static ApplicationUser User = null!;
+		public static ApplicationUser ManagerUser = null!;
+		public static Manager Manager = null!;
 
 		public static void Seed(OnlineMenuDbContext dbContext)
 		{
