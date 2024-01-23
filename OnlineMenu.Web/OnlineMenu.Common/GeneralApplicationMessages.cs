@@ -44,5 +44,6 @@
         public const string AdminRemovedMessage = "The admin was removed successfully!";
 
         public const string ItemNotFoundTestMessage = "Item not found in the database!";
+        public const string UserNotFoundTestMessage = "User not found in the database!";
 	}
 }

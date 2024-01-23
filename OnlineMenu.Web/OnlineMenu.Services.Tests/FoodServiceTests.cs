@@ -145,12 +145,12 @@
         [Test]
         public async Task DeleteFoodAsync_ShouldSetIsDeletedPropertyOfFoodToTrue()
         {
-            Food? food = await this.dbContext.Food.FirstOrDefaultAsync(f => f.IsDeleted == false && f.Name == "Beef Burger");
+            Food? food = await this.dbContext.Food.FirstOrDefaultAsync(f => f.IsDeleted == false);
             Assert.IsNotNull(food, ItemNotFoundTestMessage);
 
             await this.foodService.DeleteFoodAsync(food.Id.ToString());
 
-            bool isDeleted = await this.dbContext.Food.AnyAsync(f => f.IsDeleted == true && f.Name == "Beef Burger");
+            bool isDeleted = await this.dbContext.Food.AnyAsync(f => f.IsDeleted == true && f.Id == food.Id);
             Assert.IsTrue(isDeleted);
         }
 
@@ -168,17 +168,19 @@
 		[Test]
         public async Task DeleteFoodByCategoryIdAsync_ShouldDeleteAllFoodItemsWithGivenCategoryId()
         {
-            int saladsCategoryId = 1;
-            await this.foodService.DeleteFoodByCategoryIdAsync(saladsCategoryId);
+            Food? food = await this.dbContext.Food.FirstOrDefaultAsync(f => f.IsDeleted == false);
+            Assert.IsNotNull(food, ItemNotFoundTestMessage);
 
-            bool isAnyFoodWithCategory = await this.dbContext.Food.AnyAsync(f => f.IsDeleted == false && f.FoodCategoryId == saladsCategoryId);
+            await this.foodService.DeleteFoodByCategoryIdAsync(food.FoodCategoryId);
+
+            bool isAnyFoodWithCategory = await this.dbContext.Food.AnyAsync(f => f.IsDeleted == false && f.FoodCategoryId == food.FoodCategoryId);
             Assert.IsFalse(isAnyFoodWithCategory);
         }
 
         [Test]
         public async Task DeleteFoodByCategoryIdAsync_ShouldNotDeleteAnyFoodWhenWrongCategoryIdPassed()
         {
-            int notExistingfoodCategoryId = int.MaxValue;
+            int notExistingfoodCategoryId = int.MinValue;
             int expectedFoodCount = await this.dbContext.Food.CountAsync();
 
             await this.foodService.DeleteFoodByCategoryIdAsync(notExistingfoodCategoryId);
@@ -191,7 +193,7 @@
         [Test]
         public async Task GetFoodForEditAsync_AshouldReturnTheCorrectItem()
         {
-            Food? food = await this.dbContext.Food.FirstOrDefaultAsync(f => f.IsDeleted == false && f.Name == "Beef Burger");
+            Food? food = await this.dbContext.Food.FirstOrDefaultAsync(f => f.IsDeleted == false);
             Assert.IsNotNull(food, ItemNotFoundTestMessage);
 
             FoodPostModel foodPostModel = await this.foodService.GetFoodForEditAsync(food.Id.ToString());
@@ -219,7 +221,7 @@
 		[Test]
         public async Task EditFoodAsync_ShouldEditFoodCorrectly()
         {
-			Food? food = await this.dbContext.Food.FirstOrDefaultAsync(f => f.IsDeleted == false && f.Name == "Beef Burger");
+			Food? food = await this.dbContext.Food.FirstOrDefaultAsync(f => f.IsDeleted == false);
 			Assert.IsNotNull(food, ItemNotFoundTestMessage);
 
 			FoodPostModel expectedFood = new FoodPostModel
@@ -267,12 +269,19 @@
 		}
 
         [Test]
-        public async Task GetAllFoodByQueryModelAsync_ByGivenCategoryShouldReturnFoodItemsWithGivenCategory()
+        public async Task GetAllFoodByQueryModelAsync_ShouldReturnFoodItemsWithGivenCategory()
         {
-            string foodCategory = "Salads";
-            string salad1 = "Caesar Salad";
-            string salad2 = "Caprese Salad";
-            int expectedCount = 2;
+            string? foodCategory = await this.dbContext.FoodCategories
+                .Where(fc => fc.IsDeleted == false)
+                .Select(fc => fc.Name)
+                .FirstOrDefaultAsync();
+
+            Assert.IsNotNull(foodCategory, ItemNotFoundTestMessage);
+            
+            ICollection<Food> food = await this.dbContext.Food
+                .Where(f => f.IsDeleted == false && f.Category.Name == foodCategory)
+                .ToArrayAsync();
+
 
 			FoodQueryModel foodQueryModel = new FoodQueryModel
             {
@@ -281,30 +290,46 @@
 
 			FoodQueryModel returnedModel = await this.foodService.GetAllFoodByQueryModelAsync(foodQueryModel);
 
-            int actualCount = returnedModel.FoodAll.Count();
-            FoodAllViewModel returnedsalad1 = returnedModel.FoodAll.Where(f => f.Name == salad1).First();
-            FoodAllViewModel returnedsalad2 = returnedModel.FoodAll.Where(f => f.Name == salad2).First();
+            bool isCategoryMissing = false;
 
+            foreach (var currentFood in returnedModel.FoodAll)
+            {
+                if (!food.Any(f => f.Id.ToString() == currentFood.Id))
+                {
+                    isCategoryMissing = true;
+                    break;
+                }
+            }
+
+            int expectedCount = food.Count;
+            int actualCount = returnedModel.FoodAll.Count();
 
 			Assert.AreEqual(expectedCount, actualCount);
-            Assert.AreEqual(salad1, returnedsalad1.Name);
-            Assert.AreEqual(salad2, returnedsalad2.Name);
+            Assert.IsFalse(isCategoryMissing);
 		}
 
         [Test]
         public async Task GetAllFoodByQueryModelAsync_ShouldReturnExactItemByKeyword()
         {
-            string keyword = "Viennese Schnitzel";
+            string? keywordFoodName = await this.dbContext.Food
+                .Where(f => f.IsDeleted == false)
+                .Select(f => f.Name)
+                .FirstOrDefaultAsync();
+
+            Assert.IsNotNull(keywordFoodName, ItemNotFoundTestMessage);
 
 			FoodQueryModel foodQueryModel = new FoodQueryModel
             {
-                Keyword = keyword 
+                Keyword = keywordFoodName 
             };
 
             FoodQueryModel returnedModel = await this.foodService.GetAllFoodByQueryModelAsync(foodQueryModel);
 
-			string expectedFoodName = "Viennese Schnitzel";
-            string actualFoodName = returnedModel.FoodAll.First().Name;
+            FoodAllViewModel? foodSearched = returnedModel.FoodAll.FirstOrDefault(f => f.Name == keywordFoodName);
+            Assert.IsNotNull(foodSearched, ItemNotFoundTestMessage);
+
+			string expectedFoodName = keywordFoodName;
+            string actualFoodName = foodSearched.Name;
 
             Assert.AreEqual(expectedFoodName, actualFoodName);
 		}
@@ -312,13 +337,17 @@
         [Test]
         public async Task GetFavouriteFoodAsync_ShouldReturnFavouriteFoodOfGivenUser()
         {
-            Food? food = await this.dbContext.Food.FirstOrDefaultAsync(f => f.Name == "Viennese Schnitzel");
+            Food? food = await this.dbContext.Food.FirstOrDefaultAsync(f => f.IsDeleted == false);
             Assert.IsNotNull(food, ItemNotFoundTestMessage);
+
             await this.foodService.AddToFavouriteAsync(food.Id.ToString(), User.Id.ToString());
 
-            ICollection<FoodAllViewModel> favouriteFood = await this.foodService.GetFavouriteFoodAsync(User.Id.ToString());
+            ApplicationUser? user = await this.dbContext.Users.FirstOrDefaultAsync();
+            Assert.IsNotNull(user, UserNotFoundTestMessage);
 
-            string expectedFood = "Viennese Schnitzel";
+            ICollection<FoodAllViewModel> favouriteFood = await this.foodService.GetFavouriteFoodAsync(user.Id.ToString());
+
+            string expectedFood = food.Name;
             string actualFood = favouriteFood.First().Name;
 
             Assert.AreEqual(expectedFood, actualFood);
@@ -414,7 +443,10 @@
         [Test]
         public async Task GetFoodNamesByCategoryIdAsync_ShouldReturnFoodNamesByGivenFoodCategoryId()
         {
-            int foodCategoryId = 1;
+            int foodCategoryId = await this.dbContext.FoodCategories
+                .Where(fc => fc.IsDeleted == false)
+                .Select(fc => fc.Id)
+                .FirstOrDefaultAsync();
 
             ICollection<string> food = await this.dbContext.Food
                 .Where(f => f.IsDeleted == false && f.FoodCategoryId == foodCategoryId)
