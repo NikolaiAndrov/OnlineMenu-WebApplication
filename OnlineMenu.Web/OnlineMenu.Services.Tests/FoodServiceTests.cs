@@ -220,6 +220,27 @@
 			Assert.That(expectedFood.CategoryId, Is.EqualTo(actualFood!.FoodCategoryId));
 		}
 
+        [Test]
+        public async Task EditFoodAsync_ShouldThrowExceptionWhenInvallidIdPassed()
+        {
+            string invalidId = "InvalidFoodId-12345-Abu";
+
+			FoodPostModel food = new FoodPostModel
+			{
+				Name = "Beef Burger Burger beef burger",
+				Weight = 1000,
+				Price = 1000m,
+				Description = "Description description some description",
+				ImageUrl = "newImageUrlOfBeefBurgerburgerburger",
+				CategoryId = 1,
+			};
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            {
+                await this.foodService.EditFoodAsync(invalidId, food);
+            });
+		}
+
 		[TearDown]
         public void TearDown()
         {
