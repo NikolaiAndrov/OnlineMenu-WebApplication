@@ -51,7 +51,7 @@
             };
 
             string modelId = await this.foodService.AddFoodAndReturnIdAsync(model);
-            bool isExisting = await this.dbContext.Food.AnyAsync(f => f.Id.ToString() == modelId);
+            bool isExisting = await this.dbContext.Food.AnyAsync(f => f.IsDeleted == false && f.Id.ToString() == modelId);
 
             Assert.IsTrue(isExisting);
         }
@@ -60,7 +60,7 @@
         public async Task IsFoodExistingByIdAsync_ShouldReturnTrueWhenExisting()
         {
             Food? food = await this.dbContext.Food
-                .FirstOrDefaultAsync(f => f.Name == "Beef Burger");
+                .FirstOrDefaultAsync(f => f.IsDeleted == false);
 
             Assert.IsNotNull(food, ItemNotFoundTestMessage);
 
@@ -89,11 +89,11 @@
         public async Task AddToFavouriteAsync_ShouldWorkProperly()
         {
 			Food? food = await this.dbContext.Food
-				.FirstOrDefaultAsync(f => f.Name == "Beef Burger");
+				.FirstOrDefaultAsync(f => f.IsDeleted == false);
 
 			Assert.IsNotNull(food, ItemNotFoundTestMessage);
 
-			await this.foodService.AddToFavouriteAsync(food!.Id.ToString(), User.Id.ToString());
+			await this.foodService.AddToFavouriteAsync(food.Id.ToString(), User.Id.ToString());
 
             bool isInFavourite = await this.dbContext.UsersFood.AnyAsync(uf => uf.FoodId == food!.Id && uf.UserId == User.Id);
             Assert.IsTrue(isInFavourite);   
@@ -103,7 +103,7 @@
         public async Task RemoveFromFavouriteAsync_ShouldWorkProperly()
         {
 			Food? food = await this.dbContext.Food
-				.FirstOrDefaultAsync(f => f.Name == "Beef Burger");
+				.FirstOrDefaultAsync(f => f.IsDeleted == false);
 
 			Assert.IsNotNull(food, ItemNotFoundTestMessage);
 
@@ -118,7 +118,7 @@
         public async Task IsFoodInFavouriteAsync_ShouldReturnFalseWhenNotInFavourite()
         {
 			Food? food = await this.dbContext.Food
-				.FirstOrDefaultAsync(f => f.Name == "Beef Burger");
+				.FirstOrDefaultAsync(f => f.IsDeleted == false);
 
 			Assert.IsNotNull(food, ItemNotFoundTestMessage);
 
@@ -131,7 +131,7 @@
 		public async Task IsFoodInFavouriteAsync_ShouldReturnTrueWhenInFavourite()
         {
 			Food? food = await this.dbContext.Food
-				.FirstOrDefaultAsync(f => f.Name == "Beef Burger");
+				.FirstOrDefaultAsync(f => f.IsDeleted == false);
 
 			Assert.IsNotNull(food, ItemNotFoundTestMessage);
 
