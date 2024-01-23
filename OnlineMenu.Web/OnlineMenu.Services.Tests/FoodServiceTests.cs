@@ -204,6 +204,17 @@
 		}
 
         [Test]
+        public async Task GetFoodForEditAsync_ShouldThrowWhenInvalidIdPassed()
+        {
+            string foodId = "someinvalidfoodidididididid";
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            {
+                await this.foodService.GetFoodForEditAsync(foodId);
+            });
+        }
+
+		[Test]
         public async Task EditFoodAsync_ShouldEditFoodCorrectly()
         {
 			Food? food = await this.dbContext.Food.FirstOrDefaultAsync(f => f.IsDeleted == false && f.Name == "Beef Burger");
@@ -355,6 +366,29 @@
             string actualDescription = viewModel.Description;
 
             Assert.AreEqual(expectedDescription, actualDescription);
+		}
+
+        [Test]
+        public async Task GetFoodForDeleteAsync_ShouldThrowWhenInvalidFoodIdPassed()
+        {
+            string foodId = "someInvalidFoodId129393";
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            {
+                await this.foodService.GetFoodForDeleteAsync(foodId);
+            });
+        }
+
+        [Test]
+        public async Task GetFoodForDeleteAsync_ShoulReturnTheExactModelById()
+        {
+            Food? food = await this.dbContext.Food.FirstOrDefaultAsync();
+            Assert.IsNotNull(food, ItemNotFoundTestMessage);
+            FoodDeleteViewModel viewModel = await this.foodService.GetFoodForDeleteAsync(food.Id.ToString());
+
+            Assert.AreEqual(food.Name, viewModel.Name);
+            Assert.AreEqual(food.Description, viewModel.Description);
+            Assert.AreEqual(food.ImageUrl, viewModel.ImageUrl);
 		}
 
 		[TearDown]
