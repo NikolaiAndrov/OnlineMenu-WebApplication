@@ -151,6 +151,29 @@
             Assert.IsTrue(isDeleted);
         }
 
+        [Test]
+        public async Task DeleteFoodByCategoryIdAsync_ShouldDeleteAllFoodItemsWithGivenCategoryId()
+        {
+            int saladsCategoryId = 1;
+            await this.foodService.DeleteFoodByCategoryIdAsync(saladsCategoryId);
+
+            bool isAnyFoodWithCategory = await this.dbContext.Food.AnyAsync(f => f.IsDeleted == false && f.FoodCategoryId == saladsCategoryId);
+            Assert.IsFalse(isAnyFoodWithCategory);
+        }
+
+        [Test]
+        public async Task DeleteFoodByCategoryIdAsync_ShouldNotDeleteAnyFoodWhenWrongCategoryIdPassed()
+        {
+            int notExistingfoodCategoryId = int.MaxValue;
+            int expectedFoodCount = await this.dbContext.Food.CountAsync();
+
+            await this.foodService.DeleteFoodByCategoryIdAsync(notExistingfoodCategoryId);
+
+            int actualFoodCount = await this.dbContext.Food.CountAsync();
+
+            Assert.AreEqual(expectedFoodCount, actualFoodCount);
+        }
+
 		[TearDown]
         public void TearDown()
         {
