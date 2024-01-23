@@ -174,6 +174,52 @@
             Assert.AreEqual(expectedFoodCount, actualFoodCount);
         }
 
+        [Test]
+        public async Task GetFoodForEditAsync_AshouldReturnTheCorrectItem()
+        {
+            Food? food = await this.dbContext.Food.FirstOrDefaultAsync(f => f.IsDeleted == false && f.Name == "Beef Burger");
+            Assert.IsNotNull(food, ItemNotFoundTestMessage);
+
+            FoodPostModel foodPostModel = await this.foodService.GetFoodForEditAsync(food.Id.ToString());
+            Assert.IsNotNull(foodPostModel, ItemNotFoundTestMessage);
+
+            Assert.That(foodPostModel.Name, Is.EqualTo(food.Name));
+            Assert.That(foodPostModel.Weight, Is.EqualTo(food.Weight));
+            Assert.That(foodPostModel.Price, Is.EqualTo(food.Price));
+            Assert.That(foodPostModel.Description, Is.EqualTo(food.Description));
+            Assert.That(foodPostModel.ImageUrl, Is.EqualTo(food.ImageUrl));
+            Assert.That(foodPostModel.CategoryId, Is.EqualTo(food.FoodCategoryId));
+		}
+
+        [Test]
+        public async Task EditFoodAsync_ShouldEditFoodCorrectly()
+        {
+			Food? food = await this.dbContext.Food.FirstOrDefaultAsync(f => f.IsDeleted == false && f.Name == "Beef Burger");
+			Assert.IsNotNull(food, ItemNotFoundTestMessage);
+
+			FoodPostModel expectedFood = new FoodPostModel
+            {
+                Name = "Beef Burger Burger beef burger",
+                Weight = 1000,
+                Price = 1000m,
+                Description = "Description description some description",
+                ImageUrl = "newImageUrlOfBeefBurgerburgerburger",
+                CategoryId = 1,
+			};
+
+            await this.foodService.EditFoodAsync(food.Id.ToString(), expectedFood);
+
+            Food? actualFood = await this.dbContext.Food.FirstOrDefaultAsync(f => f.IsDeleted == false && f.Id == food.Id);
+			Assert.IsNotNull(food, ItemNotFoundTestMessage);
+
+			Assert.That(expectedFood.Name, Is.EqualTo(actualFood!.Name));
+			Assert.That(expectedFood.Weight, Is.EqualTo(actualFood!.Weight));
+			Assert.That(expectedFood.Price, Is.EqualTo(actualFood!.Price));
+			Assert.That(expectedFood.Description, Is.EqualTo(actualFood!.Description));
+			Assert.That(expectedFood.ImageUrl, Is.EqualTo(actualFood!.ImageUrl));
+			Assert.That(expectedFood.CategoryId, Is.EqualTo(actualFood!.FoodCategoryId));
+		}
+
 		[TearDown]
         public void TearDown()
         {
