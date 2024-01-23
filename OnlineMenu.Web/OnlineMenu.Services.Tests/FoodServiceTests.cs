@@ -323,6 +323,40 @@
             Assert.AreEqual(expectedCount, actualCount);
 		}
 
+        [Test]
+        public async Task GetFoodCountAsync_ShouldReturnTheExactCountOfFoodItems()
+        {
+            int expectedCount = await this.dbContext.Food.CountAsync(f => f.IsDeleted == false);
+            int actualCount = await this.foodService.GetFoodCountAsync();
+
+            Assert.AreEqual(expectedCount, actualCount);
+        }
+
+        [Test]
+        public async Task GetFoodDetailsAsync_ShouldThrowWhenNotExistinIdPassed()
+        {
+            string foodId = "notexistingfoodidABABABA-29382";
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            {
+                await this.foodService.GetFoodDetailsAsync(foodId);
+            });
+        }
+
+        [Test]
+        public async Task GetFoodDetailsAsync_ShouldReturnFoodWithProperDescription()
+        {
+            Food? food = await this.dbContext.Food.FirstOrDefaultAsync();
+            Assert.IsNotNull(food, ItemNotFoundTestMessage);
+
+            FoodDetailsViewModel viewModel = await this.foodService.GetFoodDetailsAsync(food.Id.ToString());
+
+            string expectedDescription = food.Description;
+            string actualDescription = viewModel.Description;
+
+            Assert.AreEqual(expectedDescription, actualDescription);
+		}
+
 		[TearDown]
         public void TearDown()
         {
