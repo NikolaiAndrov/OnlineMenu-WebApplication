@@ -8,6 +8,7 @@
     using OnlineMenu.Web.ViewModels.Home;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using static Common.GeneralApplicationConstants;
 
     public class FoodService : IFoodService
     {
@@ -216,7 +217,7 @@
 		public async Task<ICollection<IndexViewModel>> GetFoodForIndexAsync()
         {
             ICollection<IndexViewModel> indexFood = await this.dbContext.Food
-                .Where(f => f.Category.Name == "Desserts" || f.Category.Name == "Burgers")
+                .Where(f => f.IsDeleted == false && f.Category.Name == DessertsFoodCategoryForIndex || f.Category.Name == BurgersFoodCategoryForIndex)
                 .Select(f => new IndexViewModel
                 {
                     Id = f.Id.ToString(),

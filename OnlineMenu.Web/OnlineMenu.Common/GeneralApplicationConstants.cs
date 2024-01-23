@@ -18,5 +18,8 @@
 
 		public const string FoodCategoryCacheKey = "FoodCategoryCache";
 		public const int FoodCategoryCacheDurationMinutes = 15;
+
+        public const string DessertsFoodCategoryForIndex = "Desserts";
+        public const string BurgersFoodCategoryForIndex = "Burgers";
 	}
 }

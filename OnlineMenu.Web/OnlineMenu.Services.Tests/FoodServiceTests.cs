@@ -7,7 +7,9 @@
 	using OnlineMenu.Web.ViewModels.Food;
 	using static InMemoryDatabaseSeeder;
     using static Common.GeneralApplicationMessages;
-	using System.Security.Cryptography.X509Certificates;
+    using static Common.GeneralApplicationConstants;
+	using OnlineMenu.Web.ViewModels.Home;
+	using System.ComponentModel.DataAnnotations.Schema;
 
 	[TestFixture]
 	public class FoodServiceTests
@@ -390,6 +392,40 @@
             Assert.AreEqual(food.Description, viewModel.Description);
             Assert.AreEqual(food.ImageUrl, viewModel.ImageUrl);
 		}
+
+        [Test]
+        public async Task GetFoodForIndexAsync_ShouldReturnItemsByCategoryRequested()
+        {
+            ICollection<IndexViewModel> indexViewModels = await this.foodService.GetFoodForIndexAsync();
+            int expectedCount = await this.dbContext.Food.CountAsync(f => f.IsDeleted == false && f.Category.Name == DessertsFoodCategoryForIndex || f.Category.Name == BurgersFoodCategoryForIndex);
+            int actualCount = indexViewModels.Count;
+
+            Assert.AreEqual(expectedCount, actualCount);
+        }
+
+        [Test]
+        public async Task GetFoodNamesByCategoryIdAsync_ShouldReturnEmptyStringWhenInvalidCategoryIdPassed()
+        {
+            int foodCategoryId = int.MinValue;
+            string foodNames = await this.foodService.GetFoodNamesByCategoryIdAsync(foodCategoryId);
+            Assert.IsEmpty(foodNames);
+        }
+
+        [Test]
+        public async Task GetFoodNamesByCategoryIdAsync_ShouldReturnFoodNamesByGivenFoodCategoryId()
+        {
+            int foodCategoryId = 1;
+
+            ICollection<string> food = await this.dbContext.Food
+                .Where(f => f.IsDeleted == false && f.FoodCategoryId == foodCategoryId)
+                .Select(f => f.Name)
+                .ToArrayAsync();
+
+            string expectedNames = string.Join(", ", food);
+            string actualNames = await this.foodService.GetFoodNamesByCategoryIdAsync(foodCategoryId);
+
+            Assert.AreEqual(expectedNames, actualNames);
+        }
 
 		[TearDown]
         public void TearDown()
