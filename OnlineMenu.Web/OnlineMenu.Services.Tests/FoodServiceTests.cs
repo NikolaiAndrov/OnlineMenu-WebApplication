@@ -139,6 +139,18 @@
             Assert.IsTrue(isInFavourite);
 		}
 
+        [Test]
+        public async Task DeleteFoodAsync_ShouldSetIsDeletedPropertyOfFoodToTrue()
+        {
+            Food? food = await this.dbContext.Food.FirstOrDefaultAsync(f => f.IsDeleted == false && f.Name == "Beef Burger");
+            Assert.IsNotNull(food, ItemNotFoundTestMessage);
+
+            await this.foodService.DeleteFoodAsync(food.Id.ToString());
+
+            bool isDeleted = await this.dbContext.Food.AnyAsync(f => f.IsDeleted == true && f.Name == "Beef Burger");
+            Assert.IsTrue(isDeleted);
+        }
+
 		[TearDown]
         public void TearDown()
         {
