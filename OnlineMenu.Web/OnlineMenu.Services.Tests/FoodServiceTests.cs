@@ -296,6 +296,33 @@
             Assert.AreEqual(expectedFoodName, actualFoodName);
 		}
 
+        [Test]
+        public async Task GetFavouriteFoodAsync_ShouldReturnFavouriteFoodOfGivenUser()
+        {
+            Food? food = await this.dbContext.Food.FirstOrDefaultAsync(f => f.Name == "Viennese Schnitzel");
+            Assert.IsNotNull(food, ItemNotFoundTestMessage);
+            await this.foodService.AddToFavouriteAsync(food.Id.ToString(), User.Id.ToString());
+
+            ICollection<FoodAllViewModel> favouriteFood = await this.foodService.GetFavouriteFoodAsync(User.Id.ToString());
+
+            string expectedFood = "Viennese Schnitzel";
+            string actualFood = favouriteFood.First().Name;
+
+            Assert.AreEqual(expectedFood, actualFood);
+		}
+
+        [Test]
+        public async Task GetFavouriteFoodAsync_ShouldReturnEmptyCollectionWhenWrongIdPassed()
+        {
+            string userId = "WrongUserIdABABA-123";
+            ICollection<FoodAllViewModel> favouriteFood = await this.foodService.GetFavouriteFoodAsync(userId);
+
+            int expectedCount = 0;
+            int actualCount = favouriteFood.Count;
+
+            Assert.AreEqual(expectedCount, actualCount);
+		}
+
 		[TearDown]
         public void TearDown()
         {
