@@ -7,6 +7,7 @@
 	using OnlineMenu.Web.ViewModels.Food;
 	using static InMemoryDatabaseSeeder;
     using static Common.GeneralApplicationMessages;
+	using System.Security.Cryptography.X509Certificates;
 
 	[TestFixture]
 	public class FoodServiceTests
@@ -152,6 +153,17 @@
         }
 
         [Test]
+        public async Task DeleteFoodAsync_ShouldThrowWhenInvalidIdPassed()
+        {
+            string invalidId = "invalidFooodId";
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            {
+                await this.foodService.DeleteFoodAsync(invalidId);
+            });
+        }
+
+		[Test]
         public async Task DeleteFoodByCategoryIdAsync_ShouldDeleteAllFoodItemsWithGivenCategoryId()
         {
             int saladsCategoryId = 1;
@@ -239,6 +251,49 @@
             {
                 await this.foodService.EditFoodAsync(invalidId, food);
             });
+		}
+
+        [Test]
+        public async Task GetAllFoodByQueryModelAsync_ByGivenCategoryShouldReturnFoodItemsWithGivenCategory()
+        {
+            string foodCategory = "Salads";
+            string salad1 = "Caesar Salad";
+            string salad2 = "Caprese Salad";
+            int expectedCount = 2;
+
+			FoodQueryModel foodQueryModel = new FoodQueryModel
+            {
+                Category = foodCategory
+			};
+
+			FoodQueryModel returnedModel = await this.foodService.GetAllFoodByQueryModelAsync(foodQueryModel);
+
+            int actualCount = returnedModel.FoodAll.Count();
+            FoodAllViewModel returnedsalad1 = returnedModel.FoodAll.Where(f => f.Name == salad1).First();
+            FoodAllViewModel returnedsalad2 = returnedModel.FoodAll.Where(f => f.Name == salad2).First();
+
+
+			Assert.AreEqual(expectedCount, actualCount);
+            Assert.AreEqual(salad1, returnedsalad1.Name);
+            Assert.AreEqual(salad2, returnedsalad2.Name);
+		}
+
+        [Test]
+        public async Task GetAllFoodByQueryModelAsync_ShouldReturnExactItemByKeyword()
+        {
+            string keyword = "Viennese Schnitzel";
+
+			FoodQueryModel foodQueryModel = new FoodQueryModel
+            {
+                Keyword = keyword 
+            };
+
+            FoodQueryModel returnedModel = await this.foodService.GetAllFoodByQueryModelAsync(foodQueryModel);
+
+			string expectedFoodName = "Viennese Schnitzel";
+            string actualFoodName = returnedModel.FoodAll.First().Name;
+
+            Assert.AreEqual(expectedFoodName, actualFoodName);
 		}
 
 		[TearDown]
