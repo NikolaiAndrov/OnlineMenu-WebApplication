@@ -3,6 +3,7 @@
     using Microsoft.EntityFrameworkCore;
     using OnlineMenu.Data;
 	using OnlineMenu.Services.Interfaces;
+	using OnlineMenu.Web.ViewModels.Drink;
     using static InMemoryDatabaseSeeder;
     using static Common.GeneralApplicationMessages;
 
@@ -61,6 +62,32 @@
             bool isDrinkExisting = await this.drinkService.IsDrinkExistingByIdAsync(drinkId);
             Assert.IsTrue(isDrinkExisting);
         }
+
+        [Test]
+        public async Task AddDrinkAndReturnIdAsync_ShouldAddNewDrinkAndReturnTheDrinkId()
+        {
+            int drinkCategoryId = await this.dbContext.DrinksCategories
+                .Select(d => d.Id)
+                .FirstOrDefaultAsync();
+
+			DrinkPostModel drinkPostModel = new DrinkPostModel
+            {
+                Name = "Test",
+                Milliliters = 50,
+                Price = 50m,
+                Description = "Test Test",
+                IsAlcoholic = true,
+                ImageUrl = "NewDrinkImgUrl",
+                CategoryId = drinkCategoryId
+            };
+
+           string returnedDrinkId = await this.drinkService.AddDrinkAndReturnIdAsync(drinkPostModel);
+
+            bool isDrinkExisting = await this.dbContext.Drinks
+                .AnyAsync(d => d.IsDeleted == false && d.Id.ToString() == returnedDrinkId);
+
+            Assert.IsTrue(isDrinkExisting);
+		}
 
 
 		[TearDown] 
