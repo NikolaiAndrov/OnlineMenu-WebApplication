@@ -6,6 +6,7 @@
 	using OnlineMenu.Web.ViewModels.Drink;
     using static InMemoryDatabaseSeeder;
     using static Common.GeneralApplicationMessages;
+	using OnlineMenu.Data.Models;
 
 	[TestFixture]
 	public class DrinkServiceTests
@@ -89,6 +90,72 @@
             Assert.IsTrue(isDrinkExisting);
 		}
 
+		[Test]
+        public async Task AddToFavouriteAsync_ShouldAddDrinkToFavouritesOfUser()
+        {
+            string? userId = await this.dbContext.Users
+                .Select(u => u.Id.ToString())
+                .FirstOrDefaultAsync();
+            Assert.IsNotNull(userId, UserNotFoundTestMessage);
+
+            string? drinkId = await this.dbContext.Drinks
+                .Where(d => d.IsDeleted == false)
+                .Select(d => d.Id.ToString())
+                .FirstOrDefaultAsync();
+            Assert.IsNotNull(drinkId, ItemNotFoundTestMessage);
+
+            await this.drinkService.AddToFavouriteAsync(drinkId, userId);
+
+            bool isInFvourite = await this.dbContext.UsersDrinks
+                .AnyAsync(ud => ud.Drink.Id.ToString() == drinkId && ud.User.Id.ToString() == userId);
+
+            Assert.IsTrue(isInFvourite);
+        }
+
+        [Test]
+        public async Task IsDrinkInFavourite_ShouldReturnTrueWhenInFavourite()
+        {
+			string? userId = await this.dbContext.Users
+			   .Select(u => u.Id.ToString())
+			   .FirstOrDefaultAsync();
+			Assert.IsNotNull(userId, UserNotFoundTestMessage);
+
+			string? drinkId = await this.dbContext.Drinks
+				.Where(d => d.IsDeleted == false)
+				.Select(d => d.Id.ToString())
+				.FirstOrDefaultAsync();
+			Assert.IsNotNull(drinkId, ItemNotFoundTestMessage);
+
+			await this.drinkService.AddToFavouriteAsync(drinkId, userId);
+            bool isInFvourite = await this.drinkService.IsDrinkInFavouriteAsync(userId, drinkId);
+
+            Assert.IsTrue(isInFvourite);
+		}
+
+        [Test]
+        public async Task IsDrinkInFavourite_ShouldReturnFalseWhenNotInFavourite()
+        {
+			string? userId = await this.dbContext.Users
+			   .Select(u => u.Id.ToString())
+			   .FirstOrDefaultAsync();
+			Assert.IsNotNull(userId, UserNotFoundTestMessage);
+
+			string? drinkId = await this.dbContext.Drinks
+				.Where(d => d.IsDeleted == false)
+				.Select(d => d.Id.ToString())
+				.FirstOrDefaultAsync();
+			Assert.IsNotNull(drinkId, ItemNotFoundTestMessage);
+
+			bool isInFvourite = await this.drinkService.IsDrinkInFavouriteAsync(userId, drinkId);
+            Assert.IsFalse(isInFvourite);
+		}
+
+        [Test]
+		public async Task IsDrinkInFavourite_ShouldReturnFalseWhenNullPassed()
+        {
+			bool isInFvourite = await this.drinkService.IsDrinkInFavouriteAsync(null!, null!);
+			Assert.IsFalse(isInFvourite);
+		}
 
 		[TearDown] 
         public async Task TearDown()

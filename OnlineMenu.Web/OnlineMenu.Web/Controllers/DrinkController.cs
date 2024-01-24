@@ -69,7 +69,7 @@
 			try
 			{
 				isDrinkExisting = await this.drinkService.IsDrinkExistingByIdAsync(Id);
-                isInFavourite = await this.drinkService.IsDrinkInFavourite(userId, Id);
+                isInFavourite = await this.drinkService.IsDrinkInFavouriteAsync(userId, Id);
 			}
 			catch (Exception)
 			{
@@ -114,7 +114,7 @@
             try
             {
                 isDrinkExisting = await this.drinkService.IsDrinkExistingByIdAsync(Id);
-                isInFavourite = await this.drinkService.IsDrinkInFavourite(userId, Id);
+                isInFavourite = await this.drinkService.IsDrinkInFavouriteAsync(userId, Id);
             }
             catch (Exception)
             {
