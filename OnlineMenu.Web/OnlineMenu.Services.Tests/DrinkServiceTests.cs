@@ -361,6 +361,20 @@
 			Assert.That(drink.Description, Is.EqualTo(drinkDetails.Description));
 		}
 
+		[Test]
+		public async Task GetDrinkForDeleteAsync_ShouldReturnTheRequestedDrink()
+		{
+			Drink? drink = await this.dbContext.Drinks
+				.FirstOrDefaultAsync(d => d.IsDeleted == false);
+			Assert.IsNotNull(drink, ItemNotFoundTestMessage);
+
+			DrinkDeleteViewModel drinkDelete = await this.drinkService.GetDrinkForDeleteAsync(drink.Id.ToString());
+
+			Assert.That(drink.Name, Is.EqualTo(drinkDelete.Name));
+			Assert.That(drink.Description, Is.EqualTo(drinkDelete.Description));
+			Assert.That(drink.ImageUrl, Is.EqualTo(drinkDelete.ImageUrl));
+		}
+
 		[TearDown]
 		public async Task TearDown()
 		{
