@@ -420,6 +420,34 @@
 			Assert.That(actualCount, Is.EqualTo(expectedCount));
 		}
 
+		[Test]
+		public async Task GetDrinkNamesByCategoryIdAsync_ShouldReturnEmptyStringWhenWrongCategoryIdPassed()
+		{
+			int categoryId = int.MinValue;
+			string categories = await this.drinkService.GetDrinkNamesByCategoryIdAsync(categoryId);
+
+			Assert.IsEmpty(categories);
+		}
+
+		[Test]
+		public async Task GetDrinkNamesByCategoryIdAsync_ShouldReturnAllCategoryNamesByGivenGategoryId()
+		{
+			int drinkCategoryId = await this.dbContext.DrinksCategories
+				.Where(dc => dc.IsDeleted == false)
+				.Select(dc => dc.Id)
+				.FirstOrDefaultAsync();
+
+			ICollection<string> drinkNames = await this.dbContext.Drinks
+				.Where(d => d.IsDeleted == false && d.DrinkCategoryId == drinkCategoryId)
+				.Select(d => d.Name)
+				.ToArrayAsync();
+
+			string expectedNames = string.Join(", ", drinkNames);
+			string actualNames = await this.drinkService.GetDrinkNamesByCategoryIdAsync(drinkCategoryId);
+
+			Assert.That(expectedNames, Is.EqualTo(actualNames));
+		}
+
 		[TearDown]
 		public async Task TearDown()
 		{
