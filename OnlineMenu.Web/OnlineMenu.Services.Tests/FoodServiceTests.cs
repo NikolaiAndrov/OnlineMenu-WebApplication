@@ -155,7 +155,7 @@
         }
 
         [Test]
-        public async Task DeleteFoodAsync_ShouldThrowWhenInvalidIdPassed()
+        public void DeleteFoodAsync_ShouldThrowWhenInvalidIdPassed()
         {
             string invalidId = "invalidFooodId";
 
@@ -208,7 +208,7 @@
 		}
 
         [Test]
-        public async Task GetFoodForEditAsync_ShouldThrowWhenInvalidIdPassed()
+        public void GetFoodForEditAsync_ShouldThrowWhenInvalidIdPassed()
         {
             string foodId = "someinvalidfoodidididididid";
 
@@ -248,7 +248,7 @@
 		}
 
         [Test]
-        public async Task EditFoodAsync_ShouldThrowExceptionWhenInvallidIdPassed()
+        public void EditFoodAsync_ShouldThrowExceptionWhenInvallidIdPassed()
         {
             string invalidId = "InvalidFoodId-12345-Abu";
 
@@ -375,7 +375,7 @@
         }
 
         [Test]
-        public async Task GetFoodDetailsAsync_ShouldThrowWhenNotExistinIdPassed()
+        public void GetFoodDetailsAsync_ShouldThrowWhenNotExistinIdPassed()
         {
             string foodId = "notexistingfoodidABABABA-29382";
 
@@ -400,7 +400,7 @@
 		}
 
         [Test]
-        public async Task GetFoodForDeleteAsync_ShouldThrowWhenInvalidFoodIdPassed()
+        public void GetFoodForDeleteAsync_ShouldThrowWhenInvalidFoodIdPassed()
         {
             string foodId = "someInvalidFoodId129393";
 
