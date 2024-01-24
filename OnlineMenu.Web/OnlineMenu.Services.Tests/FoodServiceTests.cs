@@ -331,7 +331,7 @@
 			string expectedFoodName = keywordFoodName;
             string actualFoodName = foodSearched.Name;
 
-            Assert.AreEqual(expectedFoodName, actualFoodName);
+            Assert.That(actualFoodName, Is.EqualTo(expectedFoodName));
 		}
 
         [Test]

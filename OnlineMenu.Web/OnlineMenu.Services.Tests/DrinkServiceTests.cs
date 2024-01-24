@@ -7,6 +7,7 @@
 	using static InMemoryDatabaseSeeder;
 	using static Common.GeneralApplicationMessages;
 	using OnlineMenu.Data.Models;
+	using OnlineMenu.Web.ViewModels.Food;
 
 	[TestFixture]
 	public class DrinkServiceTests
@@ -279,6 +280,72 @@
 			Assert.That(drink.ImageUrl, Is.EqualTo(drinkPostModel.ImageUrl));
 			Assert.That(drink.DrinkCategoryId, Is.EqualTo(drinkPostModel.CategoryId));
 
+		}
+
+		[Test]
+		public async Task GetAllDrinksByQueryModelAsync_ShouldReturnDrinkItemsWithGivenCategory()
+		{
+			string? drinkCategory = await this.dbContext.DrinksCategories
+				.Where(dc => dc.IsDeleted == false)
+				.Select(dc => dc.Name)
+				.FirstOrDefaultAsync();
+
+			Assert.IsNotNull(drinkCategory, ItemNotFoundTestMessage);
+
+			ICollection<Drink> drinks = await this.dbContext.Drinks
+				.Where(d => d.IsDeleted == false && d.DrinkCategory.Name == drinkCategory)
+				.ToArrayAsync();
+
+
+			DrinkQueryModel drinkQueryModel = new DrinkQueryModel
+			{
+				Category = drinkCategory
+			};
+
+			DrinkQueryModel returnedModel = await this.drinkService.GetAllDrinksByQueryModelAsync(drinkQueryModel);
+
+			bool isCategoryMissing = false;
+
+			foreach (var currentDrink in returnedModel.DrinksAll)
+			{
+				if (!drinks.Any(f => f.Id.ToString() == currentDrink.Id))
+				{
+					isCategoryMissing = true;
+					break;
+				}
+			}
+
+			int expectedCount = drinks.Count;
+			int actualCount = returnedModel.DrinksAll.Count();
+
+			Assert.That(actualCount, Is.EqualTo(expectedCount));
+			Assert.IsFalse(isCategoryMissing);
+		}
+
+		[Test]
+		public async Task GetAllDrinksByQueryModelAsync_ShouldReturnExactItemByKeyword()
+		{
+			string? keywordDrinkName = await this.dbContext.Drinks
+			   .Where(d => d.IsDeleted == false)
+			   .Select(d => d.Name)
+			   .FirstOrDefaultAsync();
+
+			Assert.IsNotNull(keywordDrinkName, ItemNotFoundTestMessage);
+
+			DrinkQueryModel drinkQueryModel = new DrinkQueryModel
+			{
+				Keyword = keywordDrinkName
+			};
+
+			DrinkQueryModel returnedModel = await this.drinkService.GetAllDrinksByQueryModelAsync(drinkQueryModel);
+
+			DrinkAllViewModel? drinkSearched = returnedModel.DrinksAll.FirstOrDefault(d => d.Name == keywordDrinkName);
+			Assert.IsNotNull(drinkSearched, ItemNotFoundTestMessage);
+
+			string expectedDrinkName = keywordDrinkName;
+			string actualDrinkName = drinkSearched.Name;
+
+			Assert.That(actualDrinkName, Is.EqualTo(expectedDrinkName));
 		}
 
 		[TearDown]
