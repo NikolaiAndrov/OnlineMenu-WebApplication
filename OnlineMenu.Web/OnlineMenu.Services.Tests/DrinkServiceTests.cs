@@ -387,6 +387,39 @@
 			Assert.That(expectedCount, Is.EqualTo(actualCount));
 		}
 
+		[Test]
+		public async Task GetFavouriteDrinksAsync_ShouldReturnAllFavouriteDrinks()
+		{
+			ApplicationUser? user = await this.dbContext.Users
+				.FirstOrDefaultAsync();
+			Assert.IsNotNull(user, UserNotFoundTestMessage);
+
+			Drink? drink = await this.dbContext.Drinks
+				.FirstOrDefaultAsync(d => d.IsDeleted == false);
+			Assert.IsNotNull(drink, ItemNotFoundTestMessage);
+
+			await this.drinkService.AddToFavouriteAsync(drink.Id.ToString(), user.Id.ToString());
+
+			ICollection<DrinkAllViewModel> favouriteDrinks = await this.drinkService.GetFavouriteDrinksAsync(user.Id.ToString());
+
+			string expectedDrinkName = drink.Name;
+			string actualDrinkName = favouriteDrinks.First().Name;
+
+			Assert.That(expectedDrinkName, Is.EqualTo(actualDrinkName));
+		}
+
+		[Test]
+		public async Task GetFavouriteDrinksAsync_ShouldReturnEmptyCollectionWhenInvalidUserIdPassed()
+		{
+			string invalidUserId = "someinvalididididid123";
+			ICollection<DrinkAllViewModel> favouriteDrinks = await this.drinkService.GetFavouriteDrinksAsync(invalidUserId);
+
+			int expectedCount = 0;
+			int actualCount = favouriteDrinks.Count;
+
+			Assert.That(actualCount, Is.EqualTo(expectedCount));
+		}
+
 		[TearDown]
 		public async Task TearDown()
 		{

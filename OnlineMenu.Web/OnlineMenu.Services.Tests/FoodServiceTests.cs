@@ -350,7 +350,7 @@
             string expectedFood = food.Name;
             string actualFood = favouriteFood.First().Name;
 
-            Assert.AreEqual(expectedFood, actualFood);
+            Assert.That(actualFood, Is.EqualTo(expectedFood));
 		}
 
         [Test]
