@@ -24,14 +24,14 @@
         }
 
         [SetUp]
-        public void SetUp()
+        public async Task SetUp()
         {
             this.dbOptions = new DbContextOptionsBuilder<OnlineMenuDbContext>()
                 .UseInMemoryDatabase("OnlineMenuInMemory" + Guid.NewGuid().ToString())
                 .Options;
 
             this.dbContext = new OnlineMenuDbContext(this.dbOptions);
-            this.dbContext.Database.EnsureCreated();
+            await this.dbContext.Database.EnsureCreatedAsync();
             Seed(this.dbContext);
 
             this.foodService = new FoodService(dbContext);
@@ -460,10 +460,10 @@
         }
 
 		[TearDown]
-        public void TearDown()
+        public async Task TearDown()
         {
-            this.dbContext.Database.EnsureDeleted();
-            this.dbContext.Dispose();
+            await this.dbContext.Database.EnsureDeletedAsync();
+            await this.dbContext.DisposeAsync();
         }
     }
 }

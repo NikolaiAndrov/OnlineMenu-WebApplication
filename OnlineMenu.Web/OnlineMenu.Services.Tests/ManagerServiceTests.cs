@@ -19,7 +19,7 @@ namespace OnlineMenu.Services.Tests
         }
 
         [SetUp]
-		public void SetUp()
+		public async Task SetUp()
 		{
 			this.dbOptions = new DbContextOptionsBuilder<OnlineMenuDbContext>()
 				.UseInMemoryDatabase("OnlineMenuInMemory" + Guid.NewGuid().ToString())
@@ -27,7 +27,7 @@ namespace OnlineMenu.Services.Tests
 
 			this.dbContext = new OnlineMenuDbContext(this.dbOptions);
 
-			this.dbContext.Database.EnsureCreated();
+			await this.dbContext.Database.EnsureDeletedAsync();
 
 			Seed(this.dbContext);
 
@@ -109,10 +109,10 @@ namespace OnlineMenu.Services.Tests
 		}
 
 		[TearDown]
-		public void TearDown()
+		public async Task TearDown()
 		{
-			this.dbContext.Database.EnsureDeleted();
-			this.dbContext.Dispose();
+			await this.dbContext.Database.EnsureDeletedAsync();
+			await this.dbContext.DisposeAsync();
 		}
 	}
 }
