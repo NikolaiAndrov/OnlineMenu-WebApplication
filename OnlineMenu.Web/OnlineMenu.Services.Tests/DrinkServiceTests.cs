@@ -4,6 +4,7 @@
     using OnlineMenu.Data;
 	using OnlineMenu.Services.Interfaces;
     using static InMemoryDatabaseSeeder;
+    using static Common.GeneralApplicationMessages;
 
 	[TestFixture]
 	public class DrinkServiceTests
@@ -40,7 +41,26 @@
             Assert.IsFalse(isDrinkExisting);
         }
 
+        [Test]
+        public async Task IsDrinkExistingByIdAsync_ShouldReturnFalseWhenNullPassed()
+        {
+            bool isDrinkExisting = await this.drinkService.IsDrinkExistingByIdAsync(null!);
+            Assert.IsFalse(isDrinkExisting);
+        }
 
+		[Test]
+		public async Task IsDrinkExistingByIdAsync_ShouldReturnTrueWhenCorrectIdPassed()
+        {
+            string? drinkId = await this.dbContext.Drinks
+                .Where(d => d.IsDeleted == false)
+                .Select(d => d.Id.ToString())
+                .FirstOrDefaultAsync();
+
+            Assert.IsNotNull(drinkId, ItemNotFoundTestMessage);
+
+            bool isDrinkExisting = await this.drinkService.IsDrinkExistingByIdAsync(drinkId);
+            Assert.IsTrue(isDrinkExisting);
+        }
 
 
 		[TearDown] 
