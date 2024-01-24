@@ -375,6 +375,18 @@
 			Assert.That(drink.ImageUrl, Is.EqualTo(drinkDelete.ImageUrl));
 		}
 
+		[Test]
+		public async Task GetDrinksCountAsync_ShouldReturnAllAvailableDrinksCount()
+		{
+			int expectedCount = await this.dbContext.Drinks
+				.Where(d => d.IsDeleted == false)
+				.CountAsync();
+
+			int actualCount = await this.drinkService.GetDrinksCountAsync();
+
+			Assert.That(expectedCount, Is.EqualTo(actualCount));
+		}
+
 		[TearDown]
 		public async Task TearDown()
 		{
