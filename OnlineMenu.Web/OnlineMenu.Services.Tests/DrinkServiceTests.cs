@@ -203,6 +203,43 @@
 			Assert.IsFalse(isAnyDrink);
 		}
 
+		[Test]
+		public async Task DeleteDrinkAsync_ShouldDeleteDrinkByGivenId()
+		{
+			string? drinkId = await this.dbContext.Drinks
+				.Where(d => d.IsDeleted == false)
+				.Select(d => d.Id.ToString())
+				.FirstOrDefaultAsync();
+
+			Assert.IsNotNull(drinkId, ItemNotFoundTestMessage);
+
+			await this.drinkService.DeleteDrinkAsync(drinkId);
+
+			bool isAnyDrink = await this.dbContext.Drinks
+				.AnyAsync(d => d.IsDeleted == false && d.Id.ToString() == drinkId);
+
+			Assert.IsFalse(isAnyDrink);
+		}
+
+		[Test]
+		public async Task GetDrinkForEditAsync_ShouldReturnExactDrinkByGivenId()
+		{
+			Drink? drink = await this.dbContext.Drinks
+				.Where(d => d.IsDeleted == false)
+				.FirstOrDefaultAsync();
+
+			Assert.IsNotNull(drink, ItemNotFoundTestMessage);
+
+			DrinkPostModel model = await this.drinkService.GetDrinkForEditAsync(drink.Id.ToString());
+
+			Assert.That(model.Name, Is.EqualTo(drink.Name));
+			Assert.That(model.Milliliters, Is.EqualTo(drink.Milliliters));
+			Assert.That(model.Price, Is.EqualTo(drink.Price));
+			Assert.That(model.IsAlcoholic, Is.EqualTo(drink.IsAlcoholic));
+			Assert.That(model.ImageUrl, Is.EqualTo(drink.ImageUrl));
+			Assert.That(model.CategoryId, Is.EqualTo(drink.DrinkCategoryId));
+		}
+
 		[TearDown]
 		public async Task TearDown()
 		{
