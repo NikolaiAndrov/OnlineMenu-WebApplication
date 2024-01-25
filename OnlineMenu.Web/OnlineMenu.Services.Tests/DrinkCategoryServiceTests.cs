@@ -60,6 +60,38 @@
 			Assert.IsFalse(isCategoryExisting);
 		}
 
+		[Test]
+		public async Task IsCategoryExistingByIdAsync_ShouldReturnTrueWhenExist()
+		{
+			DrinkCategory? drinkCategory = await this.dbContext.DrinksCategories
+				.FirstOrDefaultAsync(dc => dc.IsDeleted == false);
+			Assert.IsNotNull(drinkCategory, ItemNotFoundTestMessage);
+
+			bool isExisting = await this.drinkCategoryService.IsCategoryExistingByIdAsync(drinkCategory.Id);
+			Assert.IsTrue(isExisting);
+		}
+
+		[Test]
+		public async Task IsCategoryExistingByIdAsync_ShouldReturnFalseWhenNotExisting()
+		{
+			int id = int.MinValue;
+			bool isCategoriExisting = await this.drinkCategoryService.IsCategoryExistingByIdAsync(id);
+			Assert.IsFalse(isCategoriExisting);
+		}
+
+		[Test]
+		public async Task IsCategoryExistingByIdAsync_ShouldReturnFalseWhenDeleted()
+		{
+			DrinkCategory? drinkCategory = await this.dbContext.DrinksCategories
+				.FirstOrDefaultAsync(dc => dc.IsDeleted == false);
+			Assert.IsNotNull(drinkCategory, ItemNotFoundTestMessage);
+
+			await this.drinkCategoryService.DeleteCategoryAsync(drinkCategory.Id);
+			bool isCategoryExisting = await this.drinkCategoryService.IsCategoryExistingByIdAsync(drinkCategory.Id);
+
+			Assert.IsFalse(isCategoryExisting);
+		}
+
 		[TearDown]
 		public async Task TearDown()
 		{
