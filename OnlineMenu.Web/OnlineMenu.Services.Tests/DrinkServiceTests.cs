@@ -451,7 +451,7 @@
 		[TearDown]
 		public async Task TearDown()
 		{
-			await this.dbContext.Database.EnsureCreatedAsync();
+			await this.dbContext.Database.EnsureDeletedAsync();
 			await this.dbContext.DisposeAsync();
 		}
 	}
