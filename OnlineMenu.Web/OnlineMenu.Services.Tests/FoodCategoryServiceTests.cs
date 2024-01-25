@@ -126,6 +126,54 @@
 			Assert.IsFalse(isCategoruExisting);
 		}
 
+        [Test]
+        public async Task GetCategoryForEditAsync_ShouldReturnExactCategory()
+        {
+            FoodCategory? foodCategory = await this.dbContext.FoodCategories
+                .FirstOrDefaultAsync(fc => fc.IsDeleted == false);
+            Assert.IsNotNull(foodCategory, ItemNotFoundTestMessage);
+
+            FoodCategoryPostModel model = await this.foodCategoryService.GetCategoryForEditAsync(foodCategory.Id);
+
+            Assert.That(model.Name, Is.EqualTo(foodCategory.Name));
+		}
+
+        [Test]
+        public async Task GetAllFoodCategoriesAsync_ShouldReturnAllCategories()
+        {
+			ICollection<FoodCategoryViewModel> foodCategories = await this.dbContext.FoodCategories
+                .Where(fc => fc.IsDeleted == false)
+                .Select(fc => new FoodCategoryViewModel
+                {
+                    Id = fc.Id,
+                    Name = fc.Name,
+                })
+                .ToArrayAsync();
+
+			ICollection<FoodCategoryViewModel> returnedCategories = await this.foodCategoryService.GetAllFoodCategoriesAsync();
+
+			int expectedCount = foodCategories.Count;
+            int actualCount = returnedCategories.Count;
+
+            Assert.That(actualCount, Is.EqualTo(expectedCount));
+		}
+
+        [Test]
+        public async Task GetFoodCategoryNamesAsync_ShouldReturnAllCategoriesNames()
+        {
+			ICollection<string> names = await this.dbContext.FoodCategories
+			   .Where(fc => fc.IsDeleted == false)
+			   .Select(fc => fc.Name)
+			   .ToArrayAsync();
+
+            ICollection<string> returnedNames = await this.foodCategoryService.GetFoodCategoryNamesAsync();
+
+            string expectedNames = string.Join(", ", names);
+            string actualNames = string.Join(", ", returnedNames);
+
+            Assert.That(actualNames, Is.EqualTo(expectedNames));
+		}
+
 		[TearDown]
         public async Task TearDown()
         {
