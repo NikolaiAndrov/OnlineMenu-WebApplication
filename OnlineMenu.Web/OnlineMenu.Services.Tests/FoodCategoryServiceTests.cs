@@ -3,6 +3,7 @@
     using Microsoft.EntityFrameworkCore;
     using OnlineMenu.Data;
 	using OnlineMenu.Services.Interfaces;
+	using OnlineMenu.Web.ViewModels.FoodCategory;
 
 	[TestFixture]
 	public class FoodCategoryServiceTests
@@ -28,8 +29,22 @@
             this.foodCategoryService = new FoodCategoryService(dbContext);
         }
 
+        [Test]
+        public async Task AddNewCategoryAsync_ShouldAddNewCategory()
+        {
+			FoodCategoryPostModel model = new FoodCategoryPostModel
+            {
+                Name = "Test",
+            };
 
-        [TearDown]
+            await this.foodCategoryService.AddNewCategoryAsync(model);
+            bool isCategoryAdded = await this.dbContext.FoodCategories
+                .AnyAsync(fc => fc.IsDeleted == false && fc.Name == model.Name);
+
+            Assert.IsTrue(isCategoryAdded);
+		}
+
+		[TearDown]
         public async Task TearDown()
         {
             await this.dbContext.Database.EnsureDeletedAsync();
