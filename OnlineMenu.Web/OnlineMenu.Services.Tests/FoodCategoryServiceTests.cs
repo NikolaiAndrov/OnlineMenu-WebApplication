@@ -2,8 +2,10 @@
 {
     using Microsoft.EntityFrameworkCore;
     using OnlineMenu.Data;
+	using OnlineMenu.Data.Models;
 	using OnlineMenu.Services.Interfaces;
 	using OnlineMenu.Web.ViewModels.FoodCategory;
+    using static Common.GeneralApplicationMessages;
 
 	[TestFixture]
 	public class FoodCategoryServiceTests
@@ -43,6 +45,26 @@
 
             Assert.IsTrue(isCategoryAdded);
 		}
+
+        [Test]
+        public async Task IsCategoryExistingByIdAsync_ShoulReturnTrueWhenCategoryExistung()
+        {
+            FoodCategory? category = await this.dbContext.FoodCategories
+                .FirstOrDefaultAsync(fc => fc.IsDeleted == false);
+            Assert.IsNotNull(category, ItemNotFoundTestMessage);
+
+            bool isExisting = await this.foodCategoryService.IsCategoryExistingByIdAsync(category.Id);
+            Assert.IsTrue(isExisting);
+        }
+
+        [Test]
+        public async Task IsCategoryExistingByIdAsync_ShouldReturnFalseWhenCategoryNotExisting()
+        {
+            int id = int.MinValue;
+            bool isExisting = await this.foodCategoryService.IsCategoryExistingByIdAsync(id);
+
+            Assert.IsFalse(isExisting);
+        }
 
 		[TearDown]
         public async Task TearDown()
