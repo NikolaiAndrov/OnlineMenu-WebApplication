@@ -141,6 +141,33 @@
 			Assert.That(model.Name, Is.EqualTo(drinkCategory.Name));
 		}
 
+		[Test]
+		public async Task GetAllDrinkCategoriesAsync_ShouldReturnAllCategories()
+		{
+			ICollection<DrinkCategoryViewModel> drinkCategoryViewModels = await this.drinkCategoryService.GetAllDrinkCategoriesAsync();
+
+			int expectedCount = await this.dbContext.DrinksCategories
+				.Where(dc => dc.IsDeleted == false)
+				.CountAsync();
+			
+			int actualCount = drinkCategoryViewModels.Count();
+
+			Assert.That(expectedCount, Is.EqualTo(actualCount));
+		}
+
+		[Test]
+		public async Task GetCategoryForDeleteAsync_ShouldReturnRequestedCategory()
+		{
+			DrinkCategory? drinkCategory = await this.dbContext.DrinksCategories
+				.FirstOrDefaultAsync(dc => dc.IsDeleted == false);
+			Assert.IsNotNull(drinkCategory, ItemNotFoundTestMessage);
+
+			DrinkCategoryDeleteViewModel model = await this.drinkCategoryService.GetCategoryForDeleteAsync(drinkCategory.Id);
+
+			Assert.That(drinkCategory.Id, Is.EqualTo(model.Id));
+			Assert.That(drinkCategory.Name, Is.EqualTo(model.Name));
+		}
+
 		[TearDown]
 		public async Task TearDown()
 		{
