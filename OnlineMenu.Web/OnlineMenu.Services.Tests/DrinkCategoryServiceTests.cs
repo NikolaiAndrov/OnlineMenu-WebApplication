@@ -124,6 +124,23 @@
 			Assert.IsFalse(isCategoryExisting);
 		}
 
+		[Test]
+		public async Task EditCategoryAsync_ShouldEditGivenCategory()
+		{
+			DrinkCategory? drinkCategory = await this.dbContext.DrinksCategories
+				.FirstOrDefaultAsync(dc => dc.IsDeleted == false);
+			Assert.IsNotNull(drinkCategory, ItemNotFoundTestMessage);
+
+			DrinkCategoryPostModel model = new DrinkCategoryPostModel
+			{
+				Name = "Test"
+			};
+
+			await this.drinkCategoryService.EditCategoryAsync(drinkCategory.Id, model);
+
+			Assert.That(model.Name, Is.EqualTo(drinkCategory.Name));
+		}
+
 		[TearDown]
 		public async Task TearDown()
 		{
