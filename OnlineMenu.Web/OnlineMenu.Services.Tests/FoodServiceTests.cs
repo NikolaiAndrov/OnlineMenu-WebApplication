@@ -38,6 +38,41 @@
         }
 
         [Test]
+        public async Task DeleteFoodAsync_ShouldSetIsDeletedPropertyOfFoodToTrue()
+        {
+            Food? food = await this.dbContext.Food.FirstOrDefaultAsync(f => f.IsDeleted == false);
+            Assert.IsNotNull(food, ItemNotFoundTestMessage);
+
+            await this.foodService.DeleteFoodAsync(food.Id.ToString());
+
+            bool isDeleted = await this.dbContext.Food.AnyAsync(f => f.IsDeleted == true && f.Id == food.Id);
+            Assert.IsTrue(isDeleted);
+        }
+
+        [Test]
+        public void DeleteFoodAsync_ShouldThrowWhenInvalidIdPassed()
+        {
+            string invalidId = "invalidFooodId";
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            {
+                await this.foodService.DeleteFoodAsync(invalidId);
+            });
+        }
+
+		[Test]
+        public async Task DeleteFoodByCategoryIdAsync_ShouldDeleteAllFoodItemsWithGivenCategoryId()
+        {
+            Food? food = await this.dbContext.Food.FirstOrDefaultAsync(f => f.IsDeleted == false);
+            Assert.IsNotNull(food, ItemNotFoundTestMessage);
+
+            await this.foodService.DeleteFoodByCategoryIdAsync(food.FoodCategoryId);
+
+            bool isAnyFoodWithCategory = await this.dbContext.Food.AnyAsync(f => f.IsDeleted == false && f.FoodCategoryId == food.FoodCategoryId);
+            Assert.IsFalse(isAnyFoodWithCategory);
+        }
+
+        [Test]
         public async Task AddFoodAndReturnIdAsync_ShouldWorkProperly()
         {
             FoodPostModel model = new FoodPostModel
@@ -86,6 +121,20 @@
 		}
 
         [Test]
+        public async Task IsFoodExistingByIdAsync_ShouldReturnFalseWhenDeleted()
+        {
+            Food? food = await this.dbContext.Food
+                .FirstOrDefaultAsync(f => f.IsDeleted == false);
+            Assert.IsNotNull(food, ItemNotFoundTestMessage);
+
+            await this.foodService.DeleteFoodAsync(food.Id.ToString());
+            bool isExisting = await this.foodService.IsFoodExistingByIdAsync(food.Id.ToString());
+
+            Assert.IsFalse(isExisting);
+        }
+
+
+		[Test]
         public async Task AddToFavouriteAsync_ShouldWorkProperly()
         {
 			Food? food = await this.dbContext.Food
@@ -142,40 +191,6 @@
             Assert.IsTrue(isInFavourite);
 		}
 
-        [Test]
-        public async Task DeleteFoodAsync_ShouldSetIsDeletedPropertyOfFoodToTrue()
-        {
-            Food? food = await this.dbContext.Food.FirstOrDefaultAsync(f => f.IsDeleted == false);
-            Assert.IsNotNull(food, ItemNotFoundTestMessage);
-
-            await this.foodService.DeleteFoodAsync(food.Id.ToString());
-
-            bool isDeleted = await this.dbContext.Food.AnyAsync(f => f.IsDeleted == true && f.Id == food.Id);
-            Assert.IsTrue(isDeleted);
-        }
-
-        [Test]
-        public void DeleteFoodAsync_ShouldThrowWhenInvalidIdPassed()
-        {
-            string invalidId = "invalidFooodId";
-
-            Assert.ThrowsAsync<InvalidOperationException>(async () =>
-            {
-                await this.foodService.DeleteFoodAsync(invalidId);
-            });
-        }
-
-		[Test]
-        public async Task DeleteFoodByCategoryIdAsync_ShouldDeleteAllFoodItemsWithGivenCategoryId()
-        {
-            Food? food = await this.dbContext.Food.FirstOrDefaultAsync(f => f.IsDeleted == false);
-            Assert.IsNotNull(food, ItemNotFoundTestMessage);
-
-            await this.foodService.DeleteFoodByCategoryIdAsync(food.FoodCategoryId);
-
-            bool isAnyFoodWithCategory = await this.dbContext.Food.AnyAsync(f => f.IsDeleted == false && f.FoodCategoryId == food.FoodCategoryId);
-            Assert.IsFalse(isAnyFoodWithCategory);
-        }
 
         [Test]
         public async Task DeleteFoodByCategoryIdAsync_ShouldNotDeleteAnyFoodWhenWrongCategoryIdPassed()
