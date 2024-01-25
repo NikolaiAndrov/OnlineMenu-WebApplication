@@ -47,6 +47,21 @@
 		}
 
         [Test]
+        public async Task DeleteCategoryAsync_ShouldDeleteGivenCategory()
+        {
+            FoodCategory? foodCategory = await this.dbContext.FoodCategories
+                .FirstOrDefaultAsync(fc => fc.IsDeleted == false);
+            Assert.IsNotNull(foodCategory, ItemNotFoundTestMessage);
+
+            await this.foodCategoryService.DeleteCategoryAsync(foodCategory.Id);
+
+            bool isAnyActiveCategory = await this.dbContext.FoodCategories
+                .AnyAsync(fc => fc.IsDeleted == false && fc.Id == foodCategory.Id);
+
+            Assert.False(isAnyActiveCategory);
+        }
+
+		[Test]
         public async Task IsCategoryExistingByIdAsync_ShoulReturnTrueWhenCategoryExistung()
         {
             FoodCategory? category = await this.dbContext.FoodCategories
@@ -67,6 +82,19 @@
         }
 
         [Test]
+        public async Task IsCategoryExistingByIdAsync_ShouldReturnFalseWhenCategoryDeleted()
+        {
+            FoodCategory? foodCategory = await this.dbContext.FoodCategories
+                .FirstOrDefaultAsync(fc => fc.IsDeleted == false);
+            Assert.IsNotNull(foodCategory, ItemNotFoundTestMessage);
+
+            await this.foodCategoryService.DeleteCategoryAsync(foodCategory.Id);
+
+            bool isCategoruExisting = await this.foodCategoryService.IsCategoryExistingByIdAsync(foodCategory.Id);
+            Assert.IsFalse(isCategoruExisting);
+        }
+
+		[Test]
         public async Task IsCategoryExistingByNameAsync_ShouldReturnTrueWhenExisting()
         {
             FoodCategory? foodCategory = await this.dbContext.FoodCategories
@@ -84,6 +112,19 @@
             bool isExisting = await this.foodCategoryService.IsCategoryExistingByNameAsync(name);
             Assert.IsFalse(isExisting);
         }
+
+        [Test]
+        public async Task IsCategoryExistingByNameAsync_ShouldReturnFalseWhenCategoryDeleted()
+        {
+			FoodCategory? foodCategory = await this.dbContext.FoodCategories
+			   .FirstOrDefaultAsync(fc => fc.IsDeleted == false);
+			Assert.IsNotNull(foodCategory, ItemNotFoundTestMessage);
+
+			await this.foodCategoryService.DeleteCategoryAsync(foodCategory.Id);
+
+			bool isCategoruExisting = await this.foodCategoryService.IsCategoryExistingByNameAsync(foodCategory.Name);
+			Assert.IsFalse(isCategoruExisting);
+		}
 
 		[TearDown]
         public async Task TearDown()
