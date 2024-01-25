@@ -174,6 +174,36 @@
             Assert.That(actualNames, Is.EqualTo(expectedNames));
 		}
 
+        [Test]
+        public async Task EditCategoryAsync_ShouldEditCategory()
+        {
+            FoodCategory? foodCategory = await this.dbContext.FoodCategories
+                .FirstOrDefaultAsync(fc => fc.IsDeleted == false);
+            Assert.IsNotNull(foodCategory, ItemNotFoundTestMessage);
+
+			FoodCategoryPostModel model = new FoodCategoryPostModel
+            {
+                Name = "Test",
+            };
+
+            await this.foodCategoryService.EditCategoryAsync(model, foodCategory.Id);
+
+			Assert.That(model.Name, Is.EqualTo(foodCategory.Name));
+		}
+
+        [Test]
+        public async Task GetCategoryForDeleteAsync_ShouldReturnRequestedCategory()
+        {
+            FoodCategory? foodCategory = await this.dbContext.FoodCategories
+                .FirstOrDefaultAsync(fc => fc.IsDeleted == false);
+            Assert.IsNotNull(foodCategory, ItemNotFoundTestMessage);
+
+            FoodCategoryDeleteViewModel deleteModel = await this.foodCategoryService.GetCategoryForDeleteAsync(foodCategory.Id);
+
+            Assert.That(deleteModel.Id, Is.EqualTo(foodCategory.Id));
+            Assert.That(deleteModel.Name, Is.EqualTo(foodCategory.Name));
+		}
+
 		[TearDown]
         public async Task TearDown()
         {
