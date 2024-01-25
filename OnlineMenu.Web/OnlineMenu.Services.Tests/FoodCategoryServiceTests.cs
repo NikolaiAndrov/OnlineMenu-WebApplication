@@ -5,7 +5,7 @@
 	using OnlineMenu.Data.Models;
 	using OnlineMenu.Services.Interfaces;
 	using OnlineMenu.Web.ViewModels.FoodCategory;
-    using static Common.GeneralApplicationMessages;
+	using static Common.GeneralApplicationMessages;
 
 	[TestFixture]
 	public class FoodCategoryServiceTests
@@ -63,6 +63,25 @@
             int id = int.MinValue;
             bool isExisting = await this.foodCategoryService.IsCategoryExistingByIdAsync(id);
 
+            Assert.IsFalse(isExisting);
+        }
+
+        [Test]
+        public async Task IsCategoryExistingByNameAsync_ShouldReturnTrueWhenExisting()
+        {
+            FoodCategory? foodCategory = await this.dbContext.FoodCategories
+                .FirstOrDefaultAsync(fc => fc.IsDeleted == false);
+            Assert.IsNotNull(foodCategory, ItemNotFoundTestMessage);
+
+            bool isExisting = await this.foodCategoryService.IsCategoryExistingByNameAsync(foodCategory.Name);
+            Assert.IsTrue(isExisting);
+        }
+
+        [Test]
+        public async Task IsCategoryExistingByNameAsync_ShouldReturnDalseWhenNotExisting()
+        {
+            string name = "test" + Guid.NewGuid().ToString();
+            bool isExisting = await this.foodCategoryService.IsCategoryExistingByNameAsync(name);
             Assert.IsFalse(isExisting);
         }
 
