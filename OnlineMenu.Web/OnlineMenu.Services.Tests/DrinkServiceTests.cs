@@ -36,6 +36,40 @@
 		}
 
 		[Test]
+		public async Task DeleteDrinksByCategoryIdAsync_ShouldSoftDeleteAllDrinksByGivenDrinkCategoryId()
+		{
+			int drinkCategoryId = await this.dbContext.DrinksCategories
+				.Where(dc => dc.IsDeleted == false)
+				.Select(dc => dc.Id)
+				.FirstOrDefaultAsync();
+
+			await this.drinkService.DeleteDrinksByCategoryIdAsync(drinkCategoryId);
+
+			bool isAnyDrink = await this.dbContext.Drinks
+				.AnyAsync(d => d.IsDeleted == false && d.DrinkCategoryId == drinkCategoryId);
+
+			Assert.IsFalse(isAnyDrink);
+		}
+
+		[Test]
+		public async Task DeleteDrinkAsync_ShouldDeleteDrinkByGivenId()
+		{
+			string? drinkId = await this.dbContext.Drinks
+				.Where(d => d.IsDeleted == false)
+				.Select(d => d.Id.ToString())
+				.FirstOrDefaultAsync();
+
+			Assert.IsNotNull(drinkId, ItemNotFoundTestMessage);
+
+			await this.drinkService.DeleteDrinkAsync(drinkId);
+
+			bool isAnyDrink = await this.dbContext.Drinks
+				.AnyAsync(d => d.IsDeleted == false && d.Id.ToString() == drinkId);
+
+			Assert.IsFalse(isAnyDrink);
+		}
+
+		[Test]
 		public async Task IsDrinkExistingByIdAsync_ShouldReturnFalseWhenInvalidIdPassed()
 		{
 			string drinkId = "someinvalidid123123-abababa";
@@ -48,6 +82,19 @@
 		public async Task IsDrinkExistingByIdAsync_ShouldReturnFalseWhenNullPassed()
 		{
 			bool isDrinkExisting = await this.drinkService.IsDrinkExistingByIdAsync(null!);
+			Assert.IsFalse(isDrinkExisting);
+		}
+
+		[Test]
+		public async Task IsDrinkExistingByIdAsync_ShouldReturnFalseWhenDrinkDeleted()
+		{
+			Drink? drink = await this.dbContext.Drinks
+				.FirstOrDefaultAsync(d => d.IsDeleted == false);
+			Assert.IsNotNull(drink, ItemNotFoundTestMessage);
+
+			await this.drinkService.DeleteDrinkAsync(drink.Id.ToString());
+
+			bool isDrinkExisting = await this.drinkService.IsDrinkExistingByIdAsync(drink.Id.ToString());
 			Assert.IsFalse(isDrinkExisting);
 		}
 
@@ -188,39 +235,6 @@
 			Assert.IsFalse(isDrinkInFavourite);
 		}
 
-		[Test]
-		public async Task DeleteDrinksByCategoryIdAsync_ShouldSoftDeleteAllDrinksByGivenDrinkCategoryId()
-		{
-			int drinkCategoryId = await this.dbContext.DrinksCategories
-				.Where(dc => dc.IsDeleted == false)
-				.Select(dc => dc.Id)
-				.FirstOrDefaultAsync();
-
-			await this.drinkService.DeleteDrinksByCategoryIdAsync(drinkCategoryId);
-
-			bool isAnyDrink = await this.dbContext.Drinks
-				.AnyAsync(d => d.IsDeleted == false && d.DrinkCategoryId == drinkCategoryId);
-
-			Assert.IsFalse(isAnyDrink);
-		}
-
-		[Test]
-		public async Task DeleteDrinkAsync_ShouldDeleteDrinkByGivenId()
-		{
-			string? drinkId = await this.dbContext.Drinks
-				.Where(d => d.IsDeleted == false)
-				.Select(d => d.Id.ToString())
-				.FirstOrDefaultAsync();
-
-			Assert.IsNotNull(drinkId, ItemNotFoundTestMessage);
-
-			await this.drinkService.DeleteDrinkAsync(drinkId);
-
-			bool isAnyDrink = await this.dbContext.Drinks
-				.AnyAsync(d => d.IsDeleted == false && d.Id.ToString() == drinkId);
-
-			Assert.IsFalse(isAnyDrink);
-		}
 
 		[Test]
 		public async Task GetDrinkForEditAsync_ShouldReturnExactDrinkByGivenId()
