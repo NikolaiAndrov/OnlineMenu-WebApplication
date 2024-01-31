@@ -1,17 +1,15 @@
 namespace OnlineMenu.Web
 {
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
-    using NuGet.Packaging.Signing;
-    using OnlineMenu.Data;
-    using OnlineMenu.Data.Models;
-    using OnlineMenu.Services.Interfaces;
-    using OnlineMenu.Web.Infrastructure.Extensions;
-    using OnlineMenu.Web.Infrastructure.ModelBinders;
-    using static Common.GeneralApplicationConstants;
+	using Microsoft.AspNetCore.Identity;
+	using Microsoft.AspNetCore.Mvc;
+	using Microsoft.EntityFrameworkCore;
+	using OnlineMenu.Data;
+	using OnlineMenu.Data.Models;
+	using OnlineMenu.Services.Interfaces;
+	using OnlineMenu.Web.Infrastructure.Extensions;
+	using OnlineMenu.Web.Infrastructure.ModelBinders;
 
-    public class Program
+	public class Program
     {
         public static void Main(string[] args)
         {

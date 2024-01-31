@@ -3,10 +3,10 @@
     using Microsoft.AspNetCore.Mvc;
     using OnlineMenu.Services.Interfaces;
     using OnlineMenu.Web.ViewModels.Home;
+	using OnlineMenu.Web.Infrastructure.Extensions;
     using static Common.NotificationConstantMessages;
     using static Common.GeneralApplicationMessages;
     using static Common.GeneralApplicationConstants;
-	using OnlineMenu.Web.Infrastructure.Extensions;
 
 	public class HomeController : Controller
     {

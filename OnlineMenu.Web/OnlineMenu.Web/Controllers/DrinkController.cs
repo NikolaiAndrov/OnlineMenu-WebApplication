@@ -1,13 +1,12 @@
 ﻿namespace OnlineMenu.Web.Controllers
 {
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-	using Microsoft.CodeAnalysis.CSharp.Syntax;
+	using Microsoft.AspNetCore.Authorization;
+	using Microsoft.AspNetCore.Mvc;
 	using OnlineMenu.Services.Interfaces;
 	using OnlineMenu.Web.Infrastructure.Extensions;
 	using OnlineMenu.Web.ViewModels.Drink;
-    using static Common.GeneralApplicationMessages;
-    using static Common.NotificationConstantMessages;
+	using static Common.GeneralApplicationMessages;
+	using static Common.NotificationConstantMessages;
 
 	[Authorize]
     public class DrinkController : Controller

@@ -4,9 +4,9 @@
 	using Microsoft.AspNetCore.Mvc;
 	using OnlineMenu.Services.Interfaces;
 	using OnlineMenu.Web.ViewModels.Food;
+	using OnlineMenu.Web.Infrastructure.Extensions;
 	using static Common.NotificationConstantMessages;
 	using static Common.GeneralApplicationMessages;
-	using OnlineMenu.Web.Infrastructure.Extensions;
 
 	[Authorize]
     public class FoodController : Controller
