@@ -8,16 +8,19 @@
 	using static Common.GeneralApplicationMessages;
 	using static Common.NotificationConstantMessages;
 	using static Common.GeneralApplicationConstants;
+	using Microsoft.Extensions.Caching.Memory;
 
 	public class AdminController : BaseAdminController
 	{
 		private readonly IUserService userService;
 		private readonly UserManager<ApplicationUser> userManager;
+		private readonly IMemoryCache memoryCache;
 
-		public AdminController(IUserService userService, UserManager<ApplicationUser> userManager)
+		public AdminController(IUserService userService, UserManager<ApplicationUser> userManager, IMemoryCache memoryCache)
 		{
 			this.userService = userService;
 			this.userManager = userManager;
+			this.memoryCache = memoryCache;
 		}
 
 		[HttpGet]
@@ -64,6 +67,7 @@
 
 			await userManager.AddToRoleAsync(adminUser, AdminRoleName);
 			this.TempData[SuccessMessage] = AdminAddedMessage;
+			this.memoryCache.Remove(UsersCacheKey);
 			return this.RedirectToAction("All", "User");
 		}
 
@@ -111,6 +115,7 @@
 
 			await this.userManager.RemoveFromRoleAsync(adminUser, AdminRoleName);
 			this.TempData[SuccessMessage] = AdminRemovedMessage;
+			this.memoryCache.Remove(UsersCacheKey);
 			return this.RedirectToAction("All", "User");
 		}
 	}
