@@ -15,8 +15,6 @@
 
         Task<bool> IsUserExistingByIdAsync(string userId);
 
-        Task<IdentityResult> RegisterAsync(RegisterFormModel model);
-
         Task<string> GetFullNameByIdAsync(string userId);
 
         Task<ICollection<UserViewModel>> GetAllUsersAsync();

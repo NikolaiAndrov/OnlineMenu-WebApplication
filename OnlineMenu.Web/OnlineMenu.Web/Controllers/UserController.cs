@@ -51,17 +51,16 @@
                 return this.View(model);
             }
 
-            IdentityResult result;
+            ApplicationUser user = new ApplicationUser
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName
+            };
 
-            try
-            {
-                result = await this.userService.RegisterAsync(model);
-            }
-            catch (Exception)
-            {
-                this.TempData[ErrorMessage] = UnexpectedErrorMessage;
-                return this.RedirectToAction("Index", "Home");
-            }
+            await this.userManager.SetEmailAsync(user, model.Email);
+            await this.userManager.SetUserNameAsync(user, user.Email);
+
+            IdentityResult result = await this.userManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
             {
@@ -72,8 +71,10 @@
 
                 return this.View(model);    
             }
-          
-            this.TempData[SuccessMessage] = SuccessfullRegistrationMessage;
+
+			await this.signInManager.SignInAsync(user, false);
+
+			this.TempData[SuccessMessage] = SuccessfullRegistrationMessage;
             this.memoryCache.Remove(UsersCacheKey);
             return this.RedirectToAction("Index", "Home");
         }

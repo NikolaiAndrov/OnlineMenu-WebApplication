@@ -13,15 +13,12 @@
     {
         private readonly OnlineMenuDbContext dbContext;
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly SignInManager<ApplicationUser> signInManager;
 
 		public UserService(OnlineMenuDbContext dbContext,
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            UserManager<ApplicationUser> userManager)
         {
             this.dbContext = dbContext;
             this.userManager = userManager;
-            this.signInManager = signInManager;
         }
 
 		public async Task<ICollection<UserViewModel>> GetAllUsersAsync()
@@ -113,27 +110,6 @@
 
         public async Task<bool> IsUserExistingByIdAsync(string userId)
             => await this.dbContext.Users.AnyAsync(u => u.Id.ToString() == userId);
-
-        public async Task<IdentityResult> RegisterAsync(RegisterFormModel model)
-        {
-            ApplicationUser user = new ApplicationUser
-            {
-                FirstName = model.FirstName,
-                LastName = model.LastName
-            };
-
-            await this.userManager.SetEmailAsync(user, model.Email);
-            await this.userManager.SetUserNameAsync(user, user.Email);
-
-            IdentityResult result = await this.userManager.CreateAsync(user, model.Password);
-
-            if (result.Succeeded)
-            {
-                await this.signInManager.SignInAsync(user, false);
-            }
-
-            return result;
-        }
 
 		public async Task UpdateFullNameAsync(string userId, UpdateUserPostModel model)
 		{
