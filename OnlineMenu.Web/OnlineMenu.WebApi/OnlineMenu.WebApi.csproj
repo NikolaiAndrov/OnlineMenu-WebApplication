@@ -17,6 +17,7 @@
     <ProjectReference Include="..\OnlineMenu.Services\OnlineMenu.Services.csproj" />
     <ProjectReference Include="..\OnlineMenu.Web.Infrastructure\OnlineMenu.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\OnlineMenu.Web.ViewModels\OnlineMenu.Web.ViewModels.csproj" />
+    <ProjectReference Include="..\OnlineMenu.Web\OnlineMenu.Web.csproj" />
   </ItemGroup>
 
 </Project>

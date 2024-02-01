@@ -19,7 +19,7 @@
 			this.memoryCache = memoryCache;
 		}
 
-		[Route("User/All")]
+		[HttpGet]
 		public async Task<IActionResult> All()
 		{
 			ICollection<UserViewModel> allUsers;
