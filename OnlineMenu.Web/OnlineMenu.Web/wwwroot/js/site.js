@@ -11,15 +11,15 @@
                 $('#statistics_box').removeClass('d-none');
 
                 $('#statistics_btn').text('Hide Statistics')
-                $('#statistics_btn').removeClass('btn-outline-info')
-                $('#statistics_btn').addClass('btn-outline-primary')
+                $('#statistics_btn').removeClass('btn-outline-primary')
+                $('#statistics_btn').addClass('btn-outline-info')
             });
         } else {
             $('#statistics_box').addClass('d-none');
 
             $('#statistics_btn').text('Show Statistics')
-            $('#statistics_btn').removeClass('btn-outline-primary')
-            $('#statistics_btn').addClass('btn-outline-info')
+            $('#statistics_btn').removeClass('btn-outline-info')
+            $('#statistics_btn').addClass('btn-outline-primary')
         }
 
     });
