@@ -20,7 +20,6 @@
 			this.userManager = userManager;
 		}
 
-		[Route("Admin/Add")]
 		[HttpGet]
 		public IActionResult Add()
 		{
@@ -28,7 +27,6 @@
 			return this.View(model);
 		}
 
-		[Route("Admin/Add")]
 		[HttpPost]
 		public async Task<IActionResult> Add(AdminPostModel model)
 		{
@@ -69,7 +67,6 @@
 			return this.RedirectToAction("All", "User");
 		}
 
-		[Route("Admin/Remove")]
 		[HttpGet]
 		public IActionResult Remove()
 		{
@@ -77,7 +74,6 @@
 			return this.View(model);
 		}
 
-		[Route("Admin/Remove")]
 		[HttpPost]
 		public async Task<IActionResult> Remove(AdminPostModel model)
 		{

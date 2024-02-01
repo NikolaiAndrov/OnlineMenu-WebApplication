@@ -2,8 +2,8 @@ namespace OnlineMenu.WebApi
 {
 	using Microsoft.EntityFrameworkCore;
 	using OnlineMenu.Data;
+	using OnlineMenu.Services;
 	using OnlineMenu.Services.Interfaces;
-	using OnlineMenu.Web.Infrastructure.Extensions;
 
 	public class Program
 	{
@@ -16,7 +16,8 @@ namespace OnlineMenu.WebApi
 			builder.Services.AddDbContext<OnlineMenuDbContext>(options =>
 				options.UseSqlServer(connectionString));
 
-			builder.Services.AddApplicationServices(typeof(IFoodService));
+			builder.Services.AddScoped<IFoodService, FoodService>();
+			builder.Services.AddScoped<IDrinkService, DrinkService>();
 
 			builder.Services.AddControllers();
 
