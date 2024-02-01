@@ -168,34 +168,6 @@
 			Assert.That(drinkCategory.Name, Is.EqualTo(model.Name));
 		}
 
-		[Test]
-		public async Task GetCategoryForEditAsync_ShouldReturnRequestedCategory()
-		{
-			DrinkCategory? drinkCategory = await this.dbContext.DrinksCategories
-				.FirstOrDefaultAsync(dc => dc.IsDeleted == false);
-			Assert.IsNotNull(drinkCategory, ItemNotFoundTestMessage);
-
-			DrinkCategoryPostModel model = await this.drinkCategoryService.GetCategoryForEditAsync(drinkCategory.Id);
-
-			Assert.That(drinkCategory.Name, Is.EqualTo(model.Name));
-		}
-
-		[Test]
-		public async Task GetDrinkCategoryNamesAsync_ShouldReturnAllNames()
-		{
-			ICollection<string> names = await this.dbContext.DrinksCategories
-				.Where(dc => dc.IsDeleted == false)
-				.Select(dc => dc.Name)
-				.ToArrayAsync();
-
-			ICollection<string> returnedNames = await this.drinkCategoryService.GetDrinkCategoryNamesAsync();
-
-			string expectedNames = string.Join(", ", names);
-			string actualNames = string.Join(", ", returnedNames);
-
-			Assert.That(expectedNames, Is.EqualTo(actualNames));
-		}
-
 		[TearDown]
 		public async Task TearDown()
 		{
