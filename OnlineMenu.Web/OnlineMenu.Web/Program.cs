@@ -8,6 +8,7 @@ namespace OnlineMenu.Web
 	using OnlineMenu.Services.Interfaces;
 	using OnlineMenu.Web.Infrastructure.Extensions;
 	using OnlineMenu.Web.Infrastructure.ModelBinders;
+    using static Common.GeneralApplicationConstants;
 
 	public class Program
     {
@@ -81,17 +82,17 @@ namespace OnlineMenu.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
-            /// <summary>
-            /// To seed Administrator, register a user with email: admin@abv.bg
-            /// After that uncomment the if statement below, run the application again
-            /// That's it, enjoy the application
-            /// </summary>
-            //if (app.Environment.IsDevelopment())
-            //{
-            //	app.SeedAdministrator(AdminEmail);
-            //}
+			/// <summary>
+			/// To seed Administrator, register a user with email: admin@abv.bg
+			/// After that uncomment the if statement below, run the application again
+			/// That's it, enjoy the application
+			/// </summary>
+			//if (app.Environment.IsDevelopment())
+			//{
+			//	app.SeedAdministrator(AdminEmail);
+			//}
 
-            app.UseEndpoints(endpoints =>
+			app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(name: "areas", pattern: "/{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
