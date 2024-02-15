@@ -167,7 +167,8 @@
             }
 
             this.TempData[SuccessMessage] = FullNameUpdatedMessage;
-			return this.RedirectToAction("Index", "Home");
+            this.memoryCache.Remove(UsersCacheKey);
+            return this.RedirectToAction("Index", "Home");
 		}
     }
 }
