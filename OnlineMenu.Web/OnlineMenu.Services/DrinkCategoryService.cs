@@ -50,6 +50,7 @@
 		public async Task<ICollection<DrinkCategoryViewModel>> GetAllDrinkCategoriesAsync()
 		{
 			ICollection<DrinkCategoryViewModel> drinkCategories = await this.dbContext.DrinksCategories
+				.AsNoTracking()
 				.Where(dc => dc.IsDeleted == false)
 				.Select(dc => new DrinkCategoryViewModel
 				{
@@ -64,6 +65,7 @@
 		public async Task<DrinkCategoryDeleteViewModel> GetCategoryForDeleteAsync(int id)
 		{
 			DrinkCategoryDeleteViewModel model = await this.dbContext.DrinksCategories
+				.AsNoTracking()
 				.Where(dc => dc.IsDeleted == false && dc.Id == id)
 				.Select(dc => new DrinkCategoryDeleteViewModel
 				{
@@ -78,6 +80,7 @@
 		public async Task<DrinkCategoryPostModel> GetCategoryForEditAsync(int id)
 		{
 			DrinkCategoryPostModel model = await this.dbContext.DrinksCategories
+				.AsNoTracking()
 				.Where(dc => dc.IsDeleted == false && dc.Id == id)
 				.Select(dc => new DrinkCategoryPostModel
 				{
@@ -91,6 +94,7 @@
 		public async Task<ICollection<string>> GetDrinkCategoryNamesAsync()
 		{
 			ICollection<string> drinkCategories = await this.dbContext.DrinksCategories
+				.AsNoTracking()
 				.Where(dc => dc.IsDeleted == false)
 				.Select(dc => dc.Name)
 				.ToArrayAsync();
