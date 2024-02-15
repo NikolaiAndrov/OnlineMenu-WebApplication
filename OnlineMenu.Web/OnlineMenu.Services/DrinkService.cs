@@ -79,6 +79,7 @@
 			IQueryable<Drink> drinkQuery = this.dbContext.Drinks.AsQueryable();
 
 			drinkQuery = drinkQuery
+				.AsNoTracking()
 				.Where(d => d.IsDeleted == false);
 
 			if (!string.IsNullOrWhiteSpace(drinkQueryModel.Category))
@@ -125,6 +126,7 @@
 		public async Task<DrinkDetailsViewModel> GetDrinkDetailsAsync(string drinkId)
 		{
 			DrinkDetailsViewModel drinkDetails = await this.dbContext.Drinks
+				.AsNoTracking()
 				.Where(d => d.IsDeleted == false && d.Id.ToString() == drinkId)
 				.Select(d => new DrinkDetailsViewModel
 				{
@@ -145,6 +147,7 @@
 		public async Task<DrinkDeleteViewModel> GetDrinkForDeleteAsync(string drinkId)
 		{
 			DrinkDeleteViewModel model = await this.dbContext.Drinks
+				.AsNoTracking()
 				.Where(d => d.IsDeleted == false && d.Id.ToString() == drinkId)
 				.Select(d => new DrinkDeleteViewModel
 				{
@@ -160,6 +163,7 @@
 		public async Task<DrinkPostModel> GetDrinkForEditAsync(string drinkId)
 		{
 			DrinkPostModel model = await this.dbContext.Drinks
+				.AsNoTracking()
 				.Where(d => d.IsDeleted == false && d.Id.ToString() == drinkId)
 				.Select (d => new DrinkPostModel
 				{
@@ -179,6 +183,7 @@
 		public async Task<int> GetDrinksCountAsync()
 		{
 			int count = await this.dbContext.Drinks
+				.AsNoTracking()
 				.Where(d => d.IsDeleted == false)
 				.CountAsync();
 
@@ -188,6 +193,7 @@
 		public async Task<ICollection<DrinkAllViewModel>> GetFavouriteDrinksAsync(string userId)
 		{
 			ICollection<DrinkAllViewModel> favouriteDrinks = await this.dbContext.UsersDrinks
+				.AsNoTracking()
 				.Where(ud => ud.Drink.IsDeleted == false && ud.UserId.ToString() == userId)
 				.OrderBy(ud => ud.Drink.DrinkCategoryId)
 				.ThenBy(ud => ud.Drink.IsAlcoholic == false)
@@ -211,6 +217,7 @@
 		public async Task<string> GetDrinkNamesByCategoryIdAsync(int categoryId)
 		{
 			string[] drinks = await this.dbContext.Drinks
+				.AsNoTracking()
 				.Where(d => d.IsDeleted == false && d.DrinkCategoryId == categoryId)
 				.Select(d => d.Name)
 				.ToArrayAsync();

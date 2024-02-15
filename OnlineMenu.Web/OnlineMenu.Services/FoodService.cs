@@ -158,6 +158,7 @@
 		public async Task<int> GetFoodCountAsync()
 		{
 			int count = await this.dbContext.Food
+                .AsNoTracking()
                 .Where(f => f.IsDeleted == false)
                 .CountAsync();
 
