@@ -65,6 +65,7 @@
 		public async Task<string> GetFullNameByIdAsync(string userId)
 		{
 			ApplicationUser? user = await this.dbContext.Users
+                .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
 
             if (user == null)
@@ -78,6 +79,7 @@
 		public async Task<UpdateUserPostModel> GetUserForUpdateAsync(string userId)
 		{
 			UpdateUserPostModel viewModel = await this.dbContext.Users
+                .AsNoTracking()
                 .Where(u => u.Id.ToString() == userId)
                 .Select(u => new UpdateUserPostModel
                 {
@@ -92,6 +94,7 @@
 		public async Task<string> GetUserIdByEmailAsync(string email)
         {
             string userId = await this.dbContext.Users
+                .AsNoTracking()
                 .Where(u => u.Email == email)
                 .Select(u => u.Id.ToString())
                 .FirstAsync();
