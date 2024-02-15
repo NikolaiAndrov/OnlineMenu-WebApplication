@@ -29,6 +29,7 @@
 		public async Task<FoodCategoryPostModel> GetCategoryForEditAsync(int id)
 		{
             FoodCategoryPostModel model = await this.dbContext.FoodCategories
+                .AsNoTracking()
                 .Where(fc => fc.IsDeleted == false && fc.Id == id)
                 .Select(fc => new FoodCategoryPostModel
                 {
@@ -42,6 +43,7 @@
 		public async Task<ICollection<FoodCategoryViewModel>> GetAllFoodCategoriesAsync()
 		{
 			ICollection<FoodCategoryViewModel> foodCategories = await this.dbContext.FoodCategories
+                .AsNoTracking()
                 .Where(fc => fc.IsDeleted == false)
                 .Select(fc => new FoodCategoryViewModel
                 {
@@ -56,6 +58,7 @@
 		public async Task<ICollection<string>> GetFoodCategoryNamesAsync()
         {
             ICollection<string> categoryNames = await this.dbContext.FoodCategories
+                .AsNoTracking()
                 .Where(fc => fc.IsDeleted == false)
                 .Select(fc => fc.Name)
                 .ToArrayAsync();
@@ -82,6 +85,7 @@
 		public async Task<FoodCategoryDeleteViewModel> GetCategoryForDeleteAsync(int id)
 		{
 			FoodCategoryDeleteViewModel model = await this.dbContext.FoodCategories
+                .AsNoTracking()
                 .Where(fc => fc.IsDeleted == false && fc.Id == id)
                 .Select(fc => new FoodCategoryDeleteViewModel
                 {
