@@ -93,6 +93,7 @@
             IQueryable<Food> foodQuery = this.dbContext.Food.AsQueryable();
 
             foodQuery = foodQuery
+                .AsNoTracking()
                 .Where(f => f.IsDeleted == false);
 
             if (!string.IsNullOrWhiteSpace(foodQueryModel.Category))
@@ -136,6 +137,7 @@
 		public async Task<ICollection<FoodAllViewModel>> GetFavouriteFoodAsync(string userId)
 		{
 			ICollection<FoodAllViewModel> favouriteFood = await this.dbContext.UsersFood
+                .AsNoTracking()
                 .Where(uf => uf.Food.IsDeleted == false && uf.UserId.ToString() == userId)
                 .OrderBy(uf => uf.Food.Category.Id)
                 .ThenBy(uf => uf.Food.Name)
@@ -165,6 +167,7 @@
 		public async Task<FoodDetailsViewModel> GetFoodDetailsAsync(string foodId)
 		{
 			FoodDetailsViewModel foodDetails = await this.dbContext.Food
+                .AsNoTracking()
                 .Where(f => f.IsDeleted == false && f.Id.ToString() == foodId)
                 .Select(f => new FoodDetailsViewModel
                 {
@@ -184,6 +187,7 @@
 		public async Task<FoodDeleteViewModel> GetFoodForDeleteAsync(string foodId)
 		{
 			FoodDeleteViewModel model = await this.dbContext.Food
+                .AsNoTracking()
                 .Where(f => f.IsDeleted == false && f.Id.ToString() == foodId)
                 .Select(f => new FoodDeleteViewModel
                 {
@@ -199,6 +203,7 @@
 		public async Task<FoodPostModel> GetFoodForEditAsync(string foodId)
 		{
 			FoodPostModel foodPostModel = await this.dbContext.Food
+                .AsNoTracking()
                 .Where(f => f.IsDeleted == false && f.Id.ToString() == foodId)
                 .Select(f => new FoodPostModel
                 {
@@ -217,6 +222,7 @@
 		public async Task<ICollection<IndexViewModel>> GetFoodForIndexAsync()
         {
             ICollection<IndexViewModel> indexFood = await this.dbContext.Food
+                .AsNoTracking()
                 .Where(f => f.IsDeleted == false && f.Category.Name == DessertsFoodCategoryForIndex || f.Category.Name == BurgersFoodCategoryForIndex)
                 .Select(f => new IndexViewModel
                 {
@@ -232,6 +238,7 @@
 		public async Task<string> GetFoodNamesByCategoryIdAsync(int categoryId)
 		{
             string[] food = await this.dbContext.Food
+                .AsNoTracking()
                 .Where(f => f.IsDeleted == false && f.FoodCategoryId == categoryId)
                 .Select(f => f.Name)
                 .ToArrayAsync();
