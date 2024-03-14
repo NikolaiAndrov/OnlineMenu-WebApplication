@@ -25,12 +25,12 @@
 			try
 			{
 				int foodCount = await this.foodService.GetFoodCountAsync();
-				int drinskCount = await this.drinkService.GetDrinksCountAsync();
+				int drinksCount = await this.drinkService.GetDrinksCountAsync();
 
 				StatisticsViewModel model = new StatisticsViewModel
 				{
 					TotalFood = foodCount,
-					TotalDrinks = drinskCount
+					TotalDrinks = drinksCount
 				};
 
 				return this.Ok(model);
