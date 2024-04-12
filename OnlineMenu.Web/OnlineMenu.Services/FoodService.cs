@@ -224,7 +224,9 @@
         {
             ICollection<IndexViewModel> indexFood = await this.dbContext.Food
                 .AsNoTracking()
-                .Where(f => f.IsDeleted == false && f.Category.Name == DessertsFoodCategoryForIndex || f.Category.Name == BurgersFoodCategoryForIndex)
+                .Where(f => f.IsDeleted == false)
+                .OrderBy(f => Guid.NewGuid())
+                .Take(5)
                 .Select(f => new IndexViewModel
                 {
                     Id = f.Id.ToString(),
