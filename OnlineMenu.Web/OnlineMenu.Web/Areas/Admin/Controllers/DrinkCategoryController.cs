@@ -211,6 +211,7 @@
 			}
 
 			this.TempData[ErrorMessage] = DeleteCategoryQWarningMessage;
+			this.memoryCache.Remove(DrinkCategoryCacheKey);
 			return this.View(model);
 		}
 
