@@ -8,8 +8,7 @@ namespace OnlineMenu.Web
 	using OnlineMenu.Services.Interfaces;
 	using OnlineMenu.Web.Infrastructure.Extensions;
 	using OnlineMenu.Web.Infrastructure.ModelBinders;
-    using static Common.GeneralApplicationConstants;
-
+	using static Common.GeneralApplicationConstants;
 	public class Program
     {
         public static void Main(string[] args)
@@ -41,9 +40,14 @@ namespace OnlineMenu.Web
                 options.Password.RequiredLength = builder
                     .Configuration.GetValue<int>("Identity:Password:RequiredLength");
 
-				options.Lockout.AllowedForNewUsers = true;
-				options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
-				options.Lockout.MaxFailedAccessAttempts = 5;
+				options.Lockout.AllowedForNewUsers = builder
+                .Configuration.GetValue<bool>("LockoutOptions:AllowedForNewUsers");
+
+				options.Lockout.DefaultLockoutTimeSpan = builder
+                .Configuration.GetValue<TimeSpan>("LockoutOptions:DefaultLockoutTimeSpan");
+
+				options.Lockout.MaxFailedAccessAttempts = builder.
+                Configuration.GetValue<int>("LockoutOptions:MaxFailedAccessAttempts");
 			})
             .AddRoles<IdentityRole<Guid>>()
             .AddEntityFrameworkStores<OnlineMenuDbContext>();

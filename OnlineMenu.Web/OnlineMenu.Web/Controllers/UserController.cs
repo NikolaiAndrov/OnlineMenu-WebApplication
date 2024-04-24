@@ -121,7 +121,7 @@
             }
 
             var signInResult = await this.signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, true);
-
+            
 			if (signInResult.IsLockedOut)
 			{
 				// Account locked out, provide appropriate feedback to user
