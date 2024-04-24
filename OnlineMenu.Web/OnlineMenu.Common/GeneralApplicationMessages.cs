@@ -45,5 +45,7 @@
 
         public const string ItemNotFoundTestMessage = "Item not found in the database!";
         public const string UserNotFoundTestMessage = "User not found in the database!";
+
+        public const string LockedAccountMessage = "Your account has been locked out due to multiple failed login attempts, please try again after one minute.";
 	}
 }

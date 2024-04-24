@@ -120,9 +120,16 @@
                 return this.RedirectToAction("Register", "User");
             }
 
-            var signInResult = await this.signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+            var signInResult = await this.signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, true);
 
-            if (!signInResult.Succeeded)
+			if (signInResult.IsLockedOut)
+			{
+				// Account locked out, provide appropriate feedback to user
+				this.ModelState.AddModelError(string.Empty, LockedAccountMessage);
+				return View(model);
+			}
+
+			if (!signInResult.Succeeded)
             {
                 TempData[ErrorMessage] = LogginErrorMessage;
                 return View(model);

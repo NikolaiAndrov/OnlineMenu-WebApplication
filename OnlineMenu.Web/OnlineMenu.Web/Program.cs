@@ -40,7 +40,11 @@ namespace OnlineMenu.Web
 
                 options.Password.RequiredLength = builder
                     .Configuration.GetValue<int>("Identity:Password:RequiredLength");
-            })
+
+				options.Lockout.AllowedForNewUsers = true;
+				options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
+				options.Lockout.MaxFailedAccessAttempts = 5;
+			})
             .AddRoles<IdentityRole<Guid>>()
             .AddEntityFrameworkStores<OnlineMenuDbContext>();
 
