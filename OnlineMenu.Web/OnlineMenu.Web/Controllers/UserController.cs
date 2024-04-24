@@ -21,18 +21,21 @@
         private readonly IUserStore<ApplicationUser> userStore;
         private readonly IUserService userService;
         private readonly IMemoryCache memoryCache;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
         public UserController(SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
             IUserService userService, 
-            IMemoryCache memoryCache)
+            IMemoryCache memoryCache,
+            IWebHostEnvironment webHostEnvironment)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
             this.userStore = userStore;
             this.userService = userService;
             this.memoryCache = memoryCache;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet]
@@ -124,8 +127,15 @@
             
 			if (signInResult.IsLockedOut)
 			{
-				// Account locked out, provide appropriate feedback to user
-				this.ModelState.AddModelError(string.Empty, LockedAccountMessage);
+                if (this.webHostEnvironment.IsDevelopment())
+                {
+				    this.ModelState.AddModelError(string.Empty, LockedAccountDevMessage);
+                }
+                else if (this.webHostEnvironment.IsProduction())
+                {
+					this.ModelState.AddModelError(string.Empty, LockedAccountProdMessage);
+				}
+
 				return View(model);
 			}
 

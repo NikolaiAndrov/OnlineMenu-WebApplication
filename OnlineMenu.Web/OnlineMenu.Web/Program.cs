@@ -41,13 +41,13 @@ namespace OnlineMenu.Web
                     .Configuration.GetValue<int>("Identity:Password:RequiredLength");
 
 				options.Lockout.AllowedForNewUsers = builder
-                .Configuration.GetValue<bool>("LockoutOptions:AllowedForNewUsers");
+                    .Configuration.GetValue<bool>("LockoutOptions:AllowedForNewUsers");
 
 				options.Lockout.DefaultLockoutTimeSpan = builder
-                .Configuration.GetValue<TimeSpan>("LockoutOptions:DefaultLockoutTimeSpan");
+                    .Configuration.GetValue<TimeSpan>("LockoutOptions:DefaultLockoutTimeSpan");
 
-				options.Lockout.MaxFailedAccessAttempts = builder.
-                Configuration.GetValue<int>("LockoutOptions:MaxFailedAccessAttempts");
+				options.Lockout.MaxFailedAccessAttempts = builder
+                    .Configuration.GetValue<int>("LockoutOptions:MaxFailedAccessAttempts");
 			})
             .AddRoles<IdentityRole<Guid>>()
             .AddEntityFrameworkStores<OnlineMenuDbContext>();
