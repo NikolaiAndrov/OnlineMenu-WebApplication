@@ -68,6 +68,8 @@ namespace OnlineMenu.Web
 
             builder.Services.AddMemoryCache(); 
 
+            builder.Services.AddRecaptchaService();
+
             WebApplication app = builder.Build();
 
             if (app.Environment.IsDevelopment())

@@ -12,6 +12,8 @@
     using static Common.GeneralApplicationMessages;
     using static Common.NotificationConstantMessages;
     using static Common.GeneralApplicationConstants;
+    using Griesoft.AspNetCore.ReCaptcha;
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
 
     [Authorize]
     public class UserController : Controller
@@ -47,8 +49,14 @@
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Register(RegisterFormModel model)
+        [ValidateRecaptcha(Action = nameof(Register), ValidationFailedAction = ValidationFailedAction.ContinueRequest)]
+        public async Task<IActionResult> Register(RegisterFormModel model, ValidationResponse recaptchaResponse)
         {
+            if (!recaptchaResponse.Success)
+            {
+                return this.BadRequest();
+            }
+
             if (!ModelState.IsValid)
             {
                 return this.View(model);
