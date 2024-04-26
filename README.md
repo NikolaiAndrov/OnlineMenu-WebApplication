@@ -73,7 +73,7 @@ Whether you're a casual visitor or a registered user, the platform allows you to
 # <img width="1280" alt="Screenshot 2024-01-18 161632" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/8c8f0c76-48e8-470e-82b9-da951d7cd9e1">
 # <img width="1280" alt="Screenshot 2024-01-18 161913" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/27a3ab3f-0bc6-4d48-ae7f-65d6be7821c0">
 # <img width="1280" alt="Screenshot 2024-01-18 162026" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/2aa539fa-1a95-4295-8c70-a28b4f986c49">
-# <img width="1280" alt="Screenshot 2024-01-18 162209" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/44353ca0-494b-48a6-94fc-17d887721575">
+# <img width="1280" alt="Screenshot 2024-04-26 211538" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/32016e30-1359-497f-b7d4-7fd73e256a80">
 # <img width="1280" alt="Screenshot 2024-01-18 162502" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/5531c35a-21dd-4962-8799-9b740aadb995">
 # <img width="1280" alt="Screenshot 2024-01-18 162656" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/048895e8-868d-4a89-a29a-00a03abf4bb8">
 # <img width="1280" alt="Screenshot 2024-01-18 162912" src="https://github.com/NikolaiAndrov/OnlineMenu-WebApplication/assets/32267207/71bb5878-9580-4ead-ab94-6d8f789a2e7e">
